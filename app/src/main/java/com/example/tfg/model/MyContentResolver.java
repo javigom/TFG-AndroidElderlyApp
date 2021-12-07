@@ -119,28 +119,39 @@ public class MyContentResolver {
      * @param callModelList
      * @return true if an element has been added
      */
-    public boolean updateCalls(List<CallModel> callModelList){
+    public int updateCalls(@NonNull List<CallModel> callModelList){
 
-        int numCalls = callModelList.size();
+        int newCalls = 0;
 
         // Order by date
         String sortOrder = CallLog.Calls.DATE + " DESC";
 
+        //String where = CallLog.Calls.DATE + " == " + callModelList.get(0).getDate();
+
         // Query
         Cursor cursor = contentResolver.query(CallLog.Calls.CONTENT_URI, null, null, null, sortOrder);
 
-        if(cursor != null && cursor.moveToNext()){
+        if (cursor.getCount() > 0) {
 
-            CallModel call = recoverCallModel(cursor);
+            boolean fin = false;
+            while (cursor.moveToNext() && !fin) {
 
-            // If the call is not in the list yet
-            if(!callModelList.get(0).getDate().equals(call.getDate())){
-                callModelList.add(0, call);
+                CallModel call = recoverCallModel(cursor);
+
+                if(!callModelList.get(newCalls).getDate().equals(call.getDate())){
+                    callModelList.add(newCalls, call);
+                    newCalls = newCalls + 1;
+                }
+                else{
+                    fin = true;
+                }
             }
+
+            cursor.close();
 
         }
 
-        return numCalls != callModelList.size();
+        return newCalls;
 
     }
 

@@ -50,8 +50,12 @@ public class CallLogListFragment extends Fragment {
         return view;
     }
 
-    public void update(){
-        callLogListAdapter.notifyItemInserted(0);
+    public void update(int newCalls){
+
+        for(int i = 0; i < newCalls; i++){
+            callLogListAdapter.notifyItemInserted(i);
+        }
+
         recyclerView.scrollToPosition(0);
     }
 

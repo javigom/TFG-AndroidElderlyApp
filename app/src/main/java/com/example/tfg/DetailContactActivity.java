@@ -17,9 +17,6 @@ import com.example.tfg.model.ContactModel;
 
 public class DetailContactActivity extends AppCompatActivity {
 
-    private static final int UPDATE_CALL_LOG = 200;
-    private boolean callDone = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,26 +43,13 @@ public class DetailContactActivity extends AppCompatActivity {
                 ivPhoto.setImageURI(Uri.parse(contactModel.getPhoto()));
             }
 
-            bCall.setOnClickListener(v -> {
-                try{
-                    callDone = true;
-                    startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contactModel.getPhone())));
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
-
-            });
+            bCall.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contactModel.getPhone()))));
         }
 
         // BACK NAVIGATION BUTTON
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-
-                if(callDone){
-                    Intent intent = new Intent();
-                    setResult(UPDATE_CALL_LOG, intent);
-                }
                 finish();
             }
         };

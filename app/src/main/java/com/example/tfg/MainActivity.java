@@ -55,17 +55,18 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     private TabLayoutAdapter tabLayoutAdapter;
     private FloatingActionButton fabDial;
 
-    // For updating the call log tab if the user has done a call from DetailContactActivity or DialNumberActivity
+    // For updating the call log tab if the user has done a call from DialNumberActivity
     private ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
+
                 if(result.getResultCode() == UPDATE_CALL_LOG){
 
                     myContentResolver.updateCalls(callModelList);
                     CallLogListFragment fragment =  tabLayoutAdapter.getCallLogListFragment();
 
                     if(fragment != null) {
-                        fragment.update();
+                        fragment.update(1);
                     }
                 }
 
@@ -136,12 +137,14 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
-                // Call log tab updating (for calls made from the fav tab)
+                // Call log tab updating
                 if(tab.getPosition() == 2){
 
+                    int newCalls = myContentResolver.updateCalls(callModelList);
+
                     // If something has changed and the fragment is not null
-                    if(myContentResolver.updateCalls(callModelList) && tabLayoutAdapter.getCallLogListFragment() != null){
-                        tabLayoutAdapter.getCallLogListFragment().update();
+                    if(newCalls > 0 && tabLayoutAdapter.getCallLogListFragment() != null){
+                        tabLayoutAdapter.getCallLogListFragment().update(newCalls);
                     }
                 }
             }
@@ -159,6 +162,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         fabDial.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, DialNumberActivity.class);
             activityResultLauncher.launch(intent);
+            //startActivity(new Intent(MainActivity.this, DialNumberActivity.class));
 
         });
 
@@ -166,8 +170,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
     @Override
     public void selectedContact(ContactModel contactModel) {
-        Intent intent = new Intent(MainActivity.this, DetailContactActivity.class).putExtra("contact", contactModel);
-        activityResultLauncher.launch(intent);
+        startActivity(new Intent(MainActivity.this, DetailContactActivity.class).putExtra("contact", contactModel));
     }
 
     @Override
@@ -177,8 +180,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
     @Override
     public void selectedFavContact(@NonNull ContactModel contactModel) {
-        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contactModel.getPhone()));
-        activityResultLauncher.launch(intent);
+        startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contactModel.getPhone())));
 
     }
 
