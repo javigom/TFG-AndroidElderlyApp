@@ -117,8 +117,12 @@ public class MyContentResolver {
     /**
      * Load the last call log and stores it in the first position of the list
      * @param callModelList
+     * @return true if an element has been added
      */
-    public void updateCalls(List<CallModel> callModelList){
+    public boolean updateCalls(List<CallModel> callModelList){
+
+        int numCalls = callModelList.size();
+
         // Order by date
         String sortOrder = CallLog.Calls.DATE + " DESC";
 
@@ -126,8 +130,17 @@ public class MyContentResolver {
         Cursor cursor = contentResolver.query(CallLog.Calls.CONTENT_URI, null, null, null, sortOrder);
 
         if(cursor != null && cursor.moveToNext()){
-            callModelList.add(0, recoverCallModel(cursor));
+
+            CallModel call = recoverCallModel(cursor);
+
+            // If the call is not in the list yet
+            if(!callModelList.get(0).getDate().equals(call.getDate())){
+                callModelList.add(0, call);
+            }
+
         }
+
+        return numCalls != callModelList.size();
 
     }
 

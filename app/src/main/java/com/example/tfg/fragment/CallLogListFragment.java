@@ -51,7 +51,8 @@ public class CallLogListFragment extends Fragment {
     }
 
     public void update(){
-        this.callLogListAdapter.notifyDataSetChanged();
+        callLogListAdapter.notifyItemInserted(0);
+        recyclerView.scrollToPosition(0);
     }
 
 }

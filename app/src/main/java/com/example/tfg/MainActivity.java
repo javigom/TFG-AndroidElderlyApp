@@ -6,6 +6,9 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -16,6 +19,7 @@ import com.example.tfg.adapter.CallLogListAdapter;
 import com.example.tfg.adapter.ContactListAdapter;
 import com.example.tfg.adapter.FavContactListAdapter;
 import com.example.tfg.adapter.TabLayoutAdapter;
+import com.example.tfg.fragment.CallLogListFragment;
 import com.example.tfg.model.CallModel;
 import com.example.tfg.model.ContactModel;
 import com.example.tfg.model.MyContentResolver;
@@ -51,6 +55,23 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     private TabLayoutAdapter tabLayoutAdapter;
     private FloatingActionButton fabDial;
 
+    // For updating the call log tab if the user has done a call from DetailContactActivity or DialNumberActivity
+    private ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if(result.getResultCode() == UPDATE_CALL_LOG){
+
+                    myContentResolver.updateCalls(callModelList);
+                    CallLogListFragment fragment =  tabLayoutAdapter.getCallLogListFragment();
+
+                    if(fragment != null) {
+                        fragment.update();
+                    }
+                }
+
+            }
+    );
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +80,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         initPermissions();
         initData();
         initView();
-
     }
 
     // ARREGLAR -> SOLICITAR PERMISOS NECESARIOS EN CADA FUNCIONALIDAD
@@ -115,6 +135,15 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
+
+                // Call log tab updating (for calls made from the fav tab)
+                if(tab.getPosition() == 2){
+
+                    // If something has changed and the fragment is not null
+                    if(myContentResolver.updateCalls(callModelList) && tabLayoutAdapter.getCallLogListFragment() != null){
+                        tabLayoutAdapter.getCallLogListFragment().update();
+                    }
+                }
             }
         });
 
@@ -129,15 +158,16 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
         fabDial.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, DialNumberActivity.class);
+            activityResultLauncher.launch(intent);
 
-            // Deprecated, cambiar
-            startActivityForResult(intent, UPDATE_CALL_LOG);
         });
+
     }
 
     @Override
     public void selectedContact(ContactModel contactModel) {
-        startActivity(new Intent(MainActivity.this, DetailContactActivity.class).putExtra("contact", contactModel));
+        Intent intent = new Intent(MainActivity.this, DetailContactActivity.class).putExtra("contact", contactModel);
+        activityResultLauncher.launch(intent);
     }
 
     @Override
@@ -146,16 +176,10 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     }
 
     @Override
-    public void selectedFavContact(ContactModel contactModel) {
-        startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contactModel.getPhone())));
+    public void selectedFavContact(@NonNull ContactModel contactModel) {
+        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contactModel.getPhone()));
+        activityResultLauncher.launch(intent);
+
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == UPDATE_CALL_LOG && resultCode == DialNumberActivity.RESULT_OK){
-            myContentResolver.updateCalls(callModelList);
-            tabLayoutAdapter.getCallLogListFragment().update();
-        }
-    }
 }
