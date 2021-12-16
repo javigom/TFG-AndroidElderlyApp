@@ -1,7 +1,0 @@
-<resources>
-    <string name="app_name">TFG</string>
-
-    <string name="menu_llamadas">Llamadas</string>
-    <string name="menu_favoritos">Favoritos</string>
-    <string name="menu_agenda">Agenda</string>
-</resources>

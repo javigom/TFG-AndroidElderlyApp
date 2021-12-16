@@ -7,4 +7,5 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "TFG"
-include ':app'
+include ':call'
+include ':launcher'
