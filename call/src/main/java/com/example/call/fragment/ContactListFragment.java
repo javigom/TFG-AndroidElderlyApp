@@ -20,6 +20,7 @@ public class ContactListFragment extends Fragment {
 
     private final List<ContactModel> contactModelList;
     private final ContactListAdapter.SelectedContact selectedContact;
+    private ContactListAdapter contactListAdapter;
 
     public ContactListFragment(List<ContactModel> contactModelList, ContactListAdapter.SelectedContact selectedContact) {
         this.contactModelList = contactModelList;
@@ -37,10 +38,14 @@ public class ContactListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_contact_list, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.rvContactsFCL);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        ContactListAdapter contactListAdapter = new ContactListAdapter(this.contactModelList, this.selectedContact);
+        contactListAdapter = new ContactListAdapter(this.contactModelList, this.selectedContact);
         recyclerView.setAdapter(contactListAdapter);
 
         return view;
+    }
+
+    public void update(int index){
+        contactListAdapter.notifyItemChanged(index);
     }
 
 }

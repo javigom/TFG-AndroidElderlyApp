@@ -25,6 +25,7 @@ public class EditContactFragment extends Fragment {
     private EditText etName, etNumber;
     private Button bSave;
     private View view;
+    private int isStarred;
 
     public EditContactFragment() {
         // Required empty public constructor
@@ -50,9 +51,11 @@ public class EditContactFragment extends Fragment {
 
         if(contactModel.getIsStarred() == 1) {
             ibFav.setImageDrawable(getContext().getDrawable(R.drawable.ic_star_enabled));
+            isStarred = 1;
         }
         else{
             ibFav.setImageDrawable(getContext().getDrawable(R.drawable.ic_star_disabled));
+            isStarred = 0;
         }
 
         if(contactModel.getPhoto() != null){
@@ -62,10 +65,30 @@ public class EditContactFragment extends Fragment {
         etName.setText(contactModel.getName());
         etNumber.setText(contactModel.getPhone());
 
+        ibFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isStarred == 1) {
+                    ibFav.setImageDrawable(getContext().getDrawable(R.drawable.ic_star_disabled));
+                    isStarred = 0;
+                }
+                else {
+                    ibFav.setImageDrawable(getContext().getDrawable(R.drawable.ic_star_enabled));
+                    isStarred = 1;
+                }
+            }
+        });
+
         bSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try{
+                    String newName = etName.getText().toString();
+                    String newPhone = etNumber.getText().toString();
+                    contactModel.setName(newName);
+                    contactModel.setPhone(newPhone);
+                    contactModel.setIsStarred(isStarred);
+                    Toast.makeText(getContext(), "Contacto guardado", Toast.LENGTH_LONG).show();
                     ChangeFragment changeFragment = (ChangeFragment) getActivity();
                     changeFragment.change(1);
 

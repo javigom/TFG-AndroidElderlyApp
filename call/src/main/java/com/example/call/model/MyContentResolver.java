@@ -1,6 +1,7 @@
 package com.example.call.model;
 
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
 import android.provider.CallLog;
@@ -190,6 +191,10 @@ public class MyContentResolver {
         // Call to storage
         return new CallModel(PhoneNumberUtils.formatNumber(phone.replace("+34", ""), "ES"), date, duration, type);
 
+    }
+
+    public void editContact(ContactModel contactModel){
+        //Modificar contactos
     }
 
 }

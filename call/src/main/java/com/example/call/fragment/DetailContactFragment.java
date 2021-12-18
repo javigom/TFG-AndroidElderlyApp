@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ import com.example.call.model.ContactModel;
 public class DetailContactFragment extends Fragment {
 
     private ContactModel contactModel;
+    private ImageButton ibFav;
     private TextView tvName, tvPhone;
     private ImageView ivPhoto;
     private Button bCall, bEdit;
@@ -51,13 +53,9 @@ public class DetailContactFragment extends Fragment {
         ivPhoto = view.findViewById(R.id.ivPhotoFDC);
         bCall = view.findViewById(R.id.bCallFDC);
         bEdit = view.findViewById(R.id.bEditFDC);
+        ibFav = view.findViewById(R.id.ibFavFEC);
 
-        tvName.setText(contactModel.getName());
-        tvPhone.setText(contactModel.getPhone());
-
-        if(contactModel.getPhoto() != null){
-            ivPhoto.setImageURI(Uri.parse(contactModel.getPhoto()));
-        }
+        updateView();
 
         bCall.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contactModel.getPhone()))));
         bEdit.setOnClickListener(v -> {
@@ -75,5 +73,21 @@ public class DetailContactFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public void updateView(){
+        tvName.setText(contactModel.getName());
+        tvPhone.setText(contactModel.getPhone());
+
+        if(contactModel.getPhoto() != null){
+            ivPhoto.setImageURI(Uri.parse(contactModel.getPhoto()));
+        }
+
+        if(contactModel.getIsStarred() == 1) {
+            ibFav.setImageDrawable(getContext().getDrawable(R.drawable.ic_star_enabled));
+        }
+        else{
+            ibFav.setImageDrawable(getContext().getDrawable(R.drawable.ic_star_disabled));
+        }
     }
 }

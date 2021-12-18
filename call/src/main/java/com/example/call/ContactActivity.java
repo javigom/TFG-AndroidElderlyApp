@@ -22,6 +22,9 @@ public class ContactActivity extends AppCompatActivity implements ChangeFragment
     private EditContactFragment editContactFragment;
     private FragmentManager fragmentManager;
     private int actualFragment;
+    private ContactModel contactModel;
+
+    private static final int UPDATE_CONTACT = 201;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,9 @@ public class ContactActivity extends AppCompatActivity implements ChangeFragment
             public void handleOnBackPressed() {
 
                 if(actualFragment == 0){
+                    Intent intent = new Intent(ContactActivity.this, MainActivity.class);
+                    intent.putExtra("contact", contactModel);
+                    setResult(UPDATE_CONTACT, intent);
                     finish();
                 }
 
@@ -57,7 +63,7 @@ public class ContactActivity extends AppCompatActivity implements ChangeFragment
         Intent intent = getIntent();
 
         if(intent.getExtras() != null){
-            ContactModel contactModel = (ContactModel) intent.getSerializableExtra("contact");
+            contactModel = (ContactModel) intent.getSerializableExtra("contact");
             detailContactFragment = new DetailContactFragment(contactModel);
             editContactFragment = new EditContactFragment(contactModel);
 
@@ -96,6 +102,7 @@ public class ContactActivity extends AppCompatActivity implements ChangeFragment
         else if(code == 1){
             transaction.show(detailContactFragment);
             transaction.hide(editContactFragment);
+            detailContactFragment.updateView();
             actualFragment = 0;
         }
 

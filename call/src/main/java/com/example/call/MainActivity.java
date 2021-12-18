@@ -6,6 +6,8 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -20,6 +22,8 @@ import com.example.call.adapter.ContactListAdapter;
 import com.example.call.adapter.FavContactListAdapter;
 import com.example.call.adapter.TabLayoutAdapter;
 import com.example.call.fragment.CallLogListFragment;
+import com.example.call.fragment.DetailContactFragment;
+import com.example.call.fragment.EditContactFragment;
 import com.example.call.model.CallModel;
 import com.example.call.model.ContactModel;
 import com.example.call.model.MyContentResolver;
@@ -32,7 +36,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback,
-        ContactListAdapter.SelectedContact, CallLogListAdapter.SelectedCall, FavContactListAdapter.SelectedFavContact {
+        ContactListAdapter.SelectedContact, CallLogListAdapter.SelectedCall, FavContactListAdapter.SelectedFavContact, UpdateContact {
 
     // Permission codes
     private static final int READ_CONTACTS = 100;
@@ -41,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
     // Update codes
     private static final int UPDATE_CALL_LOG = 200;
+    private static final int UPDATE_CONTACT = 201;
 
     // Model
     private MyContentResolver myContentResolver;
@@ -60,16 +65,37 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
 
-                if(result.getResultCode() == UPDATE_CALL_LOG){
+                if (result.getResultCode() == UPDATE_CALL_LOG) {
 
                     myContentResolver.updateCalls(callModelList);
-                    CallLogListFragment fragment =  tabLayoutAdapter.getCallLogListFragment();
+                    CallLogListFragment fragment = tabLayoutAdapter.getCallLogListFragment();
 
-                    if(fragment != null) {
+                    if (fragment != null) {
                         fragment.update(1);
                     }
-                }
+                } else if (result.getResultCode() == UPDATE_CONTACT) {
 
+                    if (result.getData() != null) {
+                        ContactModel newContact = (ContactModel) result.getData().getSerializableExtra("contact");
+
+                        for (int i = 0; i < contactModelList.size(); i++) {
+                            ContactModel c = contactModelList.get(i);
+
+                            if (c.getId() == newContact.getId()) {
+                                c.setName(newContact.getName());
+                                c.setPhone(newContact.getPhone());
+                                c.setIsStarred(newContact.getIsStarred());
+                                c.setPhoto(newContact.getPhoto());
+                                tabLayoutAdapter.getContactListFragment().update(i);
+                                myContentResolver.editContact(c);
+
+                            }
+                        }
+
+                    }
+
+
+                }
             }
     );
 
@@ -170,7 +196,9 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
     @Override
     public void selectedContact(ContactModel contactModel) {
-        startActivity(new Intent(MainActivity.this, ContactActivity.class).putExtra("contact", contactModel));
+        Intent intent = new Intent(MainActivity.this, ContactActivity.class);
+        intent.putExtra("contact", contactModel);
+        activityResultLauncher.launch(intent);
     }
 
     @Override
@@ -181,7 +209,10 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     @Override
     public void selectedFavContact(@NonNull ContactModel contactModel) {
         startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contactModel.getPhone())));
-
     }
 
+    @Override
+    public void updateContact(ContactModel contactModel) {
+
+    }
 }
