@@ -6,8 +6,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -22,8 +20,6 @@ import com.example.call.adapter.ContactListAdapter;
 import com.example.call.adapter.FavContactListAdapter;
 import com.example.call.adapter.TabLayoutAdapter;
 import com.example.call.fragment.CallLogListFragment;
-import com.example.call.fragment.DetailContactFragment;
-import com.example.call.fragment.EditContactFragment;
 import com.example.call.model.CallModel;
 import com.example.call.model.ContactModel;
 import com.example.call.model.MyContentResolver;
@@ -46,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     // Update codes
     private static final int UPDATE_CALL_LOG = 200;
     private static final int UPDATE_CONTACT = 201;
+    private static final int DELETE_CONTACT = 202;
 
     // Model
     private MyContentResolver myContentResolver;
@@ -73,7 +70,9 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                     if (fragment != null) {
                         fragment.update(1);
                     }
-                } else if (result.getResultCode() == UPDATE_CONTACT) {
+                }
+
+                else if (result.getResultCode() == UPDATE_CONTACT) {
 
                     if (result.getData() != null) {
                         ContactModel newContact = (ContactModel) result.getData().getSerializableExtra("contact");
@@ -84,16 +83,51 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                             if (c.getId() == newContact.getId()) {
                                 c.setName(newContact.getName());
                                 c.setPhone(newContact.getPhone());
-                                c.setIsStarred(newContact.getIsStarred());
+
+                                if(c.getIsStarred() != newContact.getIsStarred()){
+                                    c.setIsStarred(newContact.getIsStarred());
+
+                                    if(newContact.getIsStarred() == 0) {
+                                        favContactModelList.remove(c);
+                                    }
+                                    else {
+                                        favContactModelList.add(c);
+                                    }
+
+                                    tabLayoutAdapter.getFavContactListFragment().update();
+
+                                }
+
                                 c.setPhoto(newContact.getPhoto());
-                                tabLayoutAdapter.getContactListFragment().update(i);
+                                tabLayoutAdapter.getContactListFragment().updateModify(i);
                                 myContentResolver.editContact(c);
+
 
                             }
                         }
 
                     }
 
+
+                }
+
+                else if(result.getResultCode() == DELETE_CONTACT){
+                    if (result.getData() != null) {
+
+                        ContactModel newContact = (ContactModel) result.getData().getSerializableExtra("contact");
+
+                        for (int i = 0; i < contactModelList.size(); i++) {
+                            ContactModel c = contactModelList.get(i);
+
+                            if (c.getId() == newContact.getId()) {
+                                contactModelList.remove(c);
+                                favContactModelList.remove(c);
+                                tabLayoutAdapter.getFavContactListFragment().update();
+                                tabLayoutAdapter.getContactListFragment().updateDelete();
+                            }
+                        }
+
+                    }
 
                 }
             }

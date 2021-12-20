@@ -27,6 +27,7 @@ public class TabLayoutAdapter extends FragmentStateAdapter {
 
     private CallLogListFragment callLogListFragment;
     private ContactListFragment contactListFragment;
+    private FavContactListFragment favContactListFragment;
 
     public TabLayoutAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle, List<ContactModel> contactModelList,
             List<ContactModel> favContactList, List<CallModel> callModelList, Map<String, ContactModel> phoneContactMap,
@@ -49,7 +50,8 @@ public class TabLayoutAdapter extends FragmentStateAdapter {
 
         switch (position) {
             case 0:
-                return new FavContactListFragment(favContactList, selectedFavContact);
+                this.favContactListFragment = new FavContactListFragment(favContactList, selectedFavContact);
+                return favContactListFragment;
             case 1:
                 this.contactListFragment = new ContactListFragment(contactModelList, selectedContact);
                 return contactListFragment;
@@ -73,6 +75,10 @@ public class TabLayoutAdapter extends FragmentStateAdapter {
 
     public ContactListFragment getContactListFragment() {
         return this.contactListFragment;
+    }
+
+    public FavContactListFragment getFavContactListFragment() {
+        return this.favContactListFragment;
     }
 
 }

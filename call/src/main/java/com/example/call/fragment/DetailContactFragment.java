@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.call.ContactActivity;
 import com.example.call.R;
 import com.example.call.model.ContactModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class DetailContactFragment extends Fragment {
 
@@ -26,7 +27,8 @@ public class DetailContactFragment extends Fragment {
     private ImageButton ibFav;
     private TextView tvName, tvPhone;
     private ImageView ivPhoto;
-    private Button bCall, bEdit;
+    private Button bCall;
+    private FloatingActionButton fbEdit;
     private View view;
     private ContactActivity detailContactActivity;
 
@@ -52,13 +54,13 @@ public class DetailContactFragment extends Fragment {
         tvPhone = view.findViewById(R.id.tvPhoneFDC);
         ivPhoto = view.findViewById(R.id.ivPhotoFDC);
         bCall = view.findViewById(R.id.bCallFDC);
-        bEdit = view.findViewById(R.id.bEditFDC);
+        fbEdit = view.findViewById(R.id.fbEditFDC);
         ibFav = view.findViewById(R.id.ibFavFEC);
 
         updateView();
 
         bCall.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contactModel.getPhone()))));
-        bEdit.setOnClickListener(v -> {
+        fbEdit.setOnClickListener(v -> {
 
             try{
                 ChangeFragment changeFragment = (ChangeFragment) getActivity();

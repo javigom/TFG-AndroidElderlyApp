@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_margin="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,8 +17,8 @@
 
         <ImageView
             android:id="@+id/ivPhotoFDC"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
             android:adjustViewBounds="true"
             android:background="@color/blue_primary_variant"
             android:scaleType="centerCrop"
@@ -28,8 +28,6 @@
             android:id="@+id/tvNameFDC"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
             android:text="Nombre"
             android:textSize="48sp"
             android:textStyle="bold" />
@@ -38,8 +36,6 @@
             android:id="@+id/tvPhoneFDC"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
             android:text="Teléfono"
             android:textSize="24sp" />
 
@@ -47,23 +43,10 @@
             android:id="@+id/bCallFDC"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
             android:backgroundTint="@color/green_call"
             android:text="Llamar"
             android:textSize="24sp"
             app:icon="@drawable/ic_call" />
-
-        <Button
-            android:id="@+id/bEditFDC"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:backgroundTint="@color/orange_edit"
-            android:text="Editar"
-            android:textSize="24sp"
-            app:icon="@android:drawable/ic_menu_edit" />
 
     </LinearLayout>
 
@@ -71,11 +54,24 @@
         android:id="@+id/ibFavFEC"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginEnd="1dp"
+        android:layout_alignParentRight="true"
         android:background="#00ffffff"
         android:hapticFeedbackEnabled="false"
         android:src="@drawable/ic_star_disabled"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fbEditFDC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        app:backgroundTint="@color/orange_edit"
+        app:fabCustomSize="80dp"
+        app:fabSize="auto"
+        app:maxImageSize="40dp"
+        app:srcCompat="@drawable/ic_edit" />
+
+</RelativeLayout>

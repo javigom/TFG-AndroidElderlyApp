@@ -25,6 +25,7 @@ public class ContactActivity extends AppCompatActivity implements ChangeFragment
     private ContactModel contactModel;
 
     private static final int UPDATE_CONTACT = 201;
+    private static final int DELETE_CONTACT = 202;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +105,13 @@ public class ContactActivity extends AppCompatActivity implements ChangeFragment
             transaction.hide(editContactFragment);
             detailContactFragment.updateView();
             actualFragment = 0;
+        }
+
+        else if(code == 2) {
+            Intent intent = new Intent(ContactActivity.this, MainActivity.class);
+            intent.putExtra("contact", contactModel);
+            setResult(DELETE_CONTACT, intent);
+            finish();
         }
 
         transaction.commit();

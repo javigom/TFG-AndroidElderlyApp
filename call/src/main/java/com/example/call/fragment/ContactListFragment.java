@@ -44,8 +44,12 @@ public class ContactListFragment extends Fragment {
         return view;
     }
 
-    public void update(int index){
+    public void updateModify(int index){
         contactListAdapter.notifyItemChanged(index);
+    }
+
+    public void updateDelete(){
+        contactListAdapter.notifyDataSetChanged();
     }
 
 }

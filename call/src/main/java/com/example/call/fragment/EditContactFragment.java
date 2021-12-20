@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.call.R;
 import com.example.call.model.ContactModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class EditContactFragment extends Fragment {
 
@@ -23,7 +24,8 @@ public class EditContactFragment extends Fragment {
     private ImageButton ibFav;
     private ImageView ivPhoto;
     private EditText etName, etNumber;
-    private Button bSave;
+    private FloatingActionButton fbSave;
+    private Button bDelete;
     private View view;
     private int isStarred;
 
@@ -47,7 +49,8 @@ public class EditContactFragment extends Fragment {
         ivPhoto = view.findViewById(R.id.ivPhotoFEC);
         etName = view.findViewById(R.id.etNameFEC);
         etNumber = view.findViewById(R.id.etNumberFEC);
-        bSave = view.findViewById(R.id.bSaveFEC);
+        fbSave = view.findViewById(R.id.fbEditFDC);
+        bDelete = view.findViewById(R.id.bDeleteFEC);
 
         if(contactModel.getIsStarred() == 1) {
             ibFav.setImageDrawable(getContext().getDrawable(R.drawable.ic_star_enabled));
@@ -79,7 +82,7 @@ public class EditContactFragment extends Fragment {
             }
         });
 
-        bSave.setOnClickListener(new View.OnClickListener() {
+        fbSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try{
@@ -97,6 +100,15 @@ public class EditContactFragment extends Fragment {
                     e.printStackTrace();
                     Toast.makeText(getContext(), "An error occurred...", Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        bDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "Contacto eliminado", Toast.LENGTH_LONG).show();
+                ChangeFragment changeFragment = (ChangeFragment) getActivity();
+                changeFragment.change(2);
             }
         });
 

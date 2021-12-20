@@ -1,24 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp">
-
-    <ImageButton
-        android:id="@+id/ibFavFEC"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginEnd="1dp"
-        android:background="#00ffffff"
-        android:hapticFeedbackEnabled="false"
-        android:src="@drawable/ic_star_disabled"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:layout_margin="20dp">
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
@@ -69,13 +58,41 @@
             android:textSize="34dp" />
 
         <Button
-            android:id="@+id/bSaveFEC"
+            android:id="@+id/bDeleteFEC"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="@color/green_call"
-            android:text="Guardar"
-            android:textSize="24sp" />
+            android:backgroundTint="@color/red_delete"
+            android:text="Eliminar"
+            android:textSize="24sp"
+            app:icon="@drawable/ic_delete" />
+
+
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageButton
+        android:id="@+id/ibFavFEC"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentRight="true"
+        android:background="#00ffffff"
+        android:hapticFeedbackEnabled="false"
+        android:src="@drawable/ic_star_disabled"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fbEditFDC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        app:backgroundTint="@color/orange_edit"
+        app:fabCustomSize="80dp"
+        app:fabSize="auto"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="40dp"
+        app:srcCompat="@drawable/ic_check" />
+
+</RelativeLayout>
