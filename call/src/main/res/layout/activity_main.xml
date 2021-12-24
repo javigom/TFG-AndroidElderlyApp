@@ -54,7 +54,7 @@
         app:backgroundTint="@color/blue_primary_variant"
         app:fabCustomSize="80dp"
         app:fabSize="auto"
-        app:maxImageSize="40dp"
+        app:maxImageSize="50dp"
         app:srcCompat="@drawable/ic_dialpad" />
 
 </RelativeLayout>

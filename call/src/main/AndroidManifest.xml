@@ -15,16 +15,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TFG">
         <activity
-            android:name="com.example.call.DialNumberActivity"
+            android:name=".AddContactActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.call.ContactActivity"
+            android:name=".DialNumberActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.call.MainActivity"
+            android:name=".ContactActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
