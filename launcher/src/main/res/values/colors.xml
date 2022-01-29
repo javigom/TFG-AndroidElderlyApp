@@ -7,4 +7,16 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="call">#17DC00</color>
+    <color name="sms">#FFA200</color>
+
+    <color name="camera">#D63B3B</color>
+    <color name="gallery">#00FFB7</color>
+
+    <color name="videocall">#DA008A</color>
+    <color name="telegram">#005ED1</color>
+
+    <color name="others">#6F00B5</color>
+
 </resources>

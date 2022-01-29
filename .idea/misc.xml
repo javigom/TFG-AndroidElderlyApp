@@ -11,6 +11,7 @@
         <entry key="..\:/Users/Javier/Documents/GitHub/TFG/app/src/main/res/layout/item_call.xml" value="0.17239583333333333" />
         <entry key="..\:/Users/Javier/Documents/GitHub/TFG/app/src/main/res/layout/item_fav_contact.xml" value="0.3451086956521739" />
         <entry key="..\:/Users/Javier/Documents/GitHub/TFG/call/src/main/res/drawable/button_star.xml" value="0.3728205128205128" />
+        <entry key="..\:/Users/Javier/Documents/GitHub/TFG/call/src/main/res/drawable/ic_call.xml" value="0.2953703703703704" />
         <entry key="..\:/Users/Javier/Documents/GitHub/TFG/call/src/main/res/drawable/ic_check.xml" value="0.31296296296296294" />
         <entry key="..\:/Users/Javier/Documents/GitHub/TFG/call/src/main/res/drawable/ic_dialpad.xml" value="0.31296296296296294" />
         <entry key="..\:/Users/Javier/Documents/GitHub/TFG/call/src/main/res/drawable/ic_menu_star.xml" value="0.3728205128205128" />
@@ -24,9 +25,18 @@
         <entry key="..\:/Users/Javier/Documents/GitHub/TFG/call/src/main/res/layout/fragment_detail_contact.xml" value="0.33" />
         <entry key="..\:/Users/Javier/Documents/GitHub/TFG/call/src/main/res/layout/fragment_edit_contact.xml" value="0.33" />
         <entry key="..\:/Users/Javier/Documents/GitHub/TFG/call/src/main/res/layout/fragment_fav_contact_list.xml" value="0.35833333333333334" />
+        <entry key="..\:/Users/Javier/Documents/GitHub/TFG/call/src/main/res/layout/item_call.xml" value="0.21770833333333334" />
+        <entry key="..\:/Users/Javier/Documents/GitHub/TFG/call/src/main/res/layout/item_contact.xml" value="0.21770833333333334" />
         <entry key="..\:/Users/Javier/Documents/GitHub/TFG/call/src/main/res/layout/item_fav_contact.xml" value="0.31431159420289856" />
+        <entry key="..\:/Users/Javier/Documents/GitHub/TFG/launcher/src/main/res/drawable/ic_call.xml" value="0.2953703703703704" />
+        <entry key="..\:/Users/Javier/Documents/GitHub/TFG/launcher/src/main/res/drawable/ic_camera.xml" value="0.2604166666666667" />
+        <entry key="..\:/Users/Javier/Documents/GitHub/TFG/launcher/src/main/res/drawable/ic_gallery.xml" value="0.2604166666666667" />
+        <entry key="..\:/Users/Javier/Documents/GitHub/TFG/launcher/src/main/res/drawable/ic_launcher_background.xml" value="0.156" />
+        <entry key="..\:/Users/Javier/Documents/GitHub/TFG/launcher/src/main/res/drawable/ic_message.xml" value="0.156" />
+        <entry key="..\:/Users/Javier/Documents/GitHub/TFG/launcher/src/main/res/drawable/ic_telegram_background.xml" value="0.156" />
         <entry key="..\:/Users/Javier/Documents/GitHub/TFG/launcher/src/main/res/layout/activity_main.xml" value="0.3451086956521739" />
-        <entry key="..\:/Users/Javier/Documents/GitHub/TFG/launcher/src/main/res/layout/item_launcher.xml" value="0.3451086956521739" />
+        <entry key="..\:/Users/Javier/Documents/GitHub/TFG/launcher/src/main/res/layout/item_launcher.xml" value="0.5" />
+        <entry key="..\:/Users/Javier/Documents/GitHub/TFG/launcher/src/main/res/mipmap-anydpi-v26/ic_telegram.xml" value="0.156" />
       </map>
     </option>
   </component>
