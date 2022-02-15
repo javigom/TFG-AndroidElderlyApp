@@ -1,9 +1,16 @@
 package com.example.call.model;
 
+import static androidx.core.app.ActivityCompat.startActivityForResult;
+
+import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.content.OperationApplicationException;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
+import android.os.RemoteException;
 import android.provider.CallLog;
 import android.provider.ContactsContract;
 import android.telephony.PhoneNumberUtils;
@@ -11,6 +18,7 @@ import android.telephony.PhoneNumberUtils;
 import androidx.annotation.NonNull;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -195,6 +203,42 @@ public class MyContentResolver {
 
     public void editContact(ContactModel contactModel){
         //Modificar contactos
+
+        Intent intent = new Intent(ContactsContract.Intents.Insert.ACTION);
+        intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
+
+        intent.putExtra(ContactsContract.Intents.Insert.NAME, contactModel.getName())
+                .putExtra(ContactsContract.Intents.Insert.PHONE, contactModel.getPhone());
+
+    }
+
+    public void deleteContact(ContactModel contactModel) {
+
+        Cursor cursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+
+        if (cursor.getCount() > 0) {
+
+            while (cursor.moveToNext()) {
+
+                // ID
+                long id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+
+                if (contactModel.getId() == id) {
+                    String lookupKey = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY));
+                    Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_LOOKUP_URI, lookupKey);
+                    contentResolver.delete(uri, null, null);
+                    break;
+                }
+            }
+        }
+    }
+
+    public Intent addContact(ContactModel contactModel){
+        Intent intent = new Intent(ContactsContract.Intents.Insert. ACTION ) ;
+        intent.setType(ContactsContract.RawContacts. CONTENT_TYPE ) ;
+        intent.putExtra(ContactsContract.Intents.Insert. NAME , contactModel.getName())
+                .putExtra(ContactsContract.Intents.Insert. PHONE , contactModel.getPhone()) ;
+        return intent;
     }
 
 }

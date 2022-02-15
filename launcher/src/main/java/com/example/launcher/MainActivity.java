@@ -1,6 +1,7 @@
 package com.example.launcher;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -24,6 +25,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        System.out.println("===========================================");
+        List<PackageInfo> list = getPackageManager().getInstalledPackages(0);
+        for (int i = 0; i<list.size(); i++){
+            PackageInfo packageInfo = list.get(i);
+            System.out.println(i + " " + packageInfo.applicationInfo.loadLabel(getPackageManager()).toString()
+                    + " " + packageInfo.applicationInfo.packageName);
+
+        }
+        System.out.println("===========================================");
 
 
         recyclerView = findViewById(R.id.rvAppListAM);
@@ -34,13 +44,13 @@ public class MainActivity extends AppCompatActivity {
         appList.add(new AppModel("Llamar", "com.example.call", R.drawable.ic_call,
                 ResourcesCompat.getColor(getResources(), R.color.call, null)));
 
-        appList.add(new AppModel("SMS", null, R.drawable.ic_message,
+        appList.add(new AppModel("SMS", "com.android.messaging", R.drawable.ic_message,
                 ResourcesCompat.getColor(getResources(), R.color.sms, null)));
 
         appList.add(new AppModel("Cámara", "com.android.camera2", R.drawable.ic_camera,
                 ResourcesCompat.getColor(getResources(), R.color.camera, null)));
 
-        appList.add(new AppModel("Galería", null, R.drawable.ic_gallery,
+        appList.add(new AppModel("Galería", "com.android.gallery", R.drawable.ic_gallery,
                 ResourcesCompat.getColor(getResources(), R.color.gallery, null)));
 
         appList.add(new AppModel("Videollamada", null, R.drawable.ic_videocall,

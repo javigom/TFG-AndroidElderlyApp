@@ -47,8 +47,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
         //holder.button.setBackgroundColor(appList.get(position).getAppColor());
-        //holder.button.setBackgroundResource(R.color.black);
-        holder.button.setBackgroundColor(appList.get(position).getAppColor());
+        holder.imageView.setColorFilter(appList.get(position).getAppColor());
 
 
         holder.button.setOnClickListener(new View.OnClickListener() {

@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     private static final int READ_CONTACTS = 100;
     private static final int READ_CALL_LOG = 101;
     private static final int CALL_PHONE = 102;
+    private static final int WRITE_CONTACTS = 103;
 
     // Update codes
     private static final int UPDATE_CALL_LOG = 200;
@@ -109,10 +110,10 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
                     }
 
-
                 }
 
                 else if(result.getResultCode() == DELETE_CONTACT){
+
                     if (result.getData() != null) {
 
                         ContactModel newContact = (ContactModel) result.getData().getSerializableExtra("contact");
@@ -121,6 +122,9 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                             ContactModel c = contactModelList.get(i);
 
                             if (c.getId() == newContact.getId()) {
+
+                                myContentResolver.deleteContact(c);
+
                                 contactModelList.remove(c);
                                 favContactModelList.remove(c);
                                 tabLayoutAdapter.getFavContactListFragment().update();
@@ -156,6 +160,10 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
         if ((ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, 3);
+        }
+
+        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CONTACTS) != PackageManager.PERMISSION_GRANTED)) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_CONTACTS}, 4);
         }
     }
 

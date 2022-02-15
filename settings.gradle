@@ -9,4 +9,3 @@ dependencyResolutionManagement {
 rootProject.name = "TFG"
 include ':call'
 include ':launcher'
-include ':prueba'
