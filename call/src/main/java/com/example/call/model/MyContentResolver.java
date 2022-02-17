@@ -1,19 +1,16 @@
 package com.example.call.model;
 
-import static androidx.core.app.ActivityCompat.startActivityForResult;
-
 import android.content.ContentProviderOperation;
+import android.content.ContentProviderResult;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
-import android.os.RemoteException;
 import android.provider.CallLog;
 import android.provider.ContactsContract;
 import android.telephony.PhoneNumberUtils;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -89,10 +86,8 @@ public class MyContentResolver {
 
             // Sort the contact list (for special characters)
             ContactComparator comparator = new ContactComparator();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                contactModelList.sort(comparator);
-                favContactList.sort(comparator);
-            }
+            contactModelList.sort(comparator);
+            favContactList.sort(comparator);
 
         }
 
@@ -201,14 +196,47 @@ public class MyContentResolver {
 
     }
 
-    public void editContact(ContactModel contactModel){
-        //Modificar contactos
+    public void editContact(ContactModel contactModel, String phone){
 
-        Intent intent = new Intent(ContactsContract.Intents.Insert.ACTION);
-        intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
+        ArrayList<ContentProviderOperation> operations = new ArrayList<>();
 
-        intent.putExtra(ContactsContract.Intents.Insert.NAME, contactModel.getName())
-                .putExtra(ContactsContract.Intents.Insert.PHONE, contactModel.getPhone());
+        // Update name
+        String where = String.format("%s = '%s' AND %s = ?", ContactsContract.Data.MIMETYPE,
+                ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE, ContactsContract.Data.CONTACT_ID);
+
+        operations.add(ContentProviderOperation.newUpdate(ContactsContract.Data.CONTENT_URI)
+                .withSelection(where, new String[]{String.valueOf(contactModel.getId())})
+                .withValue(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME, contactModel.getName()).build());
+
+        // Update number
+        where = String.format("%s = '%s' AND %s = ?", ContactsContract.Data.MIMETYPE,
+                ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE, ContactsContract.Data.DATA1);
+
+        operations.add(ContentProviderOperation.newUpdate(ContactsContract.Data.CONTENT_URI)
+                .withSelection(where, new String[]{phone})
+                .withValue(ContactsContract.Data.DATA1, contactModel.getPhone())
+                .build());
+
+        // Update isStarred
+        if(contactModel.getIsStarred() == 1) {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(ContactsContract.Contacts.STARRED, 1);
+            contentResolver.update(ContactsContract.Contacts.CONTENT_URI,
+                    contentValues, ContactsContract.Contacts._ID + "=" + contactModel.getId(), null);
+        }
+        else if(contactModel.getIsStarred() == 0) {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(ContactsContract.Contacts.STARRED, 0);
+            contentResolver.update(ContactsContract.Contacts.CONTENT_URI,
+                    contentValues, ContactsContract.Contacts._ID + "=" + contactModel.getId(), null);
+        }
+
+        try {
+            contentResolver.applyBatch(ContactsContract.AUTHORITY, operations);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -233,12 +261,76 @@ public class MyContentResolver {
         }
     }
 
-    public Intent addContact(ContactModel contactModel){
-        Intent intent = new Intent(ContactsContract.Intents.Insert. ACTION ) ;
-        intent.setType(ContactsContract.RawContacts. CONTENT_TYPE ) ;
-        intent.putExtra(ContactsContract.Intents.Insert. NAME , contactModel.getName())
-                .putExtra(ContactsContract.Intents.Insert. PHONE , contactModel.getPhone()) ;
-        return intent;
+    public long addContact(ContactModel contactModel){
+
+        // Guardamos nombre, número y favorito
+        String name = contactModel.getName();
+        String phone = contactModel.getPhone();
+
+        // Añadimos el contacto
+        ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
+
+        ops.add(ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null).build());
+
+        ops.add(ContentProviderOperation
+                .newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, name).build());
+
+        ops.add(ContentProviderOperation
+                .newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, phone)
+                .withValue(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE).build());
+
+        /*
+        ops.add(ContentProviderOperation
+                .newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.STARRED)
+                .withValue(ContactsContract.CommonDataKinds.Phone.STARRED, isStarred).build());
+        */
+
+        try {
+            contentResolver.applyBatch(ContactsContract.AUTHORITY, ops);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Obtenemos el identificador
+        Cursor cursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI, null,
+                ContactsContract.Contacts.DISPLAY_NAME + " = ?", new String[]{String.valueOf(name)}, null);
+        long id = -1;
+
+        if (cursor.getCount() > 0) {
+
+            while (cursor.moveToNext()) {
+
+                String cname = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+
+                if(cname.equals(name)){
+                    Cursor cursorPhone = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+                            ContactsContract.CommonDataKinds.Phone.NUMBER + " = ?", new String[]{String.valueOf(phone)}, null);
+
+                    String cphone = "";
+                    if (cursorPhone != null && cursorPhone.moveToFirst()) {
+                        cphone = cursorPhone.getString(cursorPhone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        cursorPhone.close();
+                    }
+
+                    if (phone.equals(cphone)) {
+                        id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+                        break;
+                    }
+                }
+
+            }
+        }
+        return id;
     }
 
 }

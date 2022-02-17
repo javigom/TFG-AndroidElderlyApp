@@ -6,11 +6,30 @@
     android:layout_height="match_parent"
     tools:context=".view.MainActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvContactsFCL"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_contact" />
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/bAddFCL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@android:color/transparent"
+            android:text="Añadir un contacto"
+            android:textColor="#737373"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:icon="@drawable/ic_add_contact"
+            app:iconTint="#737373" />/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvContactsFCL"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_contact" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

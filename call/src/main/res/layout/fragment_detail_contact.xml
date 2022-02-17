@@ -15,14 +15,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
+        <androidx.constraintlayout.utils.widget.ImageFilterView
             android:id="@+id/ivPhotoFDC"
-            android:layout_width="220dp"
-            android:layout_height="220dp"
-            android:adjustViewBounds="true"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:background="@color/blue_primary_variant"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_default_contact_photo" />
+            android:src="@drawable/ic_default_contact_photo"
+            app:round="100dp" />
 
         <TextView
             android:id="@+id/tvNameFDC"

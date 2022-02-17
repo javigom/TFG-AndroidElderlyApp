@@ -35,7 +35,6 @@ public class ContactActivity extends AppCompatActivity implements ChangeFragment
 
         fragmentManager = getSupportFragmentManager();
 
-
         // ACTION BAR
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -49,7 +48,6 @@ public class ContactActivity extends AppCompatActivity implements ChangeFragment
                 if(actualFragment == 0){
                     Intent intent = new Intent(ContactActivity.this, MainActivity.class);
                     intent.putExtra("contact", contactModel);
-                    setResult(UPDATE_CONTACT, intent);
                     finish();
                 }
 
@@ -112,6 +110,13 @@ public class ContactActivity extends AppCompatActivity implements ChangeFragment
             Intent intent = new Intent(ContactActivity.this, MainActivity.class);
             intent.putExtra("contact", contactModel);
             setResult(DELETE_CONTACT, intent);
+            finish();
+        }
+
+        else if(code == 3) {
+            Intent intent = new Intent(ContactActivity.this, MainActivity.class);
+            intent.putExtra("contact", contactModel);
+            setResult(UPDATE_CONTACT, intent);
             finish();
         }
 

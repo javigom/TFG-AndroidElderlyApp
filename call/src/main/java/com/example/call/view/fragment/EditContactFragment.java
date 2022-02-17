@@ -91,9 +91,8 @@ public class EditContactFragment extends Fragment {
                     contactModel.setName(newName);
                     contactModel.setPhone(newPhone);
                     contactModel.setIsStarred(isStarred);
-                    Toast.makeText(getContext(), "Contacto guardado", Toast.LENGTH_LONG).show();
                     ChangeFragment changeFragment = (ChangeFragment) getActivity();
-                    changeFragment.change(1);
+                    changeFragment.change(3);
 
                 } catch (Exception e){
                     System.out.println("Something went wrong...");

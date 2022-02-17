@@ -1,9 +1,11 @@
 package com.example.call.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -12,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.call.model.ContactModel;
 import com.example.call.R;
+import com.example.call.view.DialNumberActivity;
+import com.example.call.view.MainActivity;
 import com.example.call.view.adapter.ContactListAdapter;
 
 import java.util.List;
@@ -22,9 +26,12 @@ public class ContactListFragment extends Fragment {
     private final ContactListAdapter.SelectedContact selectedContact;
     private ContactListAdapter contactListAdapter;
 
-    public ContactListFragment(List<ContactModel> contactModelList, ContactListAdapter.SelectedContact selectedContact) {
+    private MainActivity mainActivity;
+
+    public ContactListFragment(List<ContactModel> contactModelList, ContactListAdapter.SelectedContact selectedContact, MainActivity mainActivity) {
         this.contactModelList = contactModelList;
         this.selectedContact = selectedContact;
+        this.mainActivity = mainActivity;
     }
 
     @Override
@@ -40,6 +47,14 @@ public class ContactListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         contactListAdapter = new ContactListAdapter(this.contactModelList, this.selectedContact);
         recyclerView.setAdapter(contactListAdapter);
+
+        Button button = view.findViewById(R.id.bAddFCL);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainActivity.addNewContact();
+            }
+        });
 
         return view;
     }

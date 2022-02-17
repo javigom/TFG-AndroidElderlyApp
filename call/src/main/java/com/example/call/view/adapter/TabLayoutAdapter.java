@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.example.call.view.MainActivity;
 import com.example.call.view.fragment.CallLogListFragment;
 import com.example.call.view.fragment.ContactListFragment;
 import com.example.call.view.fragment.FavContactListFragment;
@@ -25,6 +26,8 @@ public class TabLayoutAdapter extends FragmentStateAdapter {
     private CallLogListAdapter.SelectedCall selectedCall;
     private FavContactListAdapter.SelectedFavContact selectedFavContact;
 
+    private MainActivity mainActivity;
+
     private CallLogListFragment callLogListFragment;
     private ContactListFragment contactListFragment;
     private FavContactListFragment favContactListFragment;
@@ -32,7 +35,7 @@ public class TabLayoutAdapter extends FragmentStateAdapter {
     public TabLayoutAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle, List<ContactModel> contactModelList,
             List<ContactModel> favContactList, List<CallModel> callModelList, Map<String, ContactModel> phoneContactMap,
                             ContactListAdapter.SelectedContact selectedContact, CallLogListAdapter.SelectedCall selectedCall,
-                            FavContactListAdapter.SelectedFavContact selectedFavContact) {
+                            FavContactListAdapter.SelectedFavContact selectedFavContact, MainActivity mainActivity) {
 
         super(fragmentManager, lifecycle);
         this.contactModelList = contactModelList;
@@ -42,6 +45,7 @@ public class TabLayoutAdapter extends FragmentStateAdapter {
         this.selectedContact = selectedContact;
         this.selectedCall = selectedCall;
         this.selectedFavContact = selectedFavContact;
+        this.mainActivity = mainActivity;
         notifyDataSetChanged();
     }
 
@@ -53,7 +57,7 @@ public class TabLayoutAdapter extends FragmentStateAdapter {
                 this.favContactListFragment = new FavContactListFragment(favContactList, selectedFavContact);
                 return favContactListFragment;
             case 1:
-                this.contactListFragment = new ContactListFragment(contactModelList, selectedContact);
+                this.contactListFragment = new ContactListFragment(contactModelList, selectedContact, mainActivity);
                 return contactListFragment;
             case 2:
                 this.callLogListFragment = new CallLogListFragment(callModelList, phoneContactMap, selectedCall);

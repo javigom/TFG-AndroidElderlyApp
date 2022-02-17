@@ -4,11 +4,15 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -16,6 +20,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.call.R;
+import com.example.call.model.ContactComparator;
 import com.example.call.view.adapter.CallLogListAdapter;
 import com.example.call.view.adapter.ContactListAdapter;
 import com.example.call.view.adapter.FavContactListAdapter;
@@ -45,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     private static final int UPDATE_CALL_LOG = 200;
     private static final int UPDATE_CONTACT = 201;
     private static final int DELETE_CONTACT = 202;
+    private static final int ADD_CONTACT = 203;
 
     // Model
     private MyContentResolver myContentResolver;
@@ -64,79 +70,127 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
 
-                if (result.getResultCode() == UPDATE_CALL_LOG) {
+                if (result.getResultCode() == UPDATE_CALL_LOG)
+                    updateCallLog();
 
-                    myContentResolver.updateCalls(callModelList);
-                    CallLogListFragment fragment = tabLayoutAdapter.getCallLogListFragment();
+                else if (result.getResultCode() == UPDATE_CONTACT)
+                    updateContact(result);
 
-                    if (fragment != null) {
-                        fragment.update(1);
-                    }
-                }
+                else if(result.getResultCode() == DELETE_CONTACT)
+                    deleteContact(result);
 
-                else if (result.getResultCode() == UPDATE_CONTACT) {
+                else if(result.getResultCode() == ADD_CONTACT)
+                    addContact(result);
+            }
+    );
 
-                    if (result.getData() != null) {
-                        ContactModel newContact = (ContactModel) result.getData().getSerializableExtra("contact");
+    private void updateCallLog(){
+        myContentResolver.updateCalls(callModelList);
+        CallLogListFragment fragment = tabLayoutAdapter.getCallLogListFragment();
 
-                        for (int i = 0; i < contactModelList.size(); i++) {
-                            ContactModel c = contactModelList.get(i);
+        if (fragment != null) {
+            fragment.update(1);
+        }
+    }
 
-                            if (c.getId() == newContact.getId()) {
-                                c.setName(newContact.getName());
-                                c.setPhone(newContact.getPhone());
+    private void updateContact(ActivityResult result){
+        if (result.getData() != null) {
+            ContactModel newContact = (ContactModel) result.getData().getSerializableExtra("contact");
 
-                                if(c.getIsStarred() != newContact.getIsStarred()){
-                                    c.setIsStarred(newContact.getIsStarred());
+            for (int i = 0; i < contactModelList.size(); i++) {
+                ContactModel c = contactModelList.get(i);
 
-                                    if(newContact.getIsStarred() == 0) {
-                                        favContactModelList.remove(c);
-                                    }
-                                    else {
-                                        favContactModelList.add(c);
-                                    }
+                if (c.getId() == newContact.getId()) {
 
-                                    tabLayoutAdapter.getFavContactListFragment().update();
+                    String oldPhone = c.getPhone(), oldName = c.getName();
 
-                                }
+                    c.setName(newContact.getName());
+                    c.setPhone(newContact.getPhone());
 
-                                c.setPhoto(newContact.getPhoto());
-                                tabLayoutAdapter.getContactListFragment().updateModify(i);
-                                myContentResolver.editContact(c);
+                    if(c.getIsStarred() != newContact.getIsStarred()){
+                        c.setIsStarred(newContact.getIsStarred());
 
-
-                            }
+                        if(newContact.getIsStarred() == 0) {
+                            favContactModelList.remove(c);
+                        }
+                        else {
+                            favContactModelList.add(c);
                         }
 
-                    }
-
-                }
-
-                else if(result.getResultCode() == DELETE_CONTACT){
-
-                    if (result.getData() != null) {
-
-                        ContactModel newContact = (ContactModel) result.getData().getSerializableExtra("contact");
-
-                        for (int i = 0; i < contactModelList.size(); i++) {
-                            ContactModel c = contactModelList.get(i);
-
-                            if (c.getId() == newContact.getId()) {
-
-                                myContentResolver.deleteContact(c);
-
-                                contactModelList.remove(c);
-                                favContactModelList.remove(c);
-                                tabLayoutAdapter.getFavContactListFragment().update();
-                                tabLayoutAdapter.getContactListFragment().updateDelete();
-                            }
-                        }
+                        tabLayoutAdapter.getFavContactListFragment().update();
 
                     }
+
+                    c.setPhoto(newContact.getPhoto());
+                    tabLayoutAdapter.getContactListFragment().updateModify(i);
+                    myContentResolver.editContact(c, oldPhone);
+                    Toast.makeText(getApplicationContext(), "Contacto actualizado", Toast.LENGTH_LONG).show();
+                    break;
 
                 }
             }
-    );
+
+        }
+
+        else {
+            Toast.makeText(getApplicationContext(), "Ha ocurrido un error editando el contacto...", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void deleteContact(ActivityResult result){
+        if (result.getData() != null) {
+
+            ContactModel newContact = (ContactModel) result.getData().getSerializableExtra("contact");
+
+            for (int i = 0; i < contactModelList.size(); i++) {
+                ContactModel c = contactModelList.get(i);
+
+                if (c.getId() == newContact.getId()) {
+                    myContentResolver.deleteContact(c);
+                    contactModelList.remove(c);
+                    favContactModelList.remove(c);
+                    tabLayoutAdapter.getFavContactListFragment().update();
+                    tabLayoutAdapter.getContactListFragment().updateDelete();
+                    Toast.makeText(getApplicationContext(), "Contacto eliminado", Toast.LENGTH_LONG).show();
+                }
+            }
+
+        }
+
+        else {
+            Toast.makeText(getApplicationContext(), "Ha ocurrido un error eliminando el contacto...", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void addContact(ActivityResult result){
+
+        if (result.getData() != null) {
+
+            ContactModel newContact = (ContactModel) result.getData().getSerializableExtra("contact");
+
+            // Modificar bbdd
+            long id = myContentResolver.addContact(newContact);
+
+            newContact.setId(id);
+
+            // Añado el contacto a las listas
+            contactModelList.add(newContact);
+            contactModelList.sort(new ContactComparator());
+            tabLayoutAdapter.getContactListFragment().updateDelete();
+
+            if(newContact.getIsStarred() == 1){
+                favContactModelList.add(newContact);
+                tabLayoutAdapter.getFavContactListFragment().update();
+            }
+
+            Toast.makeText(getApplicationContext(), "Contacto añadido", Toast.LENGTH_LONG).show();
+
+        }
+
+        else {
+            Toast.makeText(getApplicationContext(), "Ha ocurrido un error añadiendo al contacto...", Toast.LENGTH_LONG).show();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,7 +244,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         pager2 = findViewById(R.id.vp2PagerAM);
 
         FragmentManager fm = getSupportFragmentManager();
-        tabLayoutAdapter = new TabLayoutAdapter(fm, getLifecycle(), contactModelList, favContactModelList, callModelList, phoneContactMap,this, this, this);
+        tabLayoutAdapter = new TabLayoutAdapter(fm, getLifecycle(), contactModelList, favContactModelList, callModelList, phoneContactMap,
+                this, this, this, this);
         pager2.setAdapter(tabLayoutAdapter);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -252,6 +307,11 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     @Override
     public void selectedFavContact(@NonNull ContactModel contactModel) {
         startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contactModel.getPhone())));
+    }
+
+    public void addNewContact(){
+        Intent intent = new Intent(MainActivity.this, AddContactActivity.class);
+        activityResultLauncher.launch(intent);
     }
 
     @Override
