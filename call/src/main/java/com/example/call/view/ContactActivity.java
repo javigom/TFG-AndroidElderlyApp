@@ -65,7 +65,7 @@ public class ContactActivity extends AppCompatActivity implements ChangeFragment
         if(intent.getExtras() != null){
             contactModel = (ContactModel) intent.getSerializableExtra("contact");
             detailContactFragment = new DetailContactFragment(contactModel);
-            editContactFragment = new EditContactFragment(contactModel);
+            editContactFragment = new EditContactFragment(contactModel, this);
 
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.add(R.id.detail_contact_fragment, detailContactFragment);

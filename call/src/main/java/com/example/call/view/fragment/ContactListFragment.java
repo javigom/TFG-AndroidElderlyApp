@@ -49,12 +49,7 @@ public class ContactListFragment extends Fragment {
         recyclerView.setAdapter(contactListAdapter);
 
         Button button = view.findViewById(R.id.bAddFCL);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainActivity.addNewContact();
-            }
-        });
+        button.setOnClickListener(v -> mainActivity.addNewContact());
 
         return view;
     }

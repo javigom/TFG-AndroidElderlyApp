@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -12,7 +11,6 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -20,15 +18,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.call.R;
+import com.example.call.model.CallModel;
 import com.example.call.model.ContactComparator;
+import com.example.call.model.ContactModel;
+import com.example.call.model.MyContentResolver;
 import com.example.call.view.adapter.CallLogListAdapter;
 import com.example.call.view.adapter.ContactListAdapter;
 import com.example.call.view.adapter.FavContactListAdapter;
 import com.example.call.view.adapter.TabLayoutAdapter;
 import com.example.call.view.fragment.CallLogListFragment;
-import com.example.call.model.CallModel;
-import com.example.call.model.ContactModel;
-import com.example.call.model.MyContentResolver;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
@@ -38,7 +36,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback,
-        ContactListAdapter.SelectedContact, CallLogListAdapter.SelectedCall, FavContactListAdapter.SelectedFavContact, UpdateContact {
+        ContactListAdapter.SelectedContact, CallLogListAdapter.SelectedCall, FavContactListAdapter.SelectedFavContact {
 
     // Permission codes
     private static final int READ_CONTACTS = 100;
@@ -84,114 +82,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             }
     );
 
-    private void updateCallLog(){
-        myContentResolver.updateCalls(callModelList);
-        CallLogListFragment fragment = tabLayoutAdapter.getCallLogListFragment();
-
-        if (fragment != null) {
-            fragment.update(1);
-        }
-    }
-
-    private void updateContact(ActivityResult result){
-        if (result.getData() != null) {
-            ContactModel newContact = (ContactModel) result.getData().getSerializableExtra("contact");
-
-            for (int i = 0; i < contactModelList.size(); i++) {
-                ContactModel c = contactModelList.get(i);
-
-                if (c.getId() == newContact.getId()) {
-
-                    String oldPhone = c.getPhone(), oldName = c.getName();
-
-                    c.setName(newContact.getName());
-                    c.setPhone(newContact.getPhone());
-
-                    if(c.getIsStarred() != newContact.getIsStarred()){
-                        c.setIsStarred(newContact.getIsStarred());
-
-                        if(newContact.getIsStarred() == 0) {
-                            favContactModelList.remove(c);
-                        }
-                        else {
-                            favContactModelList.add(c);
-                        }
-
-                        tabLayoutAdapter.getFavContactListFragment().update();
-
-                    }
-
-                    c.setPhoto(newContact.getPhoto());
-                    tabLayoutAdapter.getContactListFragment().updateModify(i);
-                    myContentResolver.editContact(c, oldPhone);
-                    Toast.makeText(getApplicationContext(), "Contacto actualizado", Toast.LENGTH_LONG).show();
-                    break;
-
-                }
-            }
-
-        }
-
-        else {
-            Toast.makeText(getApplicationContext(), "Ha ocurrido un error editando el contacto...", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private void deleteContact(ActivityResult result){
-        if (result.getData() != null) {
-
-            ContactModel newContact = (ContactModel) result.getData().getSerializableExtra("contact");
-
-            for (int i = 0; i < contactModelList.size(); i++) {
-                ContactModel c = contactModelList.get(i);
-
-                if (c.getId() == newContact.getId()) {
-                    myContentResolver.deleteContact(c);
-                    contactModelList.remove(c);
-                    favContactModelList.remove(c);
-                    tabLayoutAdapter.getFavContactListFragment().update();
-                    tabLayoutAdapter.getContactListFragment().updateDelete();
-                    Toast.makeText(getApplicationContext(), "Contacto eliminado", Toast.LENGTH_LONG).show();
-                }
-            }
-
-        }
-
-        else {
-            Toast.makeText(getApplicationContext(), "Ha ocurrido un error eliminando el contacto...", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private void addContact(ActivityResult result){
-
-        if (result.getData() != null) {
-
-            ContactModel newContact = (ContactModel) result.getData().getSerializableExtra("contact");
-
-            // Modificar bbdd
-            long id = myContentResolver.addContact(newContact);
-
-            newContact.setId(id);
-
-            // Añado el contacto a las listas
-            contactModelList.add(newContact);
-            contactModelList.sort(new ContactComparator());
-            tabLayoutAdapter.getContactListFragment().updateDelete();
-
-            if(newContact.getIsStarred() == 1){
-                favContactModelList.add(newContact);
-                tabLayoutAdapter.getFavContactListFragment().update();
-            }
-
-            Toast.makeText(getApplicationContext(), "Contacto añadido", Toast.LENGTH_LONG).show();
-
-        }
-
-        else {
-            Toast.makeText(getApplicationContext(), "Ha ocurrido un error añadiendo al contacto...", Toast.LENGTH_LONG).show();
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -202,7 +92,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         initView();
     }
 
-    // ARREGLAR -> SOLICITAR PERMISOS NECESARIOS EN CADA FUNCIONALIDAD
     private void initPermissions(){
         if ((ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED)) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, 1);
@@ -314,8 +203,110 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         activityResultLauncher.launch(intent);
     }
 
-    @Override
-    public void updateContact(ContactModel contactModel) {
+    private void updateCallLog(){
+        myContentResolver.updateCalls(callModelList);
+        CallLogListFragment fragment = tabLayoutAdapter.getCallLogListFragment();
 
+        if (fragment != null) {
+            fragment.update(1);
+        }
+    }
+
+    private void updateContact(ActivityResult result){
+        if (result.getData() != null) {
+            ContactModel newContact = (ContactModel) result.getData().getSerializableExtra("contact");
+
+            for (int i = 0; i < contactModelList.size(); i++) {
+                ContactModel c = contactModelList.get(i);
+
+                if (c.getId() == newContact.getId()) {
+
+                    String oldPhone = c.getPhone();
+
+                    c.setName(newContact.getName());
+                    c.setPhone(newContact.getPhone());
+
+                    if(!c.getIsStarred().equals(newContact.getIsStarred())){
+                        c.setIsStarred(newContact.getIsStarred());
+
+                        if(newContact.getIsStarred() == 0) {
+                            favContactModelList.remove(c);
+                        }
+                        else {
+                            favContactModelList.add(c);
+                        }
+
+                        tabLayoutAdapter.getFavContactListFragment().update();
+
+                    }
+
+                    c.setPhoto(newContact.getPhoto());
+                    tabLayoutAdapter.getContactListFragment().updateModify(i);
+                    myContentResolver.editContact(c, oldPhone);
+                    Toast.makeText(getApplicationContext(), "Contacto actualizado", Toast.LENGTH_LONG).show();
+                    break;
+
+                }
+            }
+        }
+
+        else {
+            Toast.makeText(getApplicationContext(), "Ha ocurrido un error editando el contacto...", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void deleteContact(ActivityResult result){
+        if (result.getData() != null) {
+
+            ContactModel newContact = (ContactModel) result.getData().getSerializableExtra("contact");
+
+            for (int i = 0; i < contactModelList.size(); i++) {
+                ContactModel c = contactModelList.get(i);
+
+                if (c.getId() == newContact.getId()) {
+                    myContentResolver.deleteContact(c);
+                    contactModelList.remove(c);
+                    favContactModelList.remove(c);
+                    tabLayoutAdapter.getFavContactListFragment().update();
+                    tabLayoutAdapter.getContactListFragment().updateDelete();
+                    Toast.makeText(getApplicationContext(), "Contacto eliminado", Toast.LENGTH_LONG).show();
+                }
+            }
+
+        }
+
+        else {
+            Toast.makeText(getApplicationContext(), "Ha ocurrido un error eliminando el contacto...", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void addContact(ActivityResult result){
+
+        if (result.getData() != null) {
+
+            ContactModel newContact = (ContactModel) result.getData().getSerializableExtra("contact");
+
+            // Modificar bbdd
+            long id = myContentResolver.addContact(newContact);
+
+            newContact.setId(id);
+
+            // Añado el contacto a las listas
+            contactModelList.add(newContact);
+            contactModelList.sort(new ContactComparator());
+            tabLayoutAdapter.getContactListFragment().updateDelete();
+
+            if(newContact.getIsStarred() == 1){
+                favContactModelList.add(newContact);
+                tabLayoutAdapter.getFavContactListFragment().update();
+            }
+
+            Toast.makeText(getApplicationContext(), "Contacto añadido", Toast.LENGTH_LONG).show();
+
+        }
+
+        else {
+            Toast.makeText(getApplicationContext(), "Ha ocurrido un error añadiendo al contacto...", Toast.LENGTH_LONG).show();
+        }
     }
 }

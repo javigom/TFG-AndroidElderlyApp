@@ -24,6 +24,13 @@
             android:src="@drawable/ic_default_contact_photo"
             app:round="100dp" />
 
+        <Button
+            android:id="@+id/bChangePhotoFEC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cambiar fotografía"
+            app:icon="@drawable/ic_camera" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

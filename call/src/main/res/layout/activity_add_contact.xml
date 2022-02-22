@@ -20,9 +20,17 @@
             android:id="@+id/ivPhotoAAC"
             android:layout_width="200dp"
             android:layout_height="200dp"
+            android:adjustViewBounds="false"
             android:background="@color/blue_primary_variant"
             android:src="@drawable/ic_default_contact_photo"
             app:round="100dp" />
+
+        <Button
+            android:id="@+id/bChangePhotoAAC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cambiar fotografía"
+            app:icon="@drawable/ic_camera" />
 
         <TextView
             android:layout_width="match_parent"
