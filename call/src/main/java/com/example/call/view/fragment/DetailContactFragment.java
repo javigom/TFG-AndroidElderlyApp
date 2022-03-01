@@ -55,7 +55,7 @@ public class DetailContactFragment extends Fragment {
         ivPhoto = view.findViewById(R.id.ivPhotoFDC);
         bCall = view.findViewById(R.id.bCallFDC);
         fbEdit = view.findViewById(R.id.fbEditFDC);
-        ibFav = view.findViewById(R.id.ibFavFEC);
+        ibFav = view.findViewById(R.id.ibFavFDC);
 
         updateView();
 

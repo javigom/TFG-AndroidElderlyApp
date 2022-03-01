@@ -1,6 +1,7 @@
 package com.example.call.view;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -11,6 +12,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -27,6 +29,7 @@ import com.example.call.view.adapter.ContactListAdapter;
 import com.example.call.view.adapter.FavContactListAdapter;
 import com.example.call.view.adapter.TabLayoutAdapter;
 import com.example.call.view.fragment.CallLogListFragment;
+import com.example.call.view.fragment.ChangeFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
@@ -190,7 +193,20 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
     @Override
     public void selectedCall(CallModel callModel) {
-        //startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + callModel.getCallPhone())));
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("¿Deseas rellamar?");
+        //builder.setMessage("¿Deseas rellamar?");
+
+        builder.setPositiveButton("SÍ", (dialog, which) -> {
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + callModel.getPhone())));
+            pager2.setCurrentItem(1);
+        });
+
+        builder.setNegativeButton("NO", (dialog, which) -> dialog.dismiss());
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     @Override
@@ -237,7 +253,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                         }
 
                         tabLayoutAdapter.getFavContactListFragment().update();
-
                     }
 
                     c.setPhoto(newContact.getPhoto());
@@ -245,7 +260,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                     myContentResolver.editContact(c, oldPhone);
                     Toast.makeText(getApplicationContext(), "Contacto actualizado", Toast.LENGTH_LONG).show();
                     break;
-
                 }
             }
         }
@@ -272,7 +286,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                     Toast.makeText(getApplicationContext(), "Contacto eliminado", Toast.LENGTH_LONG).show();
                 }
             }
-
         }
 
         else {
@@ -302,7 +315,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             }
 
             Toast.makeText(getApplicationContext(), "Contacto añadido", Toast.LENGTH_LONG).show();
-
         }
 
         else {

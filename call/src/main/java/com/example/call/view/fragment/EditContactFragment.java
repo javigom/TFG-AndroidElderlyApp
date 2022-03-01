@@ -1,6 +1,7 @@
 package com.example.call.view.fragment;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -42,8 +43,8 @@ public class EditContactFragment extends Fragment {
     private ImageButton ibFav;
     private ImageView ivPhoto;
     private EditText etName, etNumber;
-    private FloatingActionButton fbSave;
-    private Button bDelete, bPhoto;
+    private FloatingActionButton fbSave, bDelete;
+    private Button bPhoto;
     private View view;
     private int isStarred;
     private Bitmap imageBitmap = null;
@@ -116,8 +117,8 @@ public class EditContactFragment extends Fragment {
         ivPhoto = view.findViewById(R.id.ivPhotoFEC);
         etName = view.findViewById(R.id.etNameFEC);
         etNumber = view.findViewById(R.id.etNumberFEC);
-        fbSave = view.findViewById(R.id.fbEditFDC);
-        bDelete = view.findViewById(R.id.bDeleteFEC);
+        fbSave = view.findViewById(R.id.fbEditFEC);
+        bDelete = view.findViewById(R.id.fbDeleteFEC);
         bPhoto = view.findViewById(R.id.bChangePhotoFEC);
 
         if(contactModel.getIsStarred() == 1) {
@@ -184,23 +185,13 @@ public class EditContactFragment extends Fragment {
             }
         });
 
-        bDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "Contacto eliminado", Toast.LENGTH_LONG).show();
-                ChangeFragment changeFragment = (ChangeFragment) getActivity();
-                changeFragment.change(2);
-            }
-        });
+        bDelete.setOnClickListener(v -> showDialogDelete());
 
-        bPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (imageBitmap == null)
-                    showDialog();
-                else
-                    showDialog2();
-            }
+        bPhoto.setOnClickListener(v -> {
+            if (imageBitmap == null)
+                showDialog();
+            else
+                showDialog2();
         });
 
         return view;
@@ -258,10 +249,36 @@ public class EditContactFragment extends Fragment {
                 ivPhoto.setImageResource(R.drawable.ic_default_contact_photo);
             }
 
-
         });
 
         builder.show();
+    }
+
+    public void showDialogDelete() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(contactActivity);
+
+        builder.setTitle("Eliminar el contacto");
+        builder.setMessage("¿Estas seguro?");
+
+        builder.setPositiveButton("SÍ", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getContext(), "Contacto eliminado", Toast.LENGTH_LONG).show();
+                ChangeFragment changeFragment = (ChangeFragment) getActivity();
+                changeFragment.change(2);
+            }
+        });
+
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     private void openCamera(){

@@ -71,9 +71,7 @@ public class ContactActivity extends AppCompatActivity implements ChangeFragment
             transaction.add(R.id.detail_contact_fragment, detailContactFragment);
             transaction.add(R.id.edit_contact_fragment, editContactFragment);
             transaction.commit();
-
         }
-
     }
 
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

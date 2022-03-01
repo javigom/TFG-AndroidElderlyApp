@@ -64,15 +64,6 @@
             android:text="Número"
             android:textSize="34dp" />
 
-        <Button
-            android:id="@+id/bDeleteFEC"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/red_delete"
-            android:text="Eliminar"
-            android:textSize="24sp"
-            app:icon="@drawable/ic_delete" />
-
 
     </LinearLayout>
 
@@ -88,7 +79,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fbEditFDC"
+        android:id="@+id/fbEditFEC"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -101,5 +92,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:maxImageSize="50dp"
         app:srcCompat="@drawable/ic_check" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fbDeleteFEC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentBottom="true"
+        app:backgroundTint="@color/red_delete"
+        app:fabCustomSize="80dp"
+        app:fabSize="auto"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:maxImageSize="50dp"
+        app:srcCompat="@drawable/ic_delete" />
 
 </RelativeLayout>

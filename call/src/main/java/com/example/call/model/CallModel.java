@@ -48,9 +48,8 @@ public class CallModel {
         this.type = callType;
     }
 
-    public String getFormattedDate(){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd LLLL - HH:mm");
-        return simpleDateFormat.format(date);
+    public String getFormattedDate() {
+        return getDisplayableTime();
     }
 
     @NonNull
@@ -60,5 +59,32 @@ public class CallModel {
                 "\nDate: " + this.date +
                 "\nDuration: " + this.duration +
                 "\nType: " + this.type + "\n";
+    }
+
+    private String getDisplayableTime() {
+
+        String format1 = new SimpleDateFormat("dd LLLL").format(date);
+        String format2 = new SimpleDateFormat("HH:mm").format(date);
+
+        Long mDate = java.lang.System.currentTimeMillis();
+        long difference = mDate - date.getTime();
+
+        final long seconds = difference/1000;
+        final long minutes = seconds/60;
+        final long hours = minutes/60;
+        final long days = hours/24;
+
+        if (seconds < 60)
+            return "Hace " + seconds + " segundos";
+        else if (seconds < 3599) // 60 * 60
+            return "Hace " + minutes + " minutos";
+        else if (seconds < 86400) // 24 * 60 * 60
+            return "Hace " + hours + " hora(s)";
+        else if (seconds < 172800) // 48 * 60 * 60
+            return "Ayer, " + format2;
+        else if (seconds < 604800) // 7 * 24 * 60 * 60
+            return "Hace " + days + " días, " + format2;
+        else
+            return format1 + ", " + format2;
     }
 }

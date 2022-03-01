@@ -156,13 +156,9 @@ public class MyContentResolver {
                     fin = true;
                 }
             }
-
             cursor.close();
-
         }
-
         return newCalls;
-
     }
 
     /**
@@ -230,34 +226,11 @@ public class MyContentResolver {
 
 
         if(contactModel.getPhoto() != null) {
-
-            /*
             try {
-                InputStream iStream = contentResolver.openInputStream(Uri.parse(contactModel.getPhoto()));
-
-                if(iStream != null) {
-                    byte[] photoByteArray = getBytes(iStream);
-
-                    where = String.format("%s = '%s' AND %s = ?", ContactsContract.Data.MIMETYPE,
-                            ContactsContract.CommonDataKinds.Photo.PHOTO, ContactsContract.Data.CONTACT_ID);
-
-                    ops.add(ContentProviderOperation
-                            .newUpdate(ContactsContract.Data.CONTENT_URI)
-                            .withSelection(where, new String[]{String.valueOf(contactModel.getId())})
-                            .withValue(ContactsContract.CommonDataKinds.Photo.PHOTO, photoByteArray)
-                            .build()
-                    );
-                }
-
-            } catch(Exception e){
+                changeContactPhoto(contactModel);
+            } catch (Exception e) {
                 e.printStackTrace();
-            }*/
-        }
-
-        try {
-            changeContactPhoto(contactModel);
-        }catch (Exception e) {
-            e.printStackTrace();
+            }
         }
 
         try {

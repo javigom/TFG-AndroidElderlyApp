@@ -30,6 +30,7 @@ public class DialNumberActivity extends AppCompatActivity {
         // ACTION BAR
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
 
         // VIEW BUTTONS
         tpPhone = findViewById(R.id.tpPhoneADN);
@@ -53,6 +54,7 @@ public class DialNumberActivity extends AppCompatActivity {
         bCall.setOnClickListener(v -> {
             callDone = true;
             startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + tpPhone.getText())));
+            tpPhone.setText("");
         });
 
         // NUMBER KEYBOARD
