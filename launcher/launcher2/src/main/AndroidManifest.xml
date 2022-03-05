@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.launcher">
-
-    <queries>
-        <package android:name="com.example.call" />
-        <package android:name="com.android.camera2" />
-    </queries>
+    package="com.example.launcher2">
 
     <application
         android:allowBackup="true"
@@ -16,15 +11,11 @@
         android:theme="@style/Theme.TFG">
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleTask"
-            android:stateNotNeeded="true"
-            android:exported="true"
-            android:theme="@style/AppTheme.Wallpaper">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.HOME" />
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
