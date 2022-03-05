@@ -1,17 +1,23 @@
 package com.example.launcher2.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.launcher2.data.AppListDataSource;
 import com.example.launcher2.databinding.ActivityAppListBinding;
+import com.example.launcher2.model.AppModel;
 import com.example.launcher2.viewmodel.AppListViewModel;
 
-public class AppListActivity extends AppCompatActivity {
+import java.util.List;
+
+public class AppListActivity extends AppCompatActivity implements RecyclerViewAppListInterface {
 
     // ATTRIBUTES
 
@@ -35,35 +41,16 @@ public class AppListActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        RecyclerViewAppListAdapter adapter = new RecyclerViewAppListAdapter();
+        RecyclerViewAppListAdapter adapter = new RecyclerViewAppListAdapter(this);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         binding.recyclerView.setAdapter(adapter);
         appViewModel.getAppList().observe(this, adapter::updateAppList);
         appViewModel.updateAppList(appListDataSource);
     }
 
-    /*
     @Override
-    public void selectedApp(AppModel appModel) {
+    public void onItemClick(AppModel  app) {
+        appViewModel.launchApp(app, this);
+    }
 
-
-        final Intent intent = new Intent(Intent.ACTION_MAIN, null);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-
-        System.out.println(appModel);
-
-
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        intent.setPackage(appModel.getPackageName());
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        //intent.setClassName(appModel.getPackageName(), className);
-        startActivity(intent);
-
-
-        //Intent intent = getPackageManager().getLaunchIntentForPackage(appModel.getPackageName());
-        //startActivity(intent);
-    }*/
 }

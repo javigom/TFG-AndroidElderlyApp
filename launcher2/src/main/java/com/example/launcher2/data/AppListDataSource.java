@@ -40,7 +40,6 @@ public class AppListDataSource {
             Drawable icon = ri.activityInfo.loadIcon(packageManager);
             AppModel app = new AppModel(name, packageName, icon);
             appsList.add(app);
-            //Log.intent(" Log package ",app.packageName.toString());
         }
 
         return appsList;
