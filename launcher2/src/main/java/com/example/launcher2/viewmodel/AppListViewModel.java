@@ -8,7 +8,6 @@ import com.example.launcher2.data.AppListDataSource;
 import com.example.launcher2.model.AppListProvider;
 import com.example.launcher2.model.AppModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AppListViewModel extends ViewModel {
