@@ -52,4 +52,5 @@ public class AppModel {
                 ", icon=" + icon +
                 '}';
     }
+
 }
