@@ -6,9 +6,11 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 
+import com.example.launcher2.model.AppComparator;
 import com.example.launcher2.model.AppModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class AppListDataSource {
@@ -16,7 +18,6 @@ public class AppListDataSource {
     // ATTRIBUTES
 
     private static Context context;
-
 
     // CONSTRUCTOR
 
@@ -27,7 +28,7 @@ public class AppListDataSource {
     // METHODS
 
     public static List<AppModel> fetchApps(){
-        List<AppModel> appsList = new ArrayList<>();
+        List<AppModel> appList = new ArrayList<>();
 
         PackageManager packageManager = context.getPackageManager();
         Intent intent = new Intent(Intent.ACTION_MAIN, null);
@@ -39,10 +40,12 @@ public class AppListDataSource {
             String packageName = ri.activityInfo.packageName;
             Drawable icon = ri.activityInfo.loadIcon(packageManager);
             AppModel app = new AppModel(name, packageName, icon);
-            appsList.add(app);
+            appList.add(app);
         }
 
-        return appsList;
+        Collections.sort(appList, new AppComparator());
+
+        return appList;
     }
 
 }
