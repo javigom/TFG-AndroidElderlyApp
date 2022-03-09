@@ -1,8 +1,8 @@
-package com.example.launcher2.view;
+package com.example.launcher2.event;
 
 import com.example.launcher2.model.AppModel;
 
 public interface RecyclerViewAppListInterface {
     void onItemClick(AppModel app);
-    //void onLongItemClick(int position);
+    void onButtonClick(AppModel app);
 }

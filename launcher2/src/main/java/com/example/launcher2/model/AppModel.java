@@ -9,13 +9,15 @@ public class AppModel {
     private String label;
     private String packageName;
     private Drawable icon;
+    private Boolean shortcut;
 
     // CONSTRUCTOR
 
-    public AppModel(String label, String packageName, Drawable icon) {
+    public AppModel(String label, String packageName, Drawable icon, Boolean shortcut) {
         this.label = label;
         this.packageName = packageName;
         this.icon = icon;
+        this.shortcut = shortcut;
     }
 
     // METHODS
@@ -42,6 +44,14 @@ public class AppModel {
 
     public void setIcon(Drawable icon) {
         this.icon = icon;
+    }
+
+    public Boolean getShortcut() {
+        return shortcut;
+    }
+
+    public void setShortcut(Boolean shortcut) {
+        this.shortcut = shortcut;
     }
 
     @Override

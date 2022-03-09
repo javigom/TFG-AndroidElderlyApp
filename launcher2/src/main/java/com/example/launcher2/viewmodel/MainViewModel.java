@@ -7,12 +7,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.launcher2.model.AppListProvider;
 import com.example.launcher2.model.AppModel;
+import com.example.launcher2.model.MainProvider;
 
 import java.util.List;
 
-public class AppListViewModel extends ViewModel {
+public class MainViewModel extends ViewModel {
 
     // ATTRIBUTES
 
@@ -20,18 +20,18 @@ public class AppListViewModel extends ViewModel {
 
     // CONSTRUCTOR
 
-    public AppListViewModel() {
+    public MainViewModel() {
         appListLiveData = new MutableLiveData<>();
     }
 
     // METHODS
 
-    public LiveData<List<AppModel>> getAppList() {
+    public LiveData<List<AppModel>> getShortcutAppList() {
         return appListLiveData;
     }
 
-    public void updateAppList() {
-        appListLiveData.setValue(AppListProvider.requestApps());
+    public void updateShortcutAppList() {
+        appListLiveData.setValue(MainProvider.requestShortcutApps());
     }
 
     public void launchApp(AppModel app, Activity activity) {
@@ -41,23 +41,10 @@ public class AppListViewModel extends ViewModel {
             intent.addCategory(Intent.CATEGORY_LAUNCHER);
             intent.setPackage(app.getPackageName());
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            //intent.setClassName(appModel.getPackageName(), className);
             activity.startActivity(intent);
 
         } catch(Exception e) {
             e.printStackTrace();
-        }
-
-    }
-
-    public void clickShortcut(AppModel app) {
-
-        if(app.getShortcut()) {
-            AppListProvider.removeShortcut(app.getPackageName());
-        }
-
-        else {
-            AppListProvider.addShortcut(app.getPackageName());
         }
 
     }

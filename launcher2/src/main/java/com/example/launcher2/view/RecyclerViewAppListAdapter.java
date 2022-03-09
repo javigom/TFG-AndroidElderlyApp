@@ -1,12 +1,15 @@
 package com.example.launcher2.view;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.launcher2.databinding.ItemAppBinding;
+import com.example.launcher2.R;
+import com.example.launcher2.databinding.ItemAppListBinding;
+import com.example.launcher2.event.RecyclerViewAppListInterface;
 import com.example.launcher2.model.AppModel;
 
 import java.util.ArrayList;
@@ -17,7 +20,7 @@ public class RecyclerViewAppListAdapter extends RecyclerView.Adapter<RecyclerVie
     // ATTRIBUTES
 
     private List<AppModel> appModelList;
-    private RecyclerViewAppListInterface recyclerViewAppListInterface;
+    private final RecyclerViewAppListInterface recyclerViewAppListInterface;
 
     // CONSTRUCTOR
 
@@ -31,20 +34,13 @@ public class RecyclerViewAppListAdapter extends RecyclerView.Adapter<RecyclerVie
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_app, parent, false);
-        //return new ViewHolder(view);
-
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        ItemAppBinding itemAppBinding = ItemAppBinding.inflate(layoutInflater, parent, false);
-        return new ViewHolder(itemAppBinding);
+        ItemAppListBinding itemAppListBinding = ItemAppListBinding.inflate(layoutInflater, parent, false);
+        return new ViewHolder(itemAppListBinding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAppListAdapter.ViewHolder holder, int position) {
-        //AppModel appModel = appModelList.get(position);
-        //holder.textView.setText(appModel.getLabel());
-        //holder.imageView.setImageDrawable(appModel.getIcon());
-
         holder.bindView(appModelList.get(position));
     }
 
@@ -61,31 +57,30 @@ public class RecyclerViewAppListAdapter extends RecyclerView.Adapter<RecyclerVie
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        ItemAppListBinding itemAppBinding;
 
-        /*
-        ImageView imageView;
-        TextView textView;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            imageView = itemView.findViewById(R.id.imageViewIcon);
-            textView = itemView.findViewById(R.id.textViewIcon);
-
-        }*/
-
-        ItemAppBinding itemAppBinding;
-
-        public ViewHolder(@NonNull ItemAppBinding binding) {
+        public ViewHolder(@NonNull ItemAppListBinding binding) {
             super(binding.getRoot());
             this.itemAppBinding = binding;
             this.itemAppBinding.linearLayout.setOnClickListener(view -> recyclerViewAppListInterface.onItemClick(appModelList.get(getAdapterPosition())));
+            this.itemAppBinding.buttonAppItem.setOnClickListener(view -> recyclerViewAppListInterface.onButtonClick(appModelList.get(getAdapterPosition())));
         }
 
         public void bindView(AppModel app) {
             itemAppBinding.imageViewIcon.setImageDrawable(app.getIcon());
             itemAppBinding.textViewIcon.setText(app.getLabel());
-        }
 
+            if(app.getShortcut()) {
+                itemAppBinding.buttonAppItem.setText("-");
+                itemAppBinding.buttonAppItem.setBackgroundColor(Color.parseColor("#FF0000"));
+            }
+
+            else {
+                itemAppBinding.buttonAppItem.setText("+");
+                itemAppBinding.buttonAppItem.setBackgroundColor(Color.parseColor("#00FF04"));
+            }
+
+        }
     }
 
 }
