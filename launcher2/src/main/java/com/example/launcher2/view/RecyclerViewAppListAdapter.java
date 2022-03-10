@@ -71,13 +71,11 @@ public class RecyclerViewAppListAdapter extends RecyclerView.Adapter<RecyclerVie
             itemAppBinding.textViewIcon.setText(app.getLabel());
 
             if(app.getShortcut()) {
-                itemAppBinding.buttonAppItem.setText("-");
-                itemAppBinding.buttonAppItem.setBackgroundColor(Color.parseColor("#FF0000"));
+                itemAppBinding.buttonAppItem.setImageResource(R.drawable.ic_check);
             }
 
             else {
-                itemAppBinding.buttonAppItem.setText("+");
-                itemAppBinding.buttonAppItem.setBackgroundColor(Color.parseColor("#00FF04"));
+                itemAppBinding.buttonAppItem.setImageResource(android.R.color.transparent);
             }
 
         }

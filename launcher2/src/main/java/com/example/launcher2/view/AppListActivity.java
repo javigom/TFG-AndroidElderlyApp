@@ -2,8 +2,12 @@ package com.example.launcher2.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -37,6 +41,10 @@ public class AppListActivity extends AppCompatActivity implements RecyclerViewAp
     }
 
     private void initView() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Aplicaciones instaladas");
+
         RecyclerViewAppListAdapter adapter = new RecyclerViewAppListAdapter(this);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         binding.recyclerView.setAdapter(adapter);
@@ -53,6 +61,15 @@ public class AppListActivity extends AppCompatActivity implements RecyclerViewAp
     public void onButtonClick(AppModel app) {
         appViewModel.clickShortcut(app);
         startActivity(new Intent(AppListActivity.this, MainActivity.class));
+    }
+
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            super.onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }
