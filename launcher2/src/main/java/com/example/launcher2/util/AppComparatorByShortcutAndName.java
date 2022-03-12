@@ -8,7 +8,7 @@ import java.text.Normalizer;
 import java.util.Comparator;
 import java.util.Locale;
 
-public class AppComparator implements Comparator<AppModel> {
+public class AppComparatorByShortcutAndName implements Comparator<AppModel> {
 
     @Override
     public int compare(@NonNull AppModel app1, @NonNull AppModel app2) {

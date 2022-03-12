@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.launcher2.model.AppListProvider;
 import com.example.launcher2.model.AppModel;
+import com.example.launcher2.util.OrderTypeAppModel;
 
 import java.util.List;
 
@@ -30,8 +31,8 @@ public class AppListViewModel extends ViewModel {
         return appListLiveData;
     }
 
-    public void updateAppList() {
-        appListLiveData.setValue(AppListProvider.requestApps());
+    public void updateAppList(OrderTypeAppModel orderType) {
+        appListLiveData.setValue(AppListProvider.requestApps(orderType));
     }
 
     public void launchApp(AppModel app, Activity activity) {
@@ -51,15 +52,8 @@ public class AppListViewModel extends ViewModel {
     }
 
     public void clickShortcut(AppModel app) {
-
-        if(app.getShortcut()) {
-            AppListProvider.removeShortcut(app.getPackageName(), app.getLabel());
-        }
-
-        else {
-            AppListProvider.addShortcut(app.getPackageName(), app.getLabel());
-        }
-
+        if(app.getShortcut()) AppListProvider.removeShortcut(app.getPackageName(), app.getLabel());
+        else AppListProvider.addShortcut(app.getPackageName(), app.getLabel());
     }
 
 }

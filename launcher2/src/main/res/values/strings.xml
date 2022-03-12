@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">launcher2</string>
+    <string name="edit_mode">Modo edición</string>
+    <string name="order_mode">Modo ordenar</string>
 </resources>

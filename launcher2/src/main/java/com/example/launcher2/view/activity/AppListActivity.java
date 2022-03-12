@@ -1,6 +1,8 @@
 package com.example.launcher2.view.activity;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -10,10 +12,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.launcher2.R;
 import com.example.launcher2.data.AppListDataSource;
 import com.example.launcher2.databinding.ActivityAppListBinding;
 import com.example.launcher2.event.RecyclerViewAppListInterface;
 import com.example.launcher2.model.AppModel;
+import com.example.launcher2.util.OrderTypeAppModel;
 import com.example.launcher2.view.adapter.RecyclerViewAppListAdapter;
 import com.example.launcher2.viewmodel.AppListViewModel;
 
@@ -23,7 +27,7 @@ public class AppListActivity extends AppCompatActivity implements RecyclerViewAp
 
     private ActivityAppListBinding binding;
     private AppListViewModel appViewModel;
-    private RecyclerViewAppListAdapter adapter;
+    private RecyclerViewAppListAdapter recyclerViewAppListAdapter;
 
     // METHODS
 
@@ -42,14 +46,19 @@ public class AppListActivity extends AppCompatActivity implements RecyclerViewAp
 
     private void initView() {
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("Aplicaciones instaladas");
 
-        adapter = new RecyclerViewAppListAdapter(this);
+        try {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("Aplicaciones instaladas");
+        } catch(NullPointerException e) {
+            e.printStackTrace();
+        }
+
+        recyclerViewAppListAdapter = new RecyclerViewAppListAdapter(this);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        binding.recyclerView.setAdapter(adapter);
-        appViewModel.getAppList().observe(this, adapter::updateAppList);
-        appViewModel.updateAppList();
+        binding.recyclerView.setAdapter(recyclerViewAppListAdapter);
+        appViewModel.getAppList().observe(this, recyclerViewAppListAdapter::updateAppList);
+        appViewModel.updateAppList(OrderTypeAppModel.ORDER_BY_NAME);
     }
 
     @Override
@@ -64,11 +73,27 @@ public class AppListActivity extends AppCompatActivity implements RecyclerViewAp
     }
 
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            super.onBackPressed();
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                super.onBackPressed();
+                return true;
+            case R.id.edit:
+                boolean editable = recyclerViewAppListAdapter.updateButtonVisibility();
+                appViewModel.updateAppList(editable? OrderTypeAppModel.ORDER_BY_SHORTCUT_AND_NAME: OrderTypeAppModel.ORDER_BY_NAME);
+                return true;
+            case R.id.order:
+                System.out.println("has pulsado ordenar");
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.option_menu,  menu);
+        return true;
+    }
+
 }

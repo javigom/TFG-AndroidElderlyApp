@@ -9,7 +9,9 @@ import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 
 import com.example.launcher2.model.AppModel;
-import com.example.launcher2.util.AppComparator;
+import com.example.launcher2.util.AppComparatorByName;
+import com.example.launcher2.util.AppComparatorByShortcutAndName;
+import com.example.launcher2.util.OrderTypeAppModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,7 +31,7 @@ public class AppListDataSource {
         AppListDataSource.context = context;
     }
 
-    public static List<AppModel> fetchApps(){
+    public static List<AppModel> fetchApps(OrderTypeAppModel orderType){
 
         List<AppModel> appList = new ArrayList<>();
         PackageManager packageManager = context.getPackageManager();
@@ -47,7 +49,13 @@ public class AppListDataSource {
             appList.add(app);
         }
 
-        Collections.sort(appList, new AppComparator());
+        if(orderType == OrderTypeAppModel.ORDER_BY_SHORTCUT_AND_NAME) {
+            Collections.sort(appList, new AppComparatorByShortcutAndName());
+        }
+
+        else if(orderType == OrderTypeAppModel.ORDER_BY_NAME) {
+            Collections.sort(appList, new AppComparatorByName());
+        }
 
         return appList;
     }

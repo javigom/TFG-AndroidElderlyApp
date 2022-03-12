@@ -1,6 +1,7 @@
 package com.example.launcher2.model;
 
 import com.example.launcher2.data.AppListDataSource;
+import com.example.launcher2.util.OrderTypeAppModel;
 
 import java.util.List;
 
@@ -12,8 +13,8 @@ public class AppListProvider {
 
     // METHODS
 
-    public static List<AppModel> requestApps() {
-        List<AppModel> appModelList = AppListDataSource.fetchApps();
+    public static List<AppModel> requestApps(OrderTypeAppModel orderType) {
+        List<AppModel> appModelList = AppListDataSource.fetchApps(orderType);
         return appModelList;
     }
 

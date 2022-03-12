@@ -1,6 +1,7 @@
 package com.example.launcher2.view.adapter;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -20,12 +21,14 @@ public class RecyclerViewAppListAdapter extends RecyclerView.Adapter<RecyclerVie
 
     private List<AppModel> appModelList;
     private final RecyclerViewAppListInterface recyclerViewAppListInterface;
+    boolean editOption;
 
     // CONSTRUCTOR
 
     public RecyclerViewAppListAdapter(RecyclerViewAppListInterface recyclerViewAppListInterface) {
         this.appModelList = new ArrayList<>();
         this.recyclerViewAppListInterface = recyclerViewAppListInterface;
+        this.editOption = false;
     }
 
     // METHODS
@@ -55,6 +58,11 @@ public class RecyclerViewAppListAdapter extends RecyclerView.Adapter<RecyclerVie
         notifyDataSetChanged();
     }
 
+    public boolean updateButtonVisibility() {
+        this.editOption = !this.editOption;
+        return this.editOption;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         ItemAppListBinding itemAppBinding;
 
@@ -73,6 +81,7 @@ public class RecyclerViewAppListAdapter extends RecyclerView.Adapter<RecyclerVie
         public void bindView(AppModel app) {
             itemAppBinding.imageViewIcon.setImageDrawable(app.getIcon());
             itemAppBinding.textViewIcon.setText(app.getLabel());
+            itemAppBinding.buttonAppItem.setVisibility((editOption)? View.VISIBLE: View.GONE);
             itemAppBinding.buttonAppItem.setImageResource((app.getShortcut()) ? R.drawable.ic_check : android.R.color.transparent);
         }
     }
