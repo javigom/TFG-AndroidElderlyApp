@@ -17,12 +17,12 @@ public class AppListProvider {
         return appModelList;
     }
 
-    public static void addShortcut(String appPackage) {
-        AppListDataSource.addShortcutApp(appPackage);
+    public static void addShortcut(String appPackage, String label) {
+        AppListDataSource.addShortcutApp(appPackage, label);
     }
 
-    public static void removeShortcut(String appPackage) {
-        AppListDataSource.removeShortcutApp(appPackage);
+    public static void removeShortcut(String appPackage, String label) {
+        AppListDataSource.removeShortcutApp(appPackage, label);
     }
 
 }

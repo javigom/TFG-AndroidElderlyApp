@@ -1,4 +1,4 @@
-package com.example.launcher2.view;
+package com.example.launcher2.view.adapter;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;

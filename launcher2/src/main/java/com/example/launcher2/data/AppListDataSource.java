@@ -39,11 +39,11 @@ public class AppListDataSource {
         SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
         for (ResolveInfo ri : allApps) {
-            String name = ri.loadLabel(packageManager).toString();
+            String label = ri.loadLabel(packageManager).toString();
             String packageName = ri.activityInfo.packageName;
             Drawable icon = ri.activityInfo.loadIcon(packageManager);
-            Boolean isShortcut = myPreferences.getBoolean(packageName, false);
-            AppModel app = new AppModel(name, packageName, icon, isShortcut);
+            Boolean isShortcut = myPreferences.getBoolean(packageName, false) && myPreferences.getBoolean(label, false);
+            AppModel app = new AppModel(label, packageName, icon, isShortcut);
             appList.add(app);
         }
 
@@ -52,17 +52,19 @@ public class AppListDataSource {
         return appList;
     }
 
-    public static void addShortcutApp(String appPackage) {
+    public static void addShortcutApp(String appPackage, String label) {
         SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor myEditor = myPreferences.edit();
         myEditor.putBoolean(appPackage, true);
+        myEditor.putBoolean(label, true);
         myEditor.commit();
     }
 
-    public static void removeShortcutApp(String appPackage) {
+    public static void removeShortcutApp(String appPackage, String label) {
         SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor myEditor = myPreferences.edit();
         myEditor.remove(appPackage);
+        myEditor.remove(label);
         myEditor.commit();
     }
 

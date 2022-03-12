@@ -1,10 +1,8 @@
-package com.example.launcher2.view;
+package com.example.launcher2.view.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -16,6 +14,7 @@ import com.example.launcher2.data.AppListDataSource;
 import com.example.launcher2.databinding.ActivityAppListBinding;
 import com.example.launcher2.event.RecyclerViewAppListInterface;
 import com.example.launcher2.model.AppModel;
+import com.example.launcher2.view.adapter.RecyclerViewAppListAdapter;
 import com.example.launcher2.viewmodel.AppListViewModel;
 
 public class AppListActivity extends AppCompatActivity implements RecyclerViewAppListInterface {
@@ -24,6 +23,7 @@ public class AppListActivity extends AppCompatActivity implements RecyclerViewAp
 
     private ActivityAppListBinding binding;
     private AppListViewModel appViewModel;
+    private RecyclerViewAppListAdapter adapter;
 
     // METHODS
 
@@ -45,7 +45,7 @@ public class AppListActivity extends AppCompatActivity implements RecyclerViewAp
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Aplicaciones instaladas");
 
-        RecyclerViewAppListAdapter adapter = new RecyclerViewAppListAdapter(this);
+        adapter = new RecyclerViewAppListAdapter(this);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         binding.recyclerView.setAdapter(adapter);
         appViewModel.getAppList().observe(this, adapter::updateAppList);
@@ -60,7 +60,7 @@ public class AppListActivity extends AppCompatActivity implements RecyclerViewAp
     @Override
     public void onButtonClick(AppModel app) {
         appViewModel.clickShortcut(app);
-        startActivity(new Intent(AppListActivity.this, MainActivity.class));
+        //startActivity(new Intent(AppListActivity.this, MainActivity.class));
     }
 
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -71,5 +71,4 @@ public class AppListActivity extends AppCompatActivity implements RecyclerViewAp
 
         return super.onOptionsItemSelected(item);
     }
-
 }

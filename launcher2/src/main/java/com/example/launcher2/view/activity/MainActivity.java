@@ -1,4 +1,4 @@
-package com.example.launcher2.view;
+package com.example.launcher2.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import com.example.launcher2.data.AppListDataSource;
 import com.example.launcher2.databinding.ActivityMainBinding;
 import com.example.launcher2.event.RecyclerViewAppListInterface;
 import com.example.launcher2.model.AppModel;
+import com.example.launcher2.view.adapter.RecyclerViewMainAdapter;
 import com.example.launcher2.viewmodel.MainViewModel;
 
 public class MainActivity extends AppCompatActivity implements RecyclerViewAppListInterface {

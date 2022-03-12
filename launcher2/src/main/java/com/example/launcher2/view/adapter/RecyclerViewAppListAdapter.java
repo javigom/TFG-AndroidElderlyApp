@@ -1,6 +1,5 @@
-package com.example.launcher2.view;
+package com.example.launcher2.view.adapter;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -63,21 +62,18 @@ public class RecyclerViewAppListAdapter extends RecyclerView.Adapter<RecyclerVie
             super(binding.getRoot());
             this.itemAppBinding = binding;
             this.itemAppBinding.linearLayout.setOnClickListener(view -> recyclerViewAppListInterface.onItemClick(appModelList.get(getAdapterPosition())));
-            this.itemAppBinding.buttonAppItem.setOnClickListener(view -> recyclerViewAppListInterface.onButtonClick(appModelList.get(getAdapterPosition())));
+            this.itemAppBinding.buttonAppItem.setOnClickListener(view -> {
+                AppModel app = appModelList.get(getAdapterPosition());
+                recyclerViewAppListInterface.onButtonClick(appModelList.get(getAdapterPosition()));
+                app.setShortcut(!app.getShortcut());
+                itemAppBinding.buttonAppItem.setImageResource((app.getShortcut()) ? R.drawable.ic_check : android.R.color.transparent);
+            });
         }
 
         public void bindView(AppModel app) {
             itemAppBinding.imageViewIcon.setImageDrawable(app.getIcon());
             itemAppBinding.textViewIcon.setText(app.getLabel());
-
-            if(app.getShortcut()) {
-                itemAppBinding.buttonAppItem.setImageResource(R.drawable.ic_check);
-            }
-
-            else {
-                itemAppBinding.buttonAppItem.setImageResource(android.R.color.transparent);
-            }
-
+            itemAppBinding.buttonAppItem.setImageResource((app.getShortcut()) ? R.drawable.ic_check : android.R.color.transparent);
         }
     }
 
