@@ -15,11 +15,11 @@ public class MainProvider {
     // METHODS
 
     public static List<AppModel> requestShortcutApps() {
-        List<AppModel> apps = AppListDataSource.fetchApps(OrderTypeAppModel.ORDER_BY_NAME);
+        List<AppModel> apps = AppListDataSource.fetchApps(OrderTypeAppModel.ORDER_BY_SHORTCUT_AND_NAME);
         List<AppModel> appsWithShortcut = new ArrayList<>();
 
         for(AppModel app: apps) {
-            if(app.getShortcut()) {
+            if(app.getPosition() != -1) {
                 appsWithShortcut.add(app);
             }
         }

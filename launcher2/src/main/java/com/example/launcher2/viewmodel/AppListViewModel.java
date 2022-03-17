@@ -52,8 +52,8 @@ public class AppListViewModel extends ViewModel {
     }
 
     public void clickShortcut(AppModel app) {
-        if(app.getShortcut()) AppListProvider.removeShortcut(app.getPackageName(), app.getLabel());
-        else AppListProvider.addShortcut(app.getPackageName(), app.getLabel());
+        if(app.getPosition() != - 1) AppListProvider.removeShortcut(app);
+        else AppListProvider.addShortcut(app);
     }
 
 }

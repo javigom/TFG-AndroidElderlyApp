@@ -9,15 +9,15 @@ public class AppModel {
     private String label;
     private String packageName;
     private Drawable icon;
-    private Boolean shortcut;
+    private int position;
 
     // CONSTRUCTOR
 
-    public AppModel(String label, String packageName, Drawable icon, Boolean shortcut) {
+    public AppModel(String label, String packageName, Drawable icon, int position) {
         this.label = label;
         this.packageName = packageName;
         this.icon = icon;
-        this.shortcut = shortcut;
+        this.position = position;
     }
 
     // METHODS
@@ -46,12 +46,16 @@ public class AppModel {
         this.icon = icon;
     }
 
-    public Boolean getShortcut() {
-        return shortcut;
+    public int getPosition() {
+        return position;
     }
 
-    public void setShortcut(Boolean shortcut) {
-        this.shortcut = shortcut;
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    public String getID() {
+        return label + packageName;
     }
 
     @Override
@@ -60,7 +64,7 @@ public class AppModel {
                 "label='" + label + '\'' +
                 ", packageName='" + packageName + '\'' +
                 ", icon=" + icon +
+                ", position=" + position +
                 '}';
     }
-
 }

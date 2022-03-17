@@ -73,8 +73,11 @@ public class RecyclerViewAppListAdapter extends RecyclerView.Adapter<RecyclerVie
             this.itemAppBinding.buttonAppItem.setOnClickListener(view -> {
                 AppModel app = appModelList.get(getAdapterPosition());
                 recyclerViewAppListInterface.onButtonClick(appModelList.get(getAdapterPosition()));
-                app.setShortcut(!app.getShortcut());
-                itemAppBinding.buttonAppItem.setImageResource((app.getShortcut()) ? R.drawable.ic_check : android.R.color.transparent);
+
+                if(app.getPosition() != -1) app.setPosition(-1);
+                else app.setPosition(0);
+
+                itemAppBinding.buttonAppItem.setImageResource((app.getPosition() != - 1) ? R.drawable.ic_check : android.R.color.transparent);
             });
         }
 
@@ -82,7 +85,7 @@ public class RecyclerViewAppListAdapter extends RecyclerView.Adapter<RecyclerVie
             itemAppBinding.imageViewIcon.setImageDrawable(app.getIcon());
             itemAppBinding.textViewIcon.setText(app.getLabel());
             itemAppBinding.buttonAppItem.setVisibility((editOption)? View.VISIBLE: View.GONE);
-            itemAppBinding.buttonAppItem.setImageResource((app.getShortcut()) ? R.drawable.ic_check : android.R.color.transparent);
+            itemAppBinding.buttonAppItem.setImageResource((app.getPosition() != - 1) ? R.drawable.ic_check : android.R.color.transparent);
         }
     }
 

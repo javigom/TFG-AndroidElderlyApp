@@ -8,6 +8,8 @@ import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 
+import androidx.annotation.NonNull;
+
 import com.example.launcher2.model.AppModel;
 import com.example.launcher2.util.AppComparatorByName;
 import com.example.launcher2.util.AppComparatorByShortcutAndName;
@@ -28,7 +30,7 @@ public class AppListDataSource {
     // METHODS
 
     public static void updateContext(Context context) {
-        AppListDataSource.context = context;
+        AppListDataSource.context = context.getApplicationContext();
     }
 
     public static List<AppModel> fetchApps(OrderTypeAppModel orderType){
@@ -44,8 +46,10 @@ public class AppListDataSource {
             String label = ri.loadLabel(packageManager).toString();
             String packageName = ri.activityInfo.packageName;
             Drawable icon = ri.activityInfo.loadIcon(packageManager);
-            Boolean isShortcut = myPreferences.getBoolean(packageName, false) && myPreferences.getBoolean(label, false);
-            AppModel app = new AppModel(label, packageName, icon, isShortcut);
+
+            AppModel app = new AppModel(label, packageName, icon, -1);
+            app.setPosition(myPreferences.getInt(app.getID(), -1));
+
             appList.add(app);
         }
 
@@ -57,23 +61,46 @@ public class AppListDataSource {
             Collections.sort(appList, new AppComparatorByName());
         }
 
+        System.out.println("Number of shortcuts = " + myPreferences.getInt("numberOfShortcuts", 0));
+
         return appList;
     }
 
-    public static void addShortcutApp(String appPackage, String label) {
+    public static void addShortcutApp(@NonNull AppModel app) {
         SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor myEditor = myPreferences.edit();
-        myEditor.putBoolean(appPackage, true);
-        myEditor.putBoolean(label, true);
-        myEditor.commit();
+
+        if(myPreferences.getInt(app.getID(), -1) == -1) {
+            SharedPreferences.Editor myEditor = myPreferences.edit();
+            int numShortcuts = myPreferences.getInt("numberOfShortcuts", 0);
+            myEditor.putInt(app.getID(), numShortcuts);
+            myEditor.putInt("numberOfShortcuts", numShortcuts + 1);
+            //myEditor.commit();
+            myEditor.apply();
+        }
     }
 
-    public static void removeShortcutApp(String appPackage, String label) {
+    public static void removeShortcutApp(@NonNull AppModel app) {
         SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor myEditor = myPreferences.edit();
-        myEditor.remove(appPackage);
-        myEditor.remove(label);
-        myEditor.commit();
+
+        if(myPreferences.getInt(app.getID(), -1) != -1) {
+            SharedPreferences.Editor myEditor = myPreferences.edit();
+            myEditor.remove(app.getID());
+
+            List<AppModel> list = fetchApps(OrderTypeAppModel.ORDER_BY_SHORTCUT_AND_NAME);
+
+            int i = app.getPosition() + 1;
+            while(list.get(i).getPosition() != -1) {
+                myEditor.putInt(list.get(i).getID(), list.get(i).getPosition() - 1);
+                i++;
+            }
+
+            int numShortcuts = myPreferences.getInt("numberOfShortcuts", 0);
+            myEditor.putInt("numberOfShortcuts", numShortcuts - 1);
+            //myEditor.commit();
+            myEditor.apply();
+        }
     }
+
+
 
 }
