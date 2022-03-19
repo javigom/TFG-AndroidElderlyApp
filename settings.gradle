@@ -7,6 +7,5 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "TFG"
-include ':call'
-include ':launcher'
-include ':launcher2'
+include ':SimpleCall'
+include ':SimpleLauncher'
