@@ -60,5 +60,16 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAppLi
 
     @Override
     public void onButtonClick(AppModel app) {
+
+    }
+
+    @Override
+    public void onUpButtonClick(AppModel app1, AppModel app2) {
+
+    }
+
+    @Override
+    public void onDownButtonClick(AppModel app1, AppModel app2) {
+
     }
 }

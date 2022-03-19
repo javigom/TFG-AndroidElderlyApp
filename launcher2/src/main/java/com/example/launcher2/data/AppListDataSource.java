@@ -101,6 +101,14 @@ public class AppListDataSource {
         }
     }
 
+    public static void swapApps(AppModel app1, AppModel app2) {
+        SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor myEditor = myPreferences.edit();
+        myEditor.putInt(app1.getID(), app2.getPosition());
+        myEditor.putInt(app2.getID(), app1.getPosition());
+        myEditor.apply();
+    }
+
 
 
 }

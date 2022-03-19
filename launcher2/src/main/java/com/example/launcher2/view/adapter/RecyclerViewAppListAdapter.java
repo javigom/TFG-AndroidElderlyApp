@@ -13,6 +13,7 @@ import com.example.launcher2.event.RecyclerViewAppListInterface;
 import com.example.launcher2.model.AppModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class RecyclerViewAppListAdapter extends RecyclerView.Adapter<RecyclerViewAppListAdapter.ViewHolder> {
@@ -21,7 +22,7 @@ public class RecyclerViewAppListAdapter extends RecyclerView.Adapter<RecyclerVie
 
     private List<AppModel> appModelList;
     private final RecyclerViewAppListInterface recyclerViewAppListInterface;
-    boolean editOption;
+    boolean editOption, orderOption;
 
     // CONSTRUCTOR
 
@@ -29,6 +30,7 @@ public class RecyclerViewAppListAdapter extends RecyclerView.Adapter<RecyclerVie
         this.appModelList = new ArrayList<>();
         this.recyclerViewAppListInterface = recyclerViewAppListInterface;
         this.editOption = false;
+        this.orderOption = false;
     }
 
     // METHODS
@@ -58,9 +60,16 @@ public class RecyclerViewAppListAdapter extends RecyclerView.Adapter<RecyclerVie
         notifyDataSetChanged();
     }
 
-    public boolean updateButtonVisibility() {
+    public boolean updateEditButtonVisibility() {
         this.editOption = !this.editOption;
+        if(editOption && orderOption) orderOption = false;
         return this.editOption;
+    }
+
+    public boolean updateOrderButtonVisibility() {
+        this.orderOption = !this.orderOption;
+        if(orderOption && editOption) editOption = false;
+        return this.orderOption;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -73,12 +82,43 @@ public class RecyclerViewAppListAdapter extends RecyclerView.Adapter<RecyclerVie
             this.itemAppBinding.buttonAppItem.setOnClickListener(view -> {
                 AppModel app = appModelList.get(getAdapterPosition());
                 recyclerViewAppListInterface.onButtonClick(appModelList.get(getAdapterPosition()));
-
                 if(app.getPosition() != -1) app.setPosition(-1);
                 else app.setPosition(0);
-
                 itemAppBinding.buttonAppItem.setImageResource((app.getPosition() != - 1) ? R.drawable.ic_check : android.R.color.transparent);
             });
+
+            this.itemAppBinding.upButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    int index = getAdapterPosition();
+
+                    if(index > 0) {
+                        recyclerViewAppListInterface.onUpButtonClick(appModelList.get(index), appModelList.get(index - 1));
+                    }
+
+                    else {
+                        recyclerViewAppListInterface.onUpButtonClick(appModelList.get(index), null);
+                    }
+
+                }
+            });
+
+            this.itemAppBinding.downButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int index = getAdapterPosition();
+
+                    if((index < appModelList.size() - 1) && (appModelList.get(index + 1).getPosition() != -1)) {
+                        recyclerViewAppListInterface.onDownButtonClick(appModelList.get(index), appModelList.get(index + 1));
+                    }
+
+                    else {
+                        recyclerViewAppListInterface.onDownButtonClick(appModelList.get(index), null);
+                    }
+                }
+            });
+
         }
 
         public void bindView(AppModel app) {
@@ -86,6 +126,8 @@ public class RecyclerViewAppListAdapter extends RecyclerView.Adapter<RecyclerVie
             itemAppBinding.textViewIcon.setText(app.getLabel());
             itemAppBinding.buttonAppItem.setVisibility((editOption)? View.VISIBLE: View.GONE);
             itemAppBinding.buttonAppItem.setImageResource((app.getPosition() != - 1) ? R.drawable.ic_check : android.R.color.transparent);
+            itemAppBinding.upButton.setVisibility((orderOption)? View.VISIBLE: View.GONE);
+            itemAppBinding.downButton.setVisibility((orderOption)? View.VISIBLE: View.GONE);
         }
     }
 

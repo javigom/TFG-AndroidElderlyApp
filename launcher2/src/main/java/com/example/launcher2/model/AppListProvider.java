@@ -26,4 +26,8 @@ public class AppListProvider {
         AppListDataSource.removeShortcutApp(app);
     }
 
+    public static void swapApps(AppModel app1, AppModel app2) {
+        AppListDataSource.swapApps(app1, app2);
+    }
+
 }

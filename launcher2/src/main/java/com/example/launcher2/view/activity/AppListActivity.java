@@ -16,6 +16,7 @@ import com.example.launcher2.R;
 import com.example.launcher2.data.AppListDataSource;
 import com.example.launcher2.databinding.ActivityAppListBinding;
 import com.example.launcher2.event.RecyclerViewAppListInterface;
+import com.example.launcher2.model.AppListProvider;
 import com.example.launcher2.model.AppModel;
 import com.example.launcher2.util.OrderTypeAppModel;
 import com.example.launcher2.view.adapter.RecyclerViewAppListAdapter;
@@ -72,17 +73,30 @@ public class AppListActivity extends AppCompatActivity implements RecyclerViewAp
         //startActivity(new Intent(AppListActivity.this, MainActivity.class));
     }
 
+    @Override
+    public void onUpButtonClick(AppModel app1, AppModel app2) {
+        appViewModel.swapAppsButton(app1, app2);
+        appViewModel.updateShortcutAppLit(OrderTypeAppModel.ORDER_BY_SHORTCUT_AND_NAME);
+    }
+
+    @Override
+    public void onDownButtonClick(AppModel app1, AppModel app2) {
+        appViewModel.swapAppsButton(app2, app1);
+        appViewModel.updateShortcutAppLit(OrderTypeAppModel.ORDER_BY_SHORTCUT_AND_NAME);
+    }
+
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 super.onBackPressed();
                 return true;
             case R.id.edit:
-                boolean editable = recyclerViewAppListAdapter.updateButtonVisibility();
+                boolean editable = recyclerViewAppListAdapter.updateEditButtonVisibility();
                 appViewModel.updateAppList(editable? OrderTypeAppModel.ORDER_BY_SHORTCUT_AND_NAME: OrderTypeAppModel.ORDER_BY_NAME);
                 return true;
             case R.id.order:
-                System.out.println("has pulsado ordenar");
+                boolean order = recyclerViewAppListAdapter.updateOrderButtonVisibility();
+                appViewModel.updateShortcutAppLit(order? OrderTypeAppModel.ORDER_BY_SHORTCUT_AND_NAME: OrderTypeAppModel.ORDER_BY_NAME);
                 return true;
         }
 
