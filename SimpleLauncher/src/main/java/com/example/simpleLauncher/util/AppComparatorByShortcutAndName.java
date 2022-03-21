@@ -1,8 +1,8 @@
-package com.example.launcher2.util;
+package com.example.simpleLauncher.util;
 
 import androidx.annotation.NonNull;
 
-import com.example.launcher2.model.AppModel;
+import com.example.simpleLauncher.model.AppModel;
 
 import java.text.Normalizer;
 import java.util.Comparator;

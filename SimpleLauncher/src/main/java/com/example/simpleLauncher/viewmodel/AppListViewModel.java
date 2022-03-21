@@ -1,4 +1,4 @@
-package com.example.launcher2.viewmodel;
+package com.example.simpleLauncher.viewmodel;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,10 +7,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.launcher2.model.AppListProvider;
-import com.example.launcher2.model.AppModel;
-import com.example.launcher2.model.MainProvider;
-import com.example.launcher2.util.OrderTypeAppModel;
+import com.example.simpleLauncher.model.AppListProvider;
+import com.example.simpleLauncher.model.AppModel;
+import com.example.simpleLauncher.model.MainProvider;
+import com.example.simpleLauncher.util.OrderTypeAppModel;
 
 import java.util.List;
 

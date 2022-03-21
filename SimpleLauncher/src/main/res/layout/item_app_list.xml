@@ -36,23 +36,29 @@
 
     <ImageButton
         android:id="@+id/upButton"
+        style="@android:style/Widget.Material.Light.Button"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_weight="1"
         android:src="@drawable/ic_arrow_up"
+        android:backgroundTint="@drawable/border_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/downButton"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="#379A02"/>
 
     <ImageButton
         android:id="@+id/downButton"
+        style="@android:style/Widget.Material.Light.Button"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_weight="1"
         android:src="@drawable/ic_arrow_down"
+        android:backgroundTint="@drawable/border_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="#AF0000" />
 
     <ImageButton
         android:id="@+id/buttonAppItem"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.launcher2">
+    package="com.example.simpleLauncher">
 
     <queries>
 
@@ -17,10 +17,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".view.activity.AppListActivity"
+            android:name="com.example.simpleLauncher.view.activity.AppListActivity"
             android:exported="false" />
         <activity
-            android:name=".view.activity.MainActivity"
+            android:name="com.example.simpleLauncher.view.activity.MainActivity"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Wallpaper"
             android:exported="true"

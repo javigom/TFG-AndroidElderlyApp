@@ -1,4 +1,4 @@
-package com.example.launcher2;
+package com.example.simpleLauncher;
 
 import static org.junit.Assert.assertEquals;
 

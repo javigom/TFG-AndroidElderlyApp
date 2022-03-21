@@ -1,7 +1,7 @@
-package com.example.launcher2.model;
+package com.example.simpleLauncher.model;
 
-import com.example.launcher2.data.AppListDataSource;
-import com.example.launcher2.util.OrderTypeAppModel;
+import com.example.simpleLauncher.data.AppListDataSource;
+import com.example.simpleLauncher.util.OrderTypeAppModel;
 
 import java.util.List;
 

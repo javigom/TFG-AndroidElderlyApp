@@ -1,4 +1,4 @@
-package com.example.launcher2.view.activity;
+package com.example.simpleLauncher.view.activity;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,14 +12,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.launcher2.R;
-import com.example.launcher2.data.AppListDataSource;
-import com.example.launcher2.databinding.ActivityAppListBinding;
-import com.example.launcher2.event.RecyclerViewAppListInterface;
-import com.example.launcher2.model.AppModel;
-import com.example.launcher2.util.OrderTypeAppModel;
-import com.example.launcher2.view.adapter.RecyclerViewAppListAdapter;
-import com.example.launcher2.viewmodel.AppListViewModel;
+import com.example.simpleLauncher.R;
+import com.example.simpleLauncher.databinding.ActivityAppListBinding;
+import com.example.simpleLauncher.data.AppListDataSource;
+import com.example.simpleLauncher.event.RecyclerViewAppListInterface;
+import com.example.simpleLauncher.model.AppModel;
+import com.example.simpleLauncher.util.OrderTypeAppModel;
+import com.example.simpleLauncher.view.adapter.RecyclerViewAppListAdapter;
+import com.example.simpleLauncher.viewmodel.AppListViewModel;
 
 public class AppListActivity extends AppCompatActivity implements RecyclerViewAppListInterface {
 
@@ -62,7 +62,7 @@ public class AppListActivity extends AppCompatActivity implements RecyclerViewAp
     }
 
     @Override
-    public void onItemClick(AppModel  app) {
+    public void onItemClick(AppModel app) {
         appViewModel.launchApp(app, this);
     }
 

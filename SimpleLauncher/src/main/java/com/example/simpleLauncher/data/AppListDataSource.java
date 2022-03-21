@@ -1,4 +1,4 @@
-package com.example.launcher2.data;
+package com.example.simpleLauncher.data;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,10 +10,10 @@ import android.preference.PreferenceManager;
 
 import androidx.annotation.NonNull;
 
-import com.example.launcher2.model.AppModel;
-import com.example.launcher2.util.AppComparatorByName;
-import com.example.launcher2.util.AppComparatorByShortcutAndName;
-import com.example.launcher2.util.OrderTypeAppModel;
+import com.example.simpleLauncher.model.AppModel;
+import com.example.simpleLauncher.util.AppComparatorByName;
+import com.example.simpleLauncher.util.AppComparatorByShortcutAndName;
+import com.example.simpleLauncher.util.OrderTypeAppModel;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,6 +1,6 @@
-package com.example.launcher2.event;
+package com.example.simpleLauncher.event;
 
-import com.example.launcher2.model.AppModel;
+import com.example.simpleLauncher.model.AppModel;
 
 public interface RecyclerViewAppListInterface {
     void onItemClick(AppModel app);

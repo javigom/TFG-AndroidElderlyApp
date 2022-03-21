@@ -1,4 +1,4 @@
-package com.example.launcher2.view.activity;
+package com.example.simpleLauncher.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,12 +8,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import com.example.launcher2.data.AppListDataSource;
-import com.example.launcher2.databinding.ActivityMainBinding;
-import com.example.launcher2.event.RecyclerViewAppListInterface;
-import com.example.launcher2.model.AppModel;
-import com.example.launcher2.view.adapter.RecyclerViewMainAdapter;
-import com.example.launcher2.viewmodel.MainViewModel;
+import com.example.simpleLauncher.data.AppListDataSource;
+import com.example.simpleLauncher.databinding.ActivityMainBinding;
+import com.example.simpleLauncher.event.RecyclerViewAppListInterface;
+import com.example.simpleLauncher.model.AppModel;
+import com.example.simpleLauncher.view.adapter.RecyclerViewMainAdapter;
+import com.example.simpleLauncher.viewmodel.MainViewModel;
 
 public class MainActivity extends AppCompatActivity implements RecyclerViewAppListInterface {
 

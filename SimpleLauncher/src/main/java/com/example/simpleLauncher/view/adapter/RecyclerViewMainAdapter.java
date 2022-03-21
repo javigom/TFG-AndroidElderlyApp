@@ -1,4 +1,4 @@
-package com.example.launcher2.view.adapter;
+package com.example.simpleLauncher.view.adapter;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -6,9 +6,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.launcher2.databinding.ItemAppShortcutBinding;
-import com.example.launcher2.event.RecyclerViewAppListInterface;
-import com.example.launcher2.model.AppModel;
+import com.example.simpleLauncher.databinding.ItemAppShortcutBinding;
+import com.example.simpleLauncher.event.RecyclerViewAppListInterface;
+import com.example.simpleLauncher.model.AppModel;
 
 import java.util.ArrayList;
 import java.util.List;
