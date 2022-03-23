@@ -1,8 +1,14 @@
 package com.example.simpleLauncher.viewmodel;
 
 import android.app.Activity;
+import android.app.WallpaperManager;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -12,6 +18,8 @@ import com.example.simpleLauncher.model.AppModel;
 import com.example.simpleLauncher.model.MainProvider;
 import com.example.simpleLauncher.util.OrderTypeAppModel;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 public class AppListViewModel extends ViewModel {
@@ -46,19 +54,16 @@ public class AppListViewModel extends ViewModel {
     }
 
     public void launchApp(AppModel app, Activity activity) {
-
         try {
             Intent intent = new Intent(Intent.ACTION_MAIN);
             intent.addCategory(Intent.CATEGORY_LAUNCHER);
             intent.setPackage(app.getPackageName());
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            //intent.setClassName(appModel.getPackageName(), className);
             activity.startActivity(intent);
 
         } catch(Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public void clickShortcut(AppModel app) {
@@ -69,6 +74,31 @@ public class AppListViewModel extends ViewModel {
     public void swapAppsButton(AppModel app1, AppModel app2) {
         if(app1 != null && app2 != null) {
             AppListProvider.swapApps(app1, app2);
+        }
+    }
+
+    public void setWallpaper(Activity activity, ActivityResult result) {
+        Intent data = result.getData();
+        if(data != null) {
+            Uri imageUri = data.getData();
+
+            if(imageUri != null) {
+                try {
+                    InputStream inputStream = activity.getContentResolver().openInputStream(imageUri);
+                    Bitmap imageBitmap = BitmapFactory.decodeStream(inputStream);
+
+                    WallpaperManager manager = WallpaperManager.getInstance(activity.getApplicationContext());
+                    try{
+                        manager.setBitmap(imageBitmap);
+                        Toast.makeText(activity, "Fondo de pantalla actualizado", Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        Toast.makeText(activity, "Error al cambiar el fondo de pantalla", Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (Exception e){
+                    Toast.makeText(activity, "Se ha producido un error al cargar la foto", Toast.LENGTH_SHORT).show();
+                }
+            }
         }
     }
 

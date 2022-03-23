@@ -89,7 +89,7 @@ public class AppListDataSource {
             List<AppModel> list = fetchApps(OrderTypeAppModel.ORDER_BY_SHORTCUT_AND_NAME);
 
             int i = app.getPosition() + 1;
-            while(list.get(i).getPosition() != -1) {
+            while(i < list.size() && list.get(i).getPosition() != -1) {
                 myEditor.putInt(list.get(i).getID(), list.get(i).getPosition() - 1);
                 i++;
             }

@@ -6,5 +6,8 @@
     <item
         android:id="@+id/order"
         android:title="@string/order_mode" />
+    <item
+        android:id="@+id/wallpaper"
+        android:title="@string/change_wallpaper" />
 
 </menu>
