@@ -7,14 +7,32 @@
     android:layout_gravity="center_horizontal|center_vertical"
     tools:context="com.example.simpleLauncher.view.activity.MainActivity">
 
+    <TextClock
+        android:id="@+id/clockTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:shadowColor="@color/black"
+        android:shadowDx="5"
+        android:shadowDy="1"
+        android:shadowRadius="10"
+        android:text="20:20"
+        android:textColor="@color/white"
+        android:textSize="100dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toTopOf="@+id/buttonApps"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clockTextView"
         tools:listitem="@layout/item_app_shortcut" />
 
     <ImageButton

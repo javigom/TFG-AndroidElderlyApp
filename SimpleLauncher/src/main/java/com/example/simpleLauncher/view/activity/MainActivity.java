@@ -30,10 +30,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAppLi
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
         AppListDataSource.updateContext(getApplicationContext());
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-
         initView();
     }
 
@@ -57,19 +55,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAppLi
     public void onItemClick(AppModel app) {
         mainViewModel.launchApp(app, this);
     }
-
     @Override
-    public void onButtonClick(AppModel app) {
-
-    }
-
+    public void onButtonClick(AppModel app) {}
     @Override
-    public void onUpButtonClick(AppModel app1, AppModel app2) {
-
-    }
-
+    public void onUpButtonClick(AppModel app1, AppModel app2) {}
     @Override
-    public void onDownButtonClick(AppModel app1, AppModel app2) {
+    public void onDownButtonClick(AppModel app1, AppModel app2) {}
 
-    }
 }

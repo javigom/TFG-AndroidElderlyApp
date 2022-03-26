@@ -4,6 +4,7 @@ import com.example.simpleLauncher.data.AppListDataSource;
 import com.example.simpleLauncher.util.OrderTypeAppModel;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class MainProvider {
@@ -25,6 +26,11 @@ public class MainProvider {
         }
 
         return appsWithShortcut;
+    }
+
+    public static String getCurrentTime() {
+        Calendar c = Calendar.getInstance();
+        return c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE);
     }
 
 }

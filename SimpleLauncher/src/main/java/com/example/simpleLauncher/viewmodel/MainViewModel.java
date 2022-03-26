@@ -18,6 +18,7 @@ public class MainViewModel extends ViewModel {
 
     private MutableLiveData<List<AppModel>> appListLiveData;
 
+
     // CONSTRUCTOR
 
     public MainViewModel() {
@@ -35,7 +36,6 @@ public class MainViewModel extends ViewModel {
     }
 
     public void launchApp(AppModel app, Activity activity) {
-
         try {
             Intent intent = new Intent(Intent.ACTION_MAIN);
             intent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -46,7 +46,6 @@ public class MainViewModel extends ViewModel {
         } catch(Exception e) {
             e.printStackTrace();
         }
-
     }
 
 }

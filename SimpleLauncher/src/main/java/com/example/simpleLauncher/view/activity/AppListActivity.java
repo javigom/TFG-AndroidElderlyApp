@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -38,6 +37,7 @@ public class AppListActivity extends AppCompatActivity implements RecyclerViewAp
     private AppListViewModel appViewModel;
     private RecyclerViewAppListAdapter recyclerViewAppListAdapter;
     private static final int PERMISSION_REQUEST_STORAGE = 100;
+
 
 
     private ActivityResultLauncher<Intent> activityResultLauncher =
