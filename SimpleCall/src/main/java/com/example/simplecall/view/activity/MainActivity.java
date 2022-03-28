@@ -1,7 +1,6 @@
-package com.example.call.view;
+package com.example.simplecall.view.activity;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -15,21 +14,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.call.R;
-import com.example.call.model.CallModel;
-import com.example.call.model.ContactComparator;
-import com.example.call.model.ContactModel;
-import com.example.call.model.MyContentResolver;
-import com.example.call.view.adapter.CallLogListAdapter;
-import com.example.call.view.adapter.ContactListAdapter;
-import com.example.call.view.adapter.FavContactListAdapter;
-import com.example.call.view.adapter.TabLayoutAdapter;
-import com.example.call.view.fragment.CallLogListFragment;
-import com.example.call.view.fragment.ChangeFragment;
+import com.example.simplecall.R;
+import com.example.simplecall.data.MyContentResolver;
+import com.example.simplecall.model.CallModel;
+import com.example.simplecall.model.ContactModel;
+import com.example.simplecall.util.ContactComparator;
+import com.example.simplecall.view.adapter.CallLogListAdapter;
+import com.example.simplecall.view.adapter.ContactListAdapter;
+import com.example.simplecall.view.adapter.FavContactListAdapter;
+import com.example.simplecall.view.adapter.TabLayoutAdapter;
+import com.example.simplecall.view.fragment.CallLogListFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
@@ -46,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     private static final int READ_CALL_LOG = 101;
     private static final int CALL_PHONE = 102;
     private static final int WRITE_CONTACTS = 103;
+
+    private static final int ALL_PERMISSIONS = 104;
 
     // Update codes
     private static final int UPDATE_CALL_LOG = 200;
@@ -89,27 +88,37 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initPermissions();
-        initData();
-        initView();
     }
 
     private void initPermissions(){
-        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED)) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, 1);
-        }
+        final String[] permissions = new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS,
+                Manifest.permission.READ_CALL_LOG, Manifest.permission.CALL_PHONE};
+        ActivityCompat.requestPermissions(this, permissions, ALL_PERMISSIONS);
+    }
 
-        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED)) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CALL_LOG}, 2);
-        }
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, 3);
-        }
+        if(requestCode == ALL_PERMISSIONS) {
+            boolean isPerpermissionForAllGranted = true;
+            if (grantResults.length > 0 && permissions.length == grantResults.length) {
+                for (int i = 0; i < permissions.length; i++) {
+                    if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                        isPerpermissionForAllGranted = false;
+                    }
+                }
 
-        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CONTACTS) != PackageManager.PERMISSION_GRANTED)) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_CONTACTS}, 4);
+            } else {
+                isPerpermissionForAllGranted = false;
+            }
+
+            if (isPerpermissionForAllGranted) {
+                initData();
+                initView();
+            } else {
+                finish();
+            }
         }
     }
 
@@ -117,7 +126,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
      * Initialization of the data
       */
     private void initData() {
-
         myContentResolver = new MyContentResolver(getContentResolver());
         contactModelList = new ArrayList<>();
         favContactModelList = new ArrayList<>();
@@ -125,7 +133,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         phoneContactMap = new HashMap<>();
         myContentResolver.loadContacts(contactModelList, favContactModelList, phoneContactMap);
         myContentResolver.loadCallLogs(callModelList);
-
     }
 
     /**
@@ -174,12 +181,9 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         });
 
         fabDial = findViewById(R.id.fabDialAM);
-
         fabDial.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, DialNumberActivity.class);
             activityResultLauncher.launch(intent);
-            //startActivity(new Intent(MainActivity.this, DialNumberActivity.class));
-
         });
 
     }
@@ -194,17 +198,13 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     @Override
     public void selectedCall(CallModel callModel) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
         builder.setTitle("¿Deseas rellamar?");
-        //builder.setMessage("¿Deseas rellamar?");
-
         builder.setPositiveButton("SÍ", (dialog, which) -> {
             startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + callModel.getPhone())));
             pager2.setCurrentItem(1);
         });
 
         builder.setNegativeButton("NO", (dialog, which) -> dialog.dismiss());
-
         AlertDialog alert = builder.create();
         alert.show();
     }
@@ -296,12 +296,10 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     private void addContact(ActivityResult result){
 
         if (result.getData() != null) {
-
             ContactModel newContact = (ContactModel) result.getData().getSerializableExtra("contact");
 
             // Modificar bbdd
             long id = myContentResolver.addContact(newContact);
-
             newContact.setId(id);
 
             // Añado el contacto a las listas
