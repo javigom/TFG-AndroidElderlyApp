@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.MainActivity">
+    tools:context="com.example.simplecall.view.activity.MainActivity">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tlMenuAM"
@@ -51,7 +51,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        app:backgroundTint="@color/blue_primary_variant"
+        app:backgroundTint="@color/purple_500"
         app:fabCustomSize="80dp"
         app:fabSize="auto"
         app:maxImageSize="50dp"

@@ -1,6 +1,8 @@
-package com.example.call.model;
+package com.example.simplecall.util;
 
 import androidx.annotation.NonNull;
+
+import com.example.simplecall.model.ContactModel;
 
 import java.text.Normalizer;
 import java.util.Comparator;

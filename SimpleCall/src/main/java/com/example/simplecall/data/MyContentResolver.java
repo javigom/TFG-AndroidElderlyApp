@@ -1,27 +1,24 @@
-package com.example.call.model;
+package com.example.simplecall.data;
 
 import android.content.ContentProviderOperation;
-import android.content.ContentProviderResult;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.CallLog;
 import android.provider.ContactsContract;
 import android.telephony.PhoneNumberUtils;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.simplecall.model.CallModel;
+import com.example.simplecall.model.ContactModel;
+import com.example.simplecall.util.ContactComparator;
+
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.spec.ECField;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;

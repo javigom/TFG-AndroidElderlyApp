@@ -1,4 +1,4 @@
-package com.example.call.view.fragment;
+package com.example.simplecall.view.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,10 +10,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.call.model.CallModel;
-import com.example.call.R;
-import com.example.call.view.adapter.CallLogListAdapter;
-import com.example.call.model.ContactModel;
+import com.example.simplecall.R;
+import com.example.simplecall.model.CallModel;
+import com.example.simplecall.model.ContactModel;
+import com.example.simplecall.view.adapter.CallLogListAdapter;
 
 import java.util.List;
 import java.util.Map;

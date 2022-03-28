@@ -1,12 +1,8 @@
-package com.example.call.view.fragment;
+package com.example.simplecall.view.fragment;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.call.view.ContactActivity;
-import com.example.call.R;
-import com.example.call.model.ContactModel;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
+import com.example.simplecall.R;
+import com.example.simplecall.model.ContactModel;
+import com.example.simplecall.view.activity.ContactActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class DetailContactFragment extends Fragment {

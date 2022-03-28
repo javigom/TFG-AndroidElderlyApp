@@ -1,6 +1,6 @@
-package com.example.call.view;
+package com.example.simplecall.event;
 
-import com.example.call.model.ContactModel;
+import com.example.simplecall.model.ContactModel;
 
 public interface UpdateContact {
     public void updateContact(ContactModel contactModel);

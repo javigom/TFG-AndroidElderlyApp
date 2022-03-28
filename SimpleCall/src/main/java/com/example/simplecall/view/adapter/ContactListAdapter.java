@@ -1,4 +1,4 @@
-package com.example.call.view.adapter;
+package com.example.simplecall.view.adapter;
 
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -10,33 +10,33 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.utils.widget.ImageFilterView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.call.model.ContactModel;
-import com.example.call.R;
+import com.example.simplecall.R;
+import com.example.simplecall.model.ContactModel;
 
 import java.util.List;
 
-public class FavContactListAdapter extends RecyclerView.Adapter<FavContactListAdapter.ViewHolder> {
+public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ViewHolder> {
 
-    private List<ContactModel> favContactModelList;
-    private SelectedFavContact selectedFavContact;
+    private List<ContactModel> contactModelList;
+    private SelectedContact selectedContact;
 
-    public FavContactListAdapter(List<ContactModel> contactModelList, SelectedFavContact selectedFavContact){
-        this.favContactModelList = contactModelList;
-        this.selectedFavContact = selectedFavContact;
+    public ContactListAdapter(List<ContactModel> contactModelList, SelectedContact selectedContact){
+        this.contactModelList = contactModelList;
+        this.selectedContact = selectedContact;
         notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_fav_contact, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_contact, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        ContactModel contactModel = favContactModelList.get(position);
+        ContactModel contactModel = contactModelList.get(position);
         holder.text_name.setText(contactModel.getName());
         holder.image.setImageResource(R.drawable.ic_default_contact_photo);
 
@@ -48,11 +48,11 @@ public class FavContactListAdapter extends RecyclerView.Adapter<FavContactListAd
 
     @Override
     public int getItemCount() {
-        return favContactModelList.size();
+        return contactModelList.size();
     }
 
-    public interface SelectedFavContact {
-        void selectedFavContact(ContactModel contactModel);
+    public interface SelectedContact {
+        void selectedContact(ContactModel contactModel);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -62,9 +62,9 @@ public class FavContactListAdapter extends RecyclerView.Adapter<FavContactListAd
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            text_name = itemView.findViewById(R.id.tvNameIFC);
-            image = itemView.findViewById(R.id.ivPhotoIFC);
-            itemView.setOnClickListener(v -> selectedFavContact.selectedFavContact(favContactModelList.get(getAdapterPosition())));
+            text_name = itemView.findViewById(R.id.tvNameIC);
+            image = itemView.findViewById(R.id.ivPhotoIC);
+            itemView.setOnClickListener(v -> selectedContact.selectedContact(contactModelList.get(getAdapterPosition())));
         }
 
     }

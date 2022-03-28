@@ -38,8 +38,6 @@ public class AppListActivity extends AppCompatActivity implements RecyclerViewAp
     private RecyclerViewAppListAdapter recyclerViewAppListAdapter;
     private static final int PERMISSION_REQUEST_STORAGE = 100;
 
-
-
     private ActivityResultLauncher<Intent> activityResultLauncher =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                     result -> { appViewModel.setWallpaper(this, result);

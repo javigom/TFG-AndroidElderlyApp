@@ -1,4 +1,4 @@
-package com.example.call.model;
+package com.example.simplecall.model;
 
 import androidx.annotation.NonNull;
 

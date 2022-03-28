@@ -1,4 +1,4 @@
-package com.example.call.view.adapter;
+package com.example.simplecall.view.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -6,12 +6,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.call.view.MainActivity;
-import com.example.call.view.fragment.CallLogListFragment;
-import com.example.call.view.fragment.ContactListFragment;
-import com.example.call.view.fragment.FavContactListFragment;
-import com.example.call.model.CallModel;
-import com.example.call.model.ContactModel;
+import com.example.simplecall.model.CallModel;
+import com.example.simplecall.model.ContactModel;
+import com.example.simplecall.view.activity.MainActivity;
+import com.example.simplecall.view.fragment.CallLogListFragment;
+import com.example.simplecall.view.fragment.ContactListFragment;
+import com.example.simplecall.view.fragment.FavContactListFragment;
 
 import java.util.List;
 import java.util.Map;

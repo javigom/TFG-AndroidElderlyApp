@@ -21,13 +21,15 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="com.example.simpleLauncher.view.activity.AppListActivity"
-            android:exported="false" />
+            android:launchMode="singleTask"
+            android:exported="false"
+            android:clearTaskOnLaunch="true"
+            android:stateNotNeeded="true"/>
         <activity
             android:name="com.example.simpleLauncher.view.activity.MainActivity"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Wallpaper"
             android:exported="true"
-
             android:clearTaskOnLaunch="true"
             android:stateNotNeeded="true">
 

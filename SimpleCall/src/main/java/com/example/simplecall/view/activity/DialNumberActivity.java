@@ -1,4 +1,4 @@
-package com.example.call.view;
+package com.example.simplecall.view.activity;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.call.R;
+import com.example.simplecall.R;
 
 public class DialNumberActivity extends AppCompatActivity {
 

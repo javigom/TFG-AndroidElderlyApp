@@ -1,4 +1,8 @@
-package com.example.call.view;
+package com.example.simplecall.view.activity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -7,15 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
-
-import com.example.call.R;
-import com.example.call.view.fragment.ChangeFragment;
-import com.example.call.view.fragment.DetailContactFragment;
-import com.example.call.view.fragment.EditContactFragment;
-import com.example.call.model.ContactModel;
+import com.example.simplecall.R;
+import com.example.simplecall.model.ContactModel;
+import com.example.simplecall.view.fragment.ChangeFragment;
+import com.example.simplecall.view.fragment.DetailContactFragment;
+import com.example.simplecall.view.fragment.EditContactFragment;
 
 public class ContactActivity extends AppCompatActivity implements ChangeFragment {
 

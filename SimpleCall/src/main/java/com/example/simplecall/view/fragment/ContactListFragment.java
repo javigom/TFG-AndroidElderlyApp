@@ -1,6 +1,5 @@
-package com.example.call.view.fragment;
+package com.example.simplecall.view.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +11,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.call.model.ContactModel;
-import com.example.call.R;
-import com.example.call.view.DialNumberActivity;
-import com.example.call.view.MainActivity;
-import com.example.call.view.adapter.ContactListAdapter;
+import com.example.simplecall.R;
+import com.example.simplecall.model.ContactModel;
+import com.example.simplecall.view.activity.MainActivity;
+import com.example.simplecall.view.adapter.ContactListAdapter;
 
 import java.util.List;
 

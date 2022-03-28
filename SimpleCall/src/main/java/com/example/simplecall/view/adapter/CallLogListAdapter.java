@@ -1,4 +1,4 @@
-package com.example.call.view.adapter;
+package com.example.simplecall.view.adapter;
 
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -10,9 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.call.R;
-import com.example.call.model.CallModel;
-import com.example.call.model.ContactModel;
+import com.example.simplecall.R;
+import com.example.simplecall.model.CallModel;
+import com.example.simplecall.model.ContactModel;
 
 import java.util.List;
 import java.util.Map;
