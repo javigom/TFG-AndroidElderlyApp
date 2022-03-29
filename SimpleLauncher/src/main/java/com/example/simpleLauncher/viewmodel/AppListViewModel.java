@@ -55,13 +55,19 @@ public class AppListViewModel extends ViewModel {
 
     public void launchApp(AppModel app, Activity activity) {
         try {
-            Intent intent = new Intent(Intent.ACTION_MAIN);
-            intent.addCategory(Intent.CATEGORY_LAUNCHER);
-            intent.setPackage(app.getPackageName());
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            activity.startActivity(intent);
+//            Intent intent = new Intent(Intent.ACTION_MAIN);
+//            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+//            intent.setPackage(app.getPackageName());
+//            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            //intent.setClassName(app.getPackageName(), className);
+//            activity.startActivity(intent);
+
+        Intent launchAppIntent = activity.getApplicationContext().getPackageManager().getLaunchIntentForPackage(app.getPackageName());
+        if (launchAppIntent != null)
+            activity.getApplicationContext().startActivity(launchAppIntent);
 
         } catch(Exception e) {
+            System.out.println(app);
             e.printStackTrace();
         }
     }
