@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -37,11 +38,11 @@ public class AppListActivity extends AppCompatActivity implements RecyclerViewAp
     private AppListViewModel appViewModel;
     private RecyclerViewAppListAdapter recyclerViewAppListAdapter;
     private static final int PERMISSION_REQUEST_STORAGE = 100;
+    private Menu menu;
 
-    private ActivityResultLauncher<Intent> activityResultLauncher =
+    private final ActivityResultLauncher<Intent> activityResultLauncher =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                    result -> { appViewModel.setWallpaper(this, result);
-            });
+                    result -> appViewModel.setWallpaper(this, result));
 
 
     // METHODS
@@ -59,17 +60,28 @@ public class AppListActivity extends AppCompatActivity implements RecyclerViewAp
         initView();
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        recyclerViewAppListAdapter.setOrderOption(false);
+        recyclerViewAppListAdapter.setEditOption(false);
+        appViewModel.updateAppList(OrderTypeAppModel.ORDER_BY_NAME);
+        if(this.menu != null)
+            updateMenuOptions();
+    }
+
     private void initView() {
         ActionBar actionBar = getSupportActionBar();
 
         try {
+            assert actionBar != null;
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle("Aplicaciones instaladas");
         } catch(NullPointerException e) {
             e.printStackTrace();
         }
 
-        recyclerViewAppListAdapter = new RecyclerViewAppListAdapter(this);
+        recyclerViewAppListAdapter = new RecyclerViewAppListAdapter(this, getApplicationContext());
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         binding.recyclerView.setAdapter(recyclerViewAppListAdapter);
         appViewModel.getAppList().observe(this, recyclerViewAppListAdapter::updateAppList);
@@ -89,29 +101,38 @@ public class AppListActivity extends AppCompatActivity implements RecyclerViewAp
     @Override
     public void onUpButtonClick(AppModel app1, AppModel app2) {
         appViewModel.swapAppsButton(app1, app2);
-        appViewModel.updateShortcutAppLit(OrderTypeAppModel.ORDER_BY_SHORTCUT_AND_NAME);
+        appViewModel.updateShortcutAppList(OrderTypeAppModel.ORDER_BY_SHORTCUT_AND_NAME);
     }
 
     @Override
     public void onDownButtonClick(AppModel app1, AppModel app2) {
         appViewModel.swapAppsButton(app2, app1);
-        appViewModel.updateShortcutAppLit(OrderTypeAppModel.ORDER_BY_SHORTCUT_AND_NAME);
+        appViewModel.updateShortcutAppList(OrderTypeAppModel.ORDER_BY_SHORTCUT_AND_NAME);
     }
 
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        boolean orderOption = recyclerViewAppListAdapter.isOrderOption();
+        boolean editOption = recyclerViewAppListAdapter.isEditOption();
+
         switch (item.getItemId()) {
             case android.R.id.home:
+                showToastMessage(editOption, orderOption);
                 super.onBackPressed();
                 return true;
             case R.id.edit:
-                boolean editable = recyclerViewAppListAdapter.updateEditButtonVisibility();
-                appViewModel.updateAppList(editable? OrderTypeAppModel.ORDER_BY_SHORTCUT_AND_NAME: OrderTypeAppModel.ORDER_BY_NAME);
+                showToastMessage(editOption, orderOption);
+                recyclerViewAppListAdapter.setEditOption(!editOption);
+                appViewModel.updateAppList(editOption? OrderTypeAppModel.ORDER_BY_NAME:  OrderTypeAppModel.ORDER_BY_SHORTCUT_AND_NAME);
+                updateMenuOptions();
                 return true;
             case R.id.order:
-                boolean order = recyclerViewAppListAdapter.updateOrderButtonVisibility();
-                appViewModel.updateShortcutAppLit(order? OrderTypeAppModel.ORDER_BY_SHORTCUT_AND_NAME: OrderTypeAppModel.ORDER_BY_NAME);
+                showToastMessage(editOption, orderOption);
+                recyclerViewAppListAdapter.setOrderOption(!orderOption);
+                appViewModel.updateShortcutAppList(orderOption? OrderTypeAppModel.ORDER_BY_NAME:  OrderTypeAppModel.ORDER_BY_SHORTCUT_AND_NAME);
+                updateMenuOptions();
                 return true;
             case R.id.wallpaper:
+                showToastMessage(editOption, orderOption);
                 showGalleryPreview();
                 return true;
         }
@@ -119,8 +140,26 @@ public class AppListActivity extends AppCompatActivity implements RecyclerViewAp
         return super.onOptionsItemSelected(item);
     }
 
+    private void showToastMessage(boolean editOption, boolean orderOption) {
+        if(editOption)
+            Toast.makeText(getApplicationContext(), "Edición actualizada correctamente", Toast.LENGTH_SHORT).show();
+        if(orderOption)
+            Toast.makeText(getApplicationContext(), "Orden actualizado correctamente", Toast.LENGTH_SHORT).show();
+    }
+
+    private void updateMenuOptions() {
+        this.menu.findItem(R.id.order).setTitle((R.string.order_mode));
+        this.menu.findItem(R.id.edit).setTitle((R.string.edit_mode));
+
+        if(recyclerViewAppListAdapter.isEditOption())
+            this.menu.findItem(R.id.edit).setTitle((R.string.exit_edit_mode));
+        else if(recyclerViewAppListAdapter.isOrderOption())
+            this.menu.findItem(R.id.order).setTitle((R.string.exit_order_mode));
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu = menu;
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.option_menu,  menu);
         return true;

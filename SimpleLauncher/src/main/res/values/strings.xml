@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">SimpleLauncher</string>
     <string name="edit_mode">Modo edición</string>
+    <string name="exit_edit_mode">Salir modo edición</string>
     <string name="order_mode">Modo ordenar</string>
+    <string name="exit_order_mode">Salir modo ordenar</string>
     <string name="change_wallpaper">Cambiar fondo de pantalla</string>
 </resources>

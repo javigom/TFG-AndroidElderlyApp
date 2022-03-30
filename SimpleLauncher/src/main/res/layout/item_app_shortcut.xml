@@ -24,6 +24,7 @@
             android:id="@+id/textViewIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxLines="1"
             android:shadowColor="@color/black"
             android:shadowDx="5"
             android:shadowDy="1"
