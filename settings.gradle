@@ -9,3 +9,4 @@ dependencyResolutionManagement {
 rootProject.name = "TFG"
 include ':SimpleCall'
 include ':SimpleLauncher'
+include ':SimpleMedicine'
