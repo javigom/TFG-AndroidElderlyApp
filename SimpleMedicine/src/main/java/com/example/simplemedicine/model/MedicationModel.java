@@ -4,10 +4,13 @@ import androidx.recyclerview.widget.SortedList;
 
 import com.example.simplemedicine.util.WeekDaysEnum;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
-public class MedicationModel {
+public class MedicationModel implements Serializable {
 
     private String name;
     private String description;
@@ -28,6 +31,7 @@ public class MedicationModel {
         this.startDate = startDate;
         this.endDate = endDate;
         this.photo = photo;
+
     }
 
     public MedicationModel(String name) {

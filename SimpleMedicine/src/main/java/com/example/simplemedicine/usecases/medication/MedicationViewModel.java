@@ -21,7 +21,9 @@ public class MedicationViewModel extends ViewModel {
         medicationListLiveData = new MutableLiveData<>();
         ArrayList<MedicationModel> medicationList = new ArrayList<>();
         medicationList.add(new MedicationModel("Paracetamol"));
+        medicationList.get(0).setDescription("600MG");
         medicationList.add(new MedicationModel("Ibuprofeno"));
+        medicationList.get(1).setDescription("400MG");
         medicationListLiveData.setValue(medicationList);
     }
 

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.simplemedicine.databinding.ItemMedicationListBinding;
 import com.example.simplemedicine.model.MedicationModel;
+import com.example.simplemedicine.usecases.medicationdetail.MedicationDetailRouter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,17 +50,19 @@ public class MedicationRecyclerViewAdapter extends RecyclerView.Adapter<Medicati
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         ItemMedicationListBinding itemMedicationListBinding;
 
         public ViewHolder(@NonNull ItemMedicationListBinding binding) {
             super(binding.getRoot());
-            this.itemMedicationListBinding = binding;
-            //this.itemMedicationListBinding.linearLayout.setOnClickListener(view -> recyclerViewAppListInterface.onItemClick(medicationModelList.get(getAdapterPosition())));
+            itemMedicationListBinding = binding;
+            // itemMedicationListBinding.linearLayout.setOnClickListener(view -> new MedicationDetailRouter().launch(view.getContext()));
+
         }
 
         public void bindView(MedicationModel medication) {
             itemMedicationListBinding.textViewIcon.setText(medication.getName());
+            itemMedicationListBinding.linearLayout.setOnClickListener(view -> new MedicationDetailRouter().launch(view.getContext(), medication));
         }
 
     }

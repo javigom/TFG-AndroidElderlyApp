@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,15 +26,35 @@ public class MedicationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle SavedInstanceState) {
         binding = FragmentMedicationBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        binding = null;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // View Model
         viewModel = ViewModelProviders.of(this).get(MedicationViewModel.class);
 
+        // Setup
+        initView();
+        initData();
+    }
+
+    private void initView() {
         // Recycler view
         recyclerViewAdapter = new MedicationRecyclerViewAdapter();
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerView.setAdapter(recyclerViewAdapter);
+    }
+
+    private void initData() {
         viewModel.getMedicationList().observe(getViewLifecycleOwner(), recyclerViewAdapter::updateMedicationList);
-
-
-        return binding.getRoot();
     }
 }
