@@ -1,28 +1,25 @@
 package com.example.simplemedicine.model;
 
-import androidx.recyclerview.widget.SortedList;
-
 import com.example.simplemedicine.util.WeekDaysEnum;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
-public class MedicationModel implements Serializable {
+public class Medication implements Serializable {
 
     private String name;
     private String description;
     private HashMap<WeekDaysEnum, Boolean> weekDays;
-    private SortedList<HourModel> hours;
+    private ArrayList<Hour> hours;
     private double unitsPerDosis;
     private Date startDate;
     private Date endDate;
     private String photo;
 
-    public MedicationModel(String name, String description, HashMap<WeekDaysEnum, Boolean> weekDays,
-                           SortedList<HourModel> hours, double unitsPerDosis, Date startDate, Date endDate, String photo) {
+    public Medication(String name, String description, HashMap<WeekDaysEnum, Boolean> weekDays,
+                      ArrayList<Hour> hours, double unitsPerDosis, Date startDate, Date endDate, String photo) {
         this.name = name;
         this.description = description;
         this.weekDays = weekDays;
@@ -34,8 +31,29 @@ public class MedicationModel implements Serializable {
 
     }
 
-    public MedicationModel(String name) {
+    public Medication() {
         this.name = name;
+        description = "";
+        weekDays = new HashMap<>();
+        for(int i = 0; i < WeekDaysEnum.values().length; i++)
+            weekDays.put(WeekDaysEnum.getWeekDay(i), false);
+        hours = new ArrayList<>();
+        this.unitsPerDosis = -1;
+        this.startDate = null;
+        this.endDate = null;
+        this.photo = null;
+    }
+
+    @Override
+    public String toString() {
+        return  "name='" + name + '\n' +
+                "description='" + description + '\n' +
+                "weekDays=" + weekDays + '\n' +
+                "hours=" + hours + '\n' +
+                "unitsPerDosis=" + unitsPerDosis + '\n' +
+                "startDate=" + startDate + '\n' +
+                "endDate=" + endDate + '\n' +
+                '}';
     }
 
     public String getName() {
@@ -62,11 +80,11 @@ public class MedicationModel implements Serializable {
         this.weekDays = weekDays;
     }
 
-    public SortedList<HourModel> getHours() {
+    public ArrayList<Hour> getHours() {
         return hours;
     }
 
-    public void setHours(SortedList<HourModel> hours) {
+    public void setHours(ArrayList<Hour> hours) {
         this.hours = hours;
     }
 
@@ -101,4 +119,5 @@ public class MedicationModel implements Serializable {
     public void setPhoto(String photo) {
         this.photo = photo;
     }
+
 }

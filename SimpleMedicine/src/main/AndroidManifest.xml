@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TFG">
         <activity
+            android:name=".usecases.onboarding.OnboardingActivity"
+            android:exported="false" />
+        <activity
             android:name=".usecases.medicationdetail.MedicationDetailActivity"
             android:exported="false" />
         <activity

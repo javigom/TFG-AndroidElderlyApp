@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.simplemedicine.model.MedicationModel;
+import com.example.simplemedicine.model.Medication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,23 +13,30 @@ public class MedicationViewModel extends ViewModel {
 
     // ATTRIBUTES
 
-    private MutableLiveData<List<MedicationModel>> medicationListLiveData;
+    private MutableLiveData<List<Medication>> medicationListLiveData;
 
     // CONSTRUCTOR
 
     public MedicationViewModel() {
         medicationListLiveData = new MutableLiveData<>();
-        ArrayList<MedicationModel> medicationList = new ArrayList<>();
-        medicationList.add(new MedicationModel("Paracetamol"));
-        medicationList.get(0).setDescription("600MG");
-        medicationList.add(new MedicationModel("Ibuprofeno"));
-        medicationList.get(1).setDescription("400MG");
+        ArrayList<Medication> medicationList = new ArrayList<>();
+
+        Medication medication = new Medication();
+        medication.setName("Paracetamol");
+        medication.setDescription("1000MG");
+        medicationList.add(medication);
+
+        Medication medication2 = new Medication();
+        medication2.setName("Ibuprofeno");
+        medication2.setDescription("600MG");
+        medicationList.add(medication2);
+
         medicationListLiveData.setValue(medicationList);
     }
 
     // METHODS
 
-    public LiveData<List<MedicationModel>> getMedicationList() {
+    public LiveData<List<Medication>> getMedicationList() {
         return medicationListLiveData;
     }
 

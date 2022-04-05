@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.simplemedicine.databinding.ItemMedicationListBinding;
-import com.example.simplemedicine.model.MedicationModel;
+import com.example.simplemedicine.model.Medication;
 import com.example.simplemedicine.usecases.medicationdetail.MedicationDetailRouter;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import java.util.List;
 public class MedicationRecyclerViewAdapter extends RecyclerView.Adapter<MedicationRecyclerViewAdapter.ViewHolder> {
     // ATTRIBUTES
 
-    private List<MedicationModel> medicationModelList;
+    private List<Medication> medicationModelList;
 
     // CONSTRUCTOR
 
@@ -44,7 +44,7 @@ public class MedicationRecyclerViewAdapter extends RecyclerView.Adapter<Medicati
         return medicationModelList.size();
     }
 
-    public void updateMedicationList(final List<MedicationModel> medicationModelList) {
+    public void updateMedicationList(final List<Medication> medicationModelList) {
         this.medicationModelList.clear();
         this.medicationModelList = medicationModelList;
         notifyDataSetChanged();
@@ -60,7 +60,7 @@ public class MedicationRecyclerViewAdapter extends RecyclerView.Adapter<Medicati
 
         }
 
-        public void bindView(MedicationModel medication) {
+        public void bindView(Medication medication) {
             itemMedicationListBinding.textViewIcon.setText(medication.getName());
             itemMedicationListBinding.linearLayout.setOnClickListener(view -> new MedicationDetailRouter().launch(view.getContext(), medication));
         }

@@ -1,11 +1,11 @@
 package com.example.simplemedicine.model;
 
-public class HourModel {
+public class Hour {
 
     private int hours;
     private int minutes;
 
-    public HourModel(int hours, int minutes) throws Exception {
+    public Hour(int hours, int minutes) throws Exception {
         if(hours >= 0 && hours < 24 && minutes >= 0 && minutes <= 60) {
             this.hours = hours;
             this.minutes = minutes;
