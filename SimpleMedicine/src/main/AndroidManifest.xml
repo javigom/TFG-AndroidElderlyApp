@@ -10,10 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TFG">
         <activity
+            android:name=".usecases.addmedication.AddMedicationActivity"
+            android:exported="false" />
+        <activity
             android:name=".usecases.onboarding.OnboardingActivity"
             android:exported="false" />
         <activity
-            android:name=".usecases.medicationdetail.MedicationDetailActivity"
+            android:name=".usecases.seemedication.SeeMedicationActivity"
             android:exported="false" />
         <activity
             android:name=".usecases.home.HomeActivity"

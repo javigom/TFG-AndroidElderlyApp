@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.simplemedicine.databinding.ItemMedicationListBinding;
 import com.example.simplemedicine.model.Medication;
-import com.example.simplemedicine.usecases.medicationdetail.MedicationDetailRouter;
+import com.example.simplemedicine.usecases.seemedication.SeeMedicationRouter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,13 +56,11 @@ public class MedicationRecyclerViewAdapter extends RecyclerView.Adapter<Medicati
         public ViewHolder(@NonNull ItemMedicationListBinding binding) {
             super(binding.getRoot());
             itemMedicationListBinding = binding;
-            // itemMedicationListBinding.linearLayout.setOnClickListener(view -> new MedicationDetailRouter().launch(view.getContext()));
-
         }
 
         public void bindView(Medication medication) {
             itemMedicationListBinding.textViewIcon.setText(medication.getName());
-            itemMedicationListBinding.linearLayout.setOnClickListener(view -> new MedicationDetailRouter().launch(view.getContext(), medication));
+            itemMedicationListBinding.linearLayout.setOnClickListener(view -> new SeeMedicationRouter().launch(view.getContext(), medication));
         }
 
     }

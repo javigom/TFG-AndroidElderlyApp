@@ -1,4 +1,4 @@
-package com.example.simplemedicine.usecases.medicationdetail;
+package com.example.simplemedicine.usecases.seemedication;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,19 +6,19 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.simplemedicine.databinding.ActivityMedicationDetailBinding;
+import com.example.simplemedicine.databinding.ActivitySeeMedicationBinding;
 import com.example.simplemedicine.model.Medication;
 
-public class MedicationDetailActivity extends AppCompatActivity {
+public class SeeMedicationActivity extends AppCompatActivity {
 
-    private ActivityMedicationDetailBinding binding;
-    private MedicationDetailViewModel viewModel;
+    private ActivitySeeMedicationBinding binding;
+    private SeeMedicationViewModel viewModel;
     private Medication medication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMedicationDetailBinding.inflate(getLayoutInflater());
+        binding = ActivitySeeMedicationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         Intent intent = getIntent();
@@ -27,7 +27,7 @@ public class MedicationDetailActivity extends AppCompatActivity {
         }
 
         // View Model
-        viewModel = ViewModelProviders.of(this).get(MedicationDetailViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(SeeMedicationViewModel.class);
         initView();
     }
 

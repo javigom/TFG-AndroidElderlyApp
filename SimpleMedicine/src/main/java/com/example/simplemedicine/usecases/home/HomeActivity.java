@@ -1,28 +1,32 @@
 package com.example.simplemedicine.usecases.home;
 
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.simplemedicine.R;
 import com.example.simplemedicine.databinding.ActivityHomeBinding;
+import com.example.simplemedicine.usecases.addmedication.AddMedicationRouter;
 import com.example.simplemedicine.usecases.medication.MedicationRouter;
 import com.example.simplemedicine.usecases.today.TodayRouter;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity {
+
+    // ATTRIBUTES
 
     private ActivityHomeBinding binding;
     private HomeViewModel viewModel;
 
+    // Fragments
     private MedicationRouter medicationFragment;
     private TodayRouter todayFragment;
 
     private int selectedItem;
+
+
+    // METHODS
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        binding.floatingButton.setOnClickListener(v -> new AddMedicationRouter().launch(this));
         loadTabs();
         defaultTab();
     }
