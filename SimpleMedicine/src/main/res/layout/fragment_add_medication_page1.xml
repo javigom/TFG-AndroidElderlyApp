@@ -3,13 +3,63 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".usecases.addmedication.page.AddMedicationPage1Fragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="HELLO PAGE 1 FRAGMENT"
-        android:gravity="center"/>
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="Dime el nombre del medicamento"
+            android:textSize="40sp"
+            android:textColor="@color/primary_text"
+            android:textStyle="bold"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre del medicamento"
+            android:layout_marginBottom="10dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:helperText="*Obligatorio"
+            app:counterEnabled="true"
+            app:counterMaxLength="35">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="35">
+
+            </com.google.android.material.textfield.TextInputEditText>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Descripción"
+            android:layout_marginBottom="10dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:counterEnabled="true"
+            app:counterMaxLength="200">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="200">
+
+            </com.google.android.material.textfield.TextInputEditText>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
 
 </FrameLayout>

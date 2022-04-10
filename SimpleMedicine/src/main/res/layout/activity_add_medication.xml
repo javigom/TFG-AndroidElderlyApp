@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_light"
     tools:context=".usecases.addmedication.AddMedicationActivity">
 
     <androidx.viewpager2.widget.ViewPager2
@@ -39,7 +38,8 @@
             app:layout_constraintEnd_toStartOf="@+id/buttonNext"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:backgroundTint="@color/secondary_light"/>
+            android:backgroundTint="@color/secondary_light"
+            android:textColor="@color/primary_text"/>
 
         <Button
             android:id="@+id/buttonNext"
@@ -54,7 +54,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/buttonPrev"
             app:layout_constraintTop_toTopOf="parent"
-            android:backgroundTint="@color/secondary"/>
+            android:backgroundTint="@color/secondary"
+            android:textColor="@color/white"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -3,6 +3,8 @@ package com.example.simplemedicine.usecases.base;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.simplemedicine.model.Medication;
+
 public interface BaseFragmentRouter {
 
     Fragment fragment();
@@ -25,6 +27,10 @@ public interface BaseFragmentRouter {
 
     default void remove(FragmentManager manager) {
         manager.beginTransaction().remove(fragment()).commitAllowingStateLoss();
+    }
+
+    default boolean fillData(Medication medication) {
+        return false;
     }
 
 }

@@ -1,25 +1,22 @@
 package com.example.simplemedicine.usecases.addmedication.page;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.example.simplemedicine.model.Medication;
 import com.example.simplemedicine.usecases.base.BaseFragmentRouter;
 
-public class AddMedicationPage2Router implements BaseFragmentRouter {
+public class AddMedicationPage3Router implements BaseFragmentRouter {
 
-    private AddMedicationPage2Fragment instance;
+    private AddMedicationPage3Fragment instance;
 
-    public AddMedicationPage2Router() {
+    public AddMedicationPage3Router() {
         instance = null;
     }
 
     @Override
     public Fragment fragment() {
         if(instance == null) {
-            instance = new AddMedicationPage2Fragment();
+            instance = new AddMedicationPage3Fragment();
         }
 
         return instance;
@@ -27,6 +24,6 @@ public class AddMedicationPage2Router implements BaseFragmentRouter {
 
     @Override
     public boolean fillData(Medication medication) {
-        return instance.setData(medication);
+        return true;
     }
 }

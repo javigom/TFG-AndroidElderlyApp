@@ -4,7 +4,6 @@ import com.example.simplemedicine.util.WeekDaysEnum;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 public class Medication implements Serializable {
@@ -14,12 +13,12 @@ public class Medication implements Serializable {
     private HashMap<WeekDaysEnum, Boolean> weekDays;
     private ArrayList<Hour> hours;
     private double unitsPerDosis;
-    private Date startDate;
-    private Date endDate;
+    private DateModel startDate;
+    private DateModel endDate;
     private String photo;
 
     public Medication(String name, String description, HashMap<WeekDaysEnum, Boolean> weekDays,
-                      ArrayList<Hour> hours, double unitsPerDosis, Date startDate, Date endDate, String photo) {
+                      ArrayList<Hour> hours, double unitsPerDosis, DateModel startDate, DateModel endDate, String photo) {
         this.name = name;
         this.description = description;
         this.weekDays = weekDays;
@@ -46,14 +45,13 @@ public class Medication implements Serializable {
 
     @Override
     public String toString() {
-        return  "name='" + name + '\n' +
-                "description='" + description + '\n' +
+        return  "name=" + name + '\n' +
+                "description=" + description + '\n' +
                 "weekDays=" + weekDays + '\n' +
                 "hours=" + hours + '\n' +
                 "unitsPerDosis=" + unitsPerDosis + '\n' +
                 "startDate=" + startDate + '\n' +
-                "endDate=" + endDate + '\n' +
-                '}';
+                "endDate=" + endDate + '\n';
     }
 
     public String getName() {
@@ -96,19 +94,19 @@ public class Medication implements Serializable {
         this.unitsPerDosis = unitsPerDosis;
     }
 
-    public Date getStartDate() {
+    public DateModel getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(DateModel startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public DateModel getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(DateModel endDate) {
         this.endDate = endDate;
     }
 

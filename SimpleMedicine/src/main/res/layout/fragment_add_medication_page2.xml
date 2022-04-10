@@ -5,11 +5,77 @@
     android:layout_height="match_parent"
     tools:context=".usecases.addmedication.page.AddMedicationPage2Fragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="HELLO PAGE 2 FRAGMENT"
-        android:gravity="center"/>
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="¿Qué días de la semana lo tomas?"
+            android:textSize="40sp"
+            android:textColor="@color/primary_text"
+            android:textStyle="bold"/>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkMonday"
+            android:text="Lunes"
+            android:textSize="25sp"
+            android:checked="true"/>
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkTuesday"
+            android:text="Martes"
+            android:textSize="25sp"
+            android:checked="true"/>
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkWednesday"
+            android:text="Miércoles"
+            android:textSize="25sp"
+            android:checked="true"/>
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkThursday"
+            android:text="Jueves"
+            android:textSize="25sp"
+            android:checked="true"/>
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkFriday"
+            android:text="Viernes"
+            android:textSize="25sp"
+            android:checked="true"/>
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkSaturday"
+            android:text="Sábado"
+            android:textSize="25sp"
+            android:checked="true"/>
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkSunday"
+            android:text="Domingo"
+            android:textSize="25sp"
+            android:checked="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="*Debes seleccionar al menos un día">
+
+        </TextView>
+
+    </LinearLayout>
 
 </FrameLayout>
