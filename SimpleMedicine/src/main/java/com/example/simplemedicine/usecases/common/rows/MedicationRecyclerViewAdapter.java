@@ -14,14 +14,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MedicationRecyclerViewAdapter extends RecyclerView.Adapter<MedicationRecyclerViewAdapter.ViewHolder> {
+
     // ATTRIBUTES
 
-    private List<Medication> medicationModelList;
+    private List<Medication> medicationList;
 
     // CONSTRUCTOR
 
     public MedicationRecyclerViewAdapter() {
-        this.medicationModelList = new ArrayList<>();
+        this.medicationList = new ArrayList<>();
     }
 
     // METHODS
@@ -36,17 +37,17 @@ public class MedicationRecyclerViewAdapter extends RecyclerView.Adapter<Medicati
 
     @Override
     public void onBindViewHolder(@NonNull MedicationRecyclerViewAdapter.ViewHolder holder, int position) {
-        holder.bindView(medicationModelList.get(position));
+        holder.bindView(medicationList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return medicationModelList.size();
+        return medicationList.size();
     }
 
     public void updateMedicationList(final List<Medication> medicationModelList) {
-        this.medicationModelList.clear();
-        this.medicationModelList = medicationModelList;
+        this.medicationList.clear();
+        this.medicationList = medicationModelList;
         notifyDataSetChanged();
     }
 

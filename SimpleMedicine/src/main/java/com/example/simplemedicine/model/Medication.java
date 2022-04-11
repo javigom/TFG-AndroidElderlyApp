@@ -5,20 +5,21 @@ import com.example.simplemedicine.util.WeekDaysEnum;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Medication implements Serializable {
 
     private String name;
     private String description;
     private HashMap<WeekDaysEnum, Boolean> weekDays;
-    private ArrayList<Hour> hours;
+    private List<Hour> hours;
     private double unitsPerDosis;
     private DateModel startDate;
     private DateModel endDate;
     private String photo;
 
     public Medication(String name, String description, HashMap<WeekDaysEnum, Boolean> weekDays,
-                      ArrayList<Hour> hours, double unitsPerDosis, DateModel startDate, DateModel endDate, String photo) {
+                      List<Hour> hours, double unitsPerDosis, DateModel startDate, DateModel endDate, String photo) {
         this.name = name;
         this.description = description;
         this.weekDays = weekDays;
@@ -78,11 +79,11 @@ public class Medication implements Serializable {
         this.weekDays = weekDays;
     }
 
-    public ArrayList<Hour> getHours() {
+    public List<Hour> getHours() {
         return hours;
     }
 
-    public void setHours(ArrayList<Hour> hours) {
+    public void setHours(List<Hour> hours) {
         this.hours = hours;
     }
 

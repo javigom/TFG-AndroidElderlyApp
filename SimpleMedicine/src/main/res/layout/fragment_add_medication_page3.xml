@@ -20,6 +20,41 @@
             android:textColor="@color/primary_text"
             android:textStyle="bold"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Número de dosis por toma:"
+            android:textSize="20sp"
+            android:textColor="@color/primary_text"/>
+
+        <EditText
+            android:id="@+id/numberText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:inputType="numberDecimal"
+            android:background="@drawable/rectangle"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Horas del día: "
+            android:textSize="20sp"
+            android:textColor="@color/primary_text"/>
+
+        <Button
+            android:id="@+id/addButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Añadir"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_day_list"/>
+
     </LinearLayout>
 
 </FrameLayout>
