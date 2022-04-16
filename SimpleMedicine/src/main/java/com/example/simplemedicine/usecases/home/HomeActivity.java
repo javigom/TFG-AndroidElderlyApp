@@ -1,9 +1,9 @@
 package com.example.simplemedicine.usecases.home;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.simplemedicine.R;
@@ -33,7 +33,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        viewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+        viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         selectedItem = -1;
         initView();
     }

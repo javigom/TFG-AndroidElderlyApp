@@ -8,8 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.simplemedicine.databinding.ItemDayListBinding;
-import com.example.simplemedicine.model.Hour;
-import com.example.simplemedicine.util.HourComparator;
+import com.example.simplemedicine.model.hour.HourModel;
+import com.example.simplemedicine.model.hour.HourComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,15 +19,15 @@ public class DaysRecyclerViewAdapter extends RecyclerView.Adapter<DaysRecyclerVi
 
     // ATTRIBUTES
 
-    private List<Hour> hourList;
+    private List<HourModel> hourList;
 
     // CONSTRUCTOR
 
     public DaysRecyclerViewAdapter() {
         hourList = new ArrayList<>();
-        hourList.add(new Hour(7, 0));
-        hourList.add(new Hour(14, 0));
-        hourList.add(new Hour(21, 0));
+        hourList.add(new HourModel(7, 0));
+        hourList.add(new HourModel(14, 0));
+        hourList.add(new HourModel(21, 0));
     }
 
     // METHODS
@@ -50,8 +50,8 @@ public class DaysRecyclerViewAdapter extends RecyclerView.Adapter<DaysRecyclerVi
         return hourList.size();
     }
 
-    public boolean addHour(Hour hour) {
-        for(Hour h : hourList) {
+    public boolean addHour(HourModel hour) {
+        for(HourModel h : hourList) {
             if(h.equals(hour)) {
                 return false;
             }
@@ -62,7 +62,7 @@ public class DaysRecyclerViewAdapter extends RecyclerView.Adapter<DaysRecyclerVi
         return true;
     }
 
-    public List<Hour> getHourList() {
+    public List<HourModel> getHourList() {
         return hourList;
     }
 
@@ -74,7 +74,7 @@ public class DaysRecyclerViewAdapter extends RecyclerView.Adapter<DaysRecyclerVi
             itemDayListBinding = binding;
         }
 
-        public void bindView(Hour hour) {
+        public void bindView(HourModel hour) {
             itemDayListBinding.hourText.setText(hour.toString());
             itemDayListBinding.deleteButton.setOnClickListener(view -> {
                 

@@ -1,6 +1,5 @@
 package com.example.simplemedicine.usecases.addmedication.page;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,12 +8,11 @@ import android.widget.CheckBox;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.example.simplemedicine.databinding.FragmentAddMedicationPage2Binding;
-import com.example.simplemedicine.model.Medication;
-import com.example.simplemedicine.util.WeekDaysEnum;
+import com.example.simplemedicine.model.medication.Medication;
+import com.example.simplemedicine.model.medication.WeekDaysEnum;
 
 import java.util.ArrayList;
 import java.util.List;

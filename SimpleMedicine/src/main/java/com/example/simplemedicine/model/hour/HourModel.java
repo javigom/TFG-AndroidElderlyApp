@@ -1,14 +1,14 @@
-package com.example.simplemedicine.model;
+package com.example.simplemedicine.model.hour;
 
-import java.util.Comparator;
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Hour {
+public class HourModel implements Serializable {
 
     private int hours;
     private int minutes;
 
-    public Hour(int hours, int minutes) {
+    public HourModel(int hours, int minutes) {
         this.hours = hours;
         this.minutes = minutes;
     }
@@ -38,7 +38,7 @@ public class Hour {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Hour hour = (Hour) o;
+        HourModel hour = (HourModel) o;
         return hours == hour.hours && minutes == hour.minutes;
     }
 

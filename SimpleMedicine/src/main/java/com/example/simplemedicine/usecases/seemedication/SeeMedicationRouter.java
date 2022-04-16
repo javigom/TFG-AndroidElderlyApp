@@ -3,7 +3,9 @@ package com.example.simplemedicine.usecases.seemedication;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.simplemedicine.model.Medication;
+import androidx.annotation.NonNull;
+
+import com.example.simplemedicine.model.medication.Medication;
 import com.example.simplemedicine.usecases.base.BaseActivityRouter;
 
 public class SeeMedicationRouter implements BaseActivityRouter {
@@ -13,7 +15,7 @@ public class SeeMedicationRouter implements BaseActivityRouter {
         return new Intent(activity, SeeMedicationActivity.class);
     }
 
-    public void launch(Context activity, Medication medication) {
+    public void launch(@NonNull Context activity, Medication medication) {
         activity.startActivity(intent(activity, medication));
     }
 

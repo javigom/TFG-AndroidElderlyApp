@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.simplemedicine.databinding.ItemMedicationListBinding;
-import com.example.simplemedicine.model.Medication;
+import com.example.simplemedicine.model.medication.Medication;
 import com.example.simplemedicine.usecases.seemedication.SeeMedicationRouter;
 
 import java.util.ArrayList;

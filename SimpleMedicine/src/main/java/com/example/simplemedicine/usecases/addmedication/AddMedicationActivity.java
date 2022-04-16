@@ -4,12 +4,11 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.simplemedicine.databinding.ActivityAddMedicationBinding;
 import com.example.simplemedicine.usecases.addmedication.page.AddMedicationPageAdapter;
-import com.example.simplemedicine.usecases.home.HomeRouter;
 
 public class AddMedicationActivity extends AppCompatActivity {
 
@@ -29,7 +28,7 @@ public class AddMedicationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityAddMedicationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        viewModel = ViewModelProviders.of(this).get(AddMedicationViewModel.class);
+        viewModel = new ViewModelProvider(this).get(AddMedicationViewModel.class);
         getSupportActionBar().setTitle("Añadir un medicacamento");
         initView();
     }
@@ -73,7 +72,7 @@ public class AddMedicationActivity extends AppCompatActivity {
 
             if(pageAdapter.saveData(selection, viewModel.getMedication())) {
                 if(selection == viewModel.getPages() - 1) {
-                    System.out.println(viewModel.getMedication());
+                    viewModel.insert();
                     Toast.makeText(this, "Medicamento añadido con éxito", Toast.LENGTH_SHORT).show();
                     finish();
                 }

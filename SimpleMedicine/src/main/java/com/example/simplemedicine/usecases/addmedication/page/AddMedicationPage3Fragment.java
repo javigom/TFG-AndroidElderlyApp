@@ -14,8 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.simplemedicine.databinding.FragmentAddMedicationPage3Binding;
-import com.example.simplemedicine.model.Hour;
-import com.example.simplemedicine.model.Medication;
+import com.example.simplemedicine.model.hour.HourModel;
+import com.example.simplemedicine.model.medication.Medication;
 import com.example.simplemedicine.usecases.common.rows.DaysRecyclerViewAdapter;
 
 public class AddMedicationPage3Fragment extends Fragment {
@@ -52,7 +52,7 @@ public class AddMedicationPage3Fragment extends Fragment {
                 TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        if(!recyclerViewAdapter.addHour(new Hour(hourOfDay, minute))) {
+                        if(!recyclerViewAdapter.addHour(new HourModel(hourOfDay, minute))) {
                             Toast.makeText(getContext(), "No puedes añadir dos horas iguales", Toast.LENGTH_SHORT).show();
                         }
 

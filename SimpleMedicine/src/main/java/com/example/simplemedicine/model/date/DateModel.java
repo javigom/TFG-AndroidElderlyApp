@@ -1,6 +1,8 @@
-package com.example.simplemedicine.model;
+package com.example.simplemedicine.model.date;
 
-public class DateModel {
+import java.io.Serializable;
+
+public class DateModel implements Serializable {
 
     private int year, month, day;
 

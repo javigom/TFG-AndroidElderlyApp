@@ -1,4 +1,4 @@
-package com.example.simplemedicine.util;
+package com.example.simplemedicine.model.medication;
 
 public enum WeekDaysEnum {
     MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY;

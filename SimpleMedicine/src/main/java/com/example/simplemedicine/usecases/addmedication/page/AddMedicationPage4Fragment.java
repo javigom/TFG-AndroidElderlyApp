@@ -1,23 +1,18 @@
 package com.example.simplemedicine.usecases.addmedication.page;
 
 import android.app.DatePickerDialog;
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
-
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.simplemedicine.databinding.FragmentAddMedicationPage4Binding;
-import com.example.simplemedicine.model.DateModel;
-import com.example.simplemedicine.model.Medication;
+import com.example.simplemedicine.model.date.DateModel;
+import com.example.simplemedicine.model.medication.Medication;
 
 import java.util.Calendar;
 import java.util.Date;

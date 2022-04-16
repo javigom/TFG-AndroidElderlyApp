@@ -3,7 +3,7 @@ package com.example.simplemedicine.usecases.base;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.example.simplemedicine.model.Medication;
+import com.example.simplemedicine.model.medication.Medication;
 
 public interface BaseFragmentRouter {
 

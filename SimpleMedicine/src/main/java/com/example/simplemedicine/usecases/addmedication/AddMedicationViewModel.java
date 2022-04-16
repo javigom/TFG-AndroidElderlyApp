@@ -1,12 +1,11 @@
 package com.example.simplemedicine.usecases.addmedication;
 
-import androidx.lifecycle.ViewModel;
+import android.app.Application;
 
-import com.example.simplemedicine.R;
-import com.example.simplemedicine.databinding.ActivityAddMedicationBinding;
-import com.example.simplemedicine.databinding.FragmentAddMedicationPage1Binding;
-import com.example.simplemedicine.model.Medication;
-import com.example.simplemedicine.usecases.addmedication.page.AddMedicationPage1Fragment;
+import androidx.lifecycle.AndroidViewModel;
+
+import com.example.simplemedicine.model.medication.Medication;
+import com.example.simplemedicine.provider.medication.MedicationRepo;
 import com.example.simplemedicine.usecases.addmedication.page.AddMedicationPage1Router;
 import com.example.simplemedicine.usecases.addmedication.page.AddMedicationPage2Router;
 import com.example.simplemedicine.usecases.addmedication.page.AddMedicationPage3Router;
@@ -16,18 +15,25 @@ import com.example.simplemedicine.usecases.base.BaseFragmentRouter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddMedicationViewModel extends ViewModel {
+public class AddMedicationViewModel extends AndroidViewModel {
 
-    private List<BaseFragmentRouter> fragments;
-    private Medication medication;
+    private final List<BaseFragmentRouter> fragments;
+    private final Medication medication;
+    private MedicationRepo repository;
 
-    public AddMedicationViewModel() {
+    public AddMedicationViewModel(Application application) {
+        super(application);
         fragments = new ArrayList<>();
         fragments.add(new AddMedicationPage1Router());
         fragments.add(new AddMedicationPage2Router());
         fragments.add(new AddMedicationPage3Router());
         fragments.add(new AddMedicationPage4Router());
         medication = new Medication();
+        repository = new MedicationRepo(application);
+    }
+
+    public void insert() {
+        repository.insert(medication);
     }
 
     public int getPages() {

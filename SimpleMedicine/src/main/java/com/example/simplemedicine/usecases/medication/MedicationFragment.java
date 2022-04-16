@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.simplemedicine.databinding.FragmentMedicationBinding;
@@ -40,7 +40,7 @@ public class MedicationFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // View Model
-        viewModel = ViewModelProviders.of(this).get(MedicationViewModel.class);
+        viewModel = new ViewModelProvider(this).get(MedicationViewModel.class);
 
         // Setup
         initView();
@@ -55,6 +55,6 @@ public class MedicationFragment extends Fragment {
     }
 
     private void initData() {
-        viewModel.getMedicationList().observe(getViewLifecycleOwner(), recyclerViewAdapter::updateMedicationList);
+        viewModel.getAllMedications().observe(getViewLifecycleOwner(), recyclerViewAdapter::updateMedicationList);
     }
 }

@@ -1,47 +1,39 @@
-package com.example.simplemedicine.model;
+package com.example.simplemedicine.model.medication;
 
-import com.example.simplemedicine.util.WeekDaysEnum;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import com.example.simplemedicine.model.date.DateModel;
+import com.example.simplemedicine.model.hour.HourModel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+@Entity(tableName = "medication_table")
 public class Medication implements Serializable {
+
+    @PrimaryKey(autoGenerate = true)
+    private int id;
 
     private String name;
     private String description;
-    private HashMap<WeekDaysEnum, Boolean> weekDays;
-    private List<Hour> hours;
+    private Map<WeekDaysEnum, Boolean> weekDays;
+    private List<HourModel> hours;
     private double unitsPerDosis;
     private DateModel startDate;
     private DateModel endDate;
     private String photo;
 
-    public Medication(String name, String description, HashMap<WeekDaysEnum, Boolean> weekDays,
-                      List<Hour> hours, double unitsPerDosis, DateModel startDate, DateModel endDate, String photo) {
-        this.name = name;
-        this.description = description;
-        this.weekDays = weekDays;
-        this.hours = hours;
-        this.unitsPerDosis = unitsPerDosis;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.photo = photo;
-
-    }
-
-    public Medication() {
-        this.name = name;
+     public Medication() {
         description = "";
         weekDays = new HashMap<>();
         for(int i = 0; i < WeekDaysEnum.values().length; i++)
             weekDays.put(WeekDaysEnum.getWeekDay(i), false);
         hours = new ArrayList<>();
         this.unitsPerDosis = -1;
-        this.startDate = null;
-        this.endDate = null;
-        this.photo = null;
     }
 
     @Override
@@ -53,6 +45,14 @@ public class Medication implements Serializable {
                 "unitsPerDosis=" + unitsPerDosis + '\n' +
                 "startDate=" + startDate + '\n' +
                 "endDate=" + endDate + '\n';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -71,19 +71,19 @@ public class Medication implements Serializable {
         this.description = description;
     }
 
-    public HashMap<WeekDaysEnum, Boolean> getWeekDays() {
+    public Map<WeekDaysEnum, Boolean> getWeekDays() {
         return weekDays;
     }
 
-    public void setWeekDays(HashMap<WeekDaysEnum, Boolean> weekDays) {
+    public void setWeekDays(Map<WeekDaysEnum, Boolean> weekDays) {
         this.weekDays = weekDays;
     }
 
-    public List<Hour> getHours() {
+    public List<HourModel> getHours() {
         return hours;
     }
 
-    public void setHours(List<Hour> hours) {
+    public void setHours(List<HourModel> hours) {
         this.hours = hours;
     }
 

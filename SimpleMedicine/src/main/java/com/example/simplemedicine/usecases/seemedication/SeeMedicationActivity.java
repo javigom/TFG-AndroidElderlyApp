@@ -4,10 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.simplemedicine.databinding.ActivitySeeMedicationBinding;
-import com.example.simplemedicine.model.Medication;
+import com.example.simplemedicine.model.medication.Medication;
 
 public class SeeMedicationActivity extends AppCompatActivity {
 
@@ -27,7 +28,7 @@ public class SeeMedicationActivity extends AppCompatActivity {
         }
 
         // View Model
-        viewModel = ViewModelProviders.of(this).get(SeeMedicationViewModel.class);
+        viewModel = new ViewModelProvider(this).get(SeeMedicationViewModel.class);
         initView();
     }
 

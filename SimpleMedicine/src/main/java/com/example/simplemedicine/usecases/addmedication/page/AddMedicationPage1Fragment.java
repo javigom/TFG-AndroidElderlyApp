@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.simplemedicine.databinding.FragmentAddMedicationPage1Binding;
-import com.example.simplemedicine.model.Medication;
+import com.example.simplemedicine.model.medication.Medication;
 
 public class AddMedicationPage1Fragment extends Fragment {
 

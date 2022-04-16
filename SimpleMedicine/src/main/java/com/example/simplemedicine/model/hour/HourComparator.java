@@ -1,15 +1,15 @@
-package com.example.simplemedicine.util;
+package com.example.simplemedicine.model.hour;
 
 import androidx.annotation.NonNull;
 
-import com.example.simplemedicine.model.Hour;
+import com.example.simplemedicine.model.hour.HourModel;
 
 import java.util.Comparator;
 
-public class HourComparator implements Comparator<Hour> {
+public class HourComparator implements Comparator<HourModel> {
 
     @Override
-    public int compare(@NonNull Hour o1, @NonNull Hour o2) {
+    public int compare(@NonNull HourModel o1, @NonNull HourModel o2) {
         if(o1.getHours() != o2.getHours())
             return (o1.getHours() > o2.getHours()? 1: -1);
         else

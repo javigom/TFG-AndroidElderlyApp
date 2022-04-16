@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.simplemedicine.databinding.FragmentTodayBinding;
@@ -37,7 +38,7 @@ public class TodayFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // View Model
-        viewModel = ViewModelProviders.of(this).get(TodayViewModel.class);
+        viewModel = new ViewModelProvider(this).get(TodayViewModel.class);
 
         // Setup
         initView();
