@@ -19,7 +19,7 @@ public class AddMedicationViewModel extends AndroidViewModel {
 
     private final List<BaseFragmentRouter> fragments;
     private final Medication medication;
-    private MedicationRepo repository;
+    private final MedicationRepo repository;
 
     public AddMedicationViewModel(Application application) {
         super(application);

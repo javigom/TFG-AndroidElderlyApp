@@ -1,6 +1,7 @@
 package com.example.simplemedicine.usecases.addmedication;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,12 +31,19 @@ public class AddMedicationActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         viewModel = new ViewModelProvider(this).get(AddMedicationViewModel.class);
         getSupportActionBar().setTitle("Añadir un medicacamento");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initView();
     }
 
     @Override
     public void onBackPressed() {
         binding.buttonPrev.callOnClick();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        onBackPressed();
+        return true;
     }
 
     private void initView() {
@@ -50,7 +58,6 @@ public class AddMedicationActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 selection = position;
-
                 binding.buttonPrev.setText((position == 0)? "Cancelar": "Anterior");
                 binding.buttonNext.setText((position == viewModel.getPages() - 1)? "Guardar": "Siguiente");
             }

@@ -38,6 +38,9 @@ public class DateModel implements Serializable {
 
     @Override
     public String toString() {
-        return day + "/" + month + "/" + year;
+        if(day == -1 || month == -1 || year == -1)
+            return "Sin fecha de fin";
+        else
+            return day + "/" + month + "/" + year;
     }
 }

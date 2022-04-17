@@ -1,5 +1,6 @@
 package com.example.simplemedicine.usecases.common.rows;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -50,9 +51,10 @@ public class DaysRecyclerViewAdapter extends RecyclerView.Adapter<DaysRecyclerVi
         return hourList.size();
     }
 
-    public boolean addHour(HourModel hour) {
+    public boolean addHour(Context context, HourModel hour) {
         for(HourModel h : hourList) {
             if(h.equals(hour)) {
+                Toast.makeText(context, "No puedes añadir dos horas iguales", Toast.LENGTH_SHORT).show();
                 return false;
             }
         }

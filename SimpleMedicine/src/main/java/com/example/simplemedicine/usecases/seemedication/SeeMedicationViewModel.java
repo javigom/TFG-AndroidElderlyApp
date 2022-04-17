@@ -1,6 +1,23 @@
 package com.example.simplemedicine.usecases.seemedication;
 
-import androidx.lifecycle.ViewModel;
+import android.app.Application;
 
-public class SeeMedicationViewModel extends ViewModel {
+import androidx.lifecycle.AndroidViewModel;
+
+import com.example.simplemedicine.model.medication.Medication;
+import com.example.simplemedicine.provider.medication.MedicationRepo;
+
+public class SeeMedicationViewModel extends AndroidViewModel {
+
+    private final MedicationRepo repository;
+
+    public SeeMedicationViewModel(Application application) {
+        super(application);
+        repository = new MedicationRepo(application);
+    }
+
+    public void delete(Medication medication) {
+        repository.delete(medication);
+    }
+
 }

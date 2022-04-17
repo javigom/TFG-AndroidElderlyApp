@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.simplemedicine.databinding.FragmentAddMedicationPage3Binding;
@@ -43,22 +44,27 @@ public class AddMedicationPage3Fragment extends Fragment {
 
     private void initView() {
         recyclerViewAdapter = new DaysRecyclerViewAdapter();
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         binding.recyclerView.setAdapter(recyclerViewAdapter);
         binding.addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        if(!recyclerViewAdapter.addHour(new HourModel(hourOfDay, minute))) {
-                            Toast.makeText(getContext(), "No puedes añadir dos horas iguales", Toast.LENGTH_SHORT).show();
+                
+                if(recyclerViewAdapter.getHourList().size() < 10) {
+                    TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                            recyclerViewAdapter.addHour(getContext(), new HourModel(hourOfDay, minute));
                         }
+                    }, 9, 0, true);
+                    timePickerDialog.show();
+                }
+                
+                else {
+                    Toast.makeText(getContext(), "No puedes añadir más de 10 horas", Toast.LENGTH_SHORT).show();
+                }
 
-                    }
-                }, 9, 0, true);
-                timePickerDialog.show();
+                
             }
         });
     }

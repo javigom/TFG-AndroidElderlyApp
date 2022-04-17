@@ -11,10 +11,8 @@
         android:theme="@style/Theme.TFG">
         <activity
             android:name=".usecases.addmedication.AddMedicationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".usecases.onboarding.OnboardingActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".usecases.seemedication.SeeMedicationActivity"
             android:exported="false" />

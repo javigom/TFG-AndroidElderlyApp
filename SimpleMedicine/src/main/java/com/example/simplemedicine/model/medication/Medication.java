@@ -75,12 +75,25 @@ public class Medication implements Serializable {
         return weekDays;
     }
 
+    public String getWeekDaysString() {
+         ArrayList<String> days = new ArrayList<>();
+         for(int i = 0; i < weekDays.size(); i++) {
+             if(weekDays.get(WeekDaysEnum.getWeekDay(i)))
+                 days.add(WeekDaysEnum.getWeekDayString(i));
+         }
+         return days.toString().replace("[", "").replace("]", "");
+    }
+
     public void setWeekDays(Map<WeekDaysEnum, Boolean> weekDays) {
         this.weekDays = weekDays;
     }
 
     public List<HourModel> getHours() {
         return hours;
+    }
+
+    public String getHoursString() {
+         return hours.toString().replace("[", "").replace("]", "");
     }
 
     public void setHours(List<HourModel> hours) {
@@ -103,12 +116,20 @@ public class Medication implements Serializable {
         this.startDate = startDate;
     }
 
+    public String getStartDateString() {
+         return startDate.toString();
+    }
+
     public DateModel getEndDate() {
         return endDate;
     }
 
     public void setEndDate(DateModel endDate) {
         this.endDate = endDate;
+    }
+
+    public String getEndDateString() {
+        return endDate.toString();
     }
 
     public String getPhoto() {
