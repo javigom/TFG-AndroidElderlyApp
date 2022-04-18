@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.simplemedicine.R;
 import com.example.simplemedicine.databinding.ActivitySeeMedicationBinding;
 import com.example.simplemedicine.model.medication.Medication;
+import com.example.simplemedicine.usecases.addmedication.AddMedicationRouter;
 
 public class SeeMedicationActivity extends AppCompatActivity {
 
@@ -51,13 +52,19 @@ public class SeeMedicationActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     private void initView() {
         binding.nameText.setText(medication.getName());
         binding.descriptionText.setText(medication.getDescription());
+        binding.unitsText.setText(medication.getUnitsPerDosisString());
         binding.daysText.setText(medication.getWeekDaysString());
         binding.hoursText.setText(medication.getHoursString());
-        binding.startText.append(medication.getStartDateString());
-        binding.endText.append(medication.getEndDateString());
+        binding.startText.setText("Desde: " + medication.getStartDateString());
+        binding.endText.setText("Hasta: " + medication.getEndDateString());
     }
 
     @Override
@@ -74,7 +81,9 @@ public class SeeMedicationActivity extends AppCompatActivity {
                onBackPressed();
                return true;
            case R.id.edit:
-                return true;
+               new AddMedicationRouter().launch(this, medication);
+               finish();
+               return true;
            case R.id.delete:
                viewModel.delete(medication);
                Toast.makeText(this, "Medicamento eliminado", Toast.LENGTH_SHORT).show();
@@ -84,6 +93,5 @@ public class SeeMedicationActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 
 }

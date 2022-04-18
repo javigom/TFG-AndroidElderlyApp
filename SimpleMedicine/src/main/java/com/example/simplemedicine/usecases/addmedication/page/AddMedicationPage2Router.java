@@ -8,15 +8,19 @@ import com.example.simplemedicine.usecases.base.BaseFragmentRouter;
 public class AddMedicationPage2Router implements BaseFragmentRouter {
 
     private AddMedicationPage2Fragment instance;
+    private boolean editMode;
+    private Medication medication;
 
-    public AddMedicationPage2Router() {
+    public AddMedicationPage2Router(boolean editMode, Medication medication) {
         instance = null;
+        this.editMode = editMode;
+        this.medication = medication;
     }
 
     @Override
     public Fragment fragment() {
         if(instance == null) {
-            instance = new AddMedicationPage2Fragment();
+            instance = new AddMedicationPage2Fragment(editMode, medication);
         }
 
         return instance;

@@ -18,22 +18,36 @@ import java.util.List;
 public class AddMedicationViewModel extends AndroidViewModel {
 
     private final List<BaseFragmentRouter> fragments;
-    private final Medication medication;
+    private Medication medication;
     private final MedicationRepo repository;
+    private boolean editMode;
 
     public AddMedicationViewModel(Application application) {
         super(application);
         fragments = new ArrayList<>();
-        fragments.add(new AddMedicationPage1Router());
-        fragments.add(new AddMedicationPage2Router());
-        fragments.add(new AddMedicationPage3Router());
-        fragments.add(new AddMedicationPage4Router());
-        medication = new Medication();
         repository = new MedicationRepo(application);
+        medication = new Medication();
+        editMode = false;
     }
 
     public void insert() {
         repository.insert(medication);
+    }
+
+    public void update() {
+        repository.update(medication);
+    }
+
+    public void setMedication(Medication medication) {
+        this.medication = medication;
+        editMode = true;
+    }
+
+    public void initPages() {
+        fragments.add(new AddMedicationPage1Router(editMode, medication));
+        fragments.add(new AddMedicationPage2Router(editMode, medication));
+        fragments.add(new AddMedicationPage3Router(editMode, medication));
+        fragments.add(new AddMedicationPage4Router(editMode, medication));
     }
 
     public int getPages() {

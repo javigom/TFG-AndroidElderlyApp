@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.simplemedicine.databinding.FragmentAddMedicationPage3Binding;
 import com.example.simplemedicine.model.hour.HourModel;
@@ -23,7 +22,13 @@ public class AddMedicationPage3Fragment extends Fragment {
 
     private FragmentAddMedicationPage3Binding binding;
     private DaysRecyclerViewAdapter recyclerViewAdapter;
+    private boolean editMode;
+    private Medication medication;
 
+    public AddMedicationPage3Fragment(boolean editMode, Medication medication) {
+        this.editMode = editMode;
+        this.medication = medication;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle SavedInstanceState) {
         binding = FragmentAddMedicationPage3Binding.inflate(inflater, container, false);
@@ -40,10 +45,13 @@ public class AddMedicationPage3Fragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView();
+        if(editMode) {
+            binding.numberText.setText(String.valueOf(medication.getUnitsPerDosis()));
+        }
     }
 
     private void initView() {
-        recyclerViewAdapter = new DaysRecyclerViewAdapter();
+        recyclerViewAdapter = new DaysRecyclerViewAdapter(editMode, medication.getHours());
         binding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         binding.recyclerView.setAdapter(recyclerViewAdapter);
         binding.addButton.setOnClickListener(new View.OnClickListener() {
@@ -63,8 +71,6 @@ public class AddMedicationPage3Fragment extends Fragment {
                 else {
                     Toast.makeText(getContext(), "No puedes añadir más de 10 horas", Toast.LENGTH_SHORT).show();
                 }
-
-                
             }
         });
     }

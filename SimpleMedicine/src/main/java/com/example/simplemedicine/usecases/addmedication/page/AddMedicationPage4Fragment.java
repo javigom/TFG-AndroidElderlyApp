@@ -21,6 +21,13 @@ public class AddMedicationPage4Fragment extends Fragment {
 
     private FragmentAddMedicationPage4Binding binding;
     private DateModel start, end;
+    private boolean editMode;
+    private Medication medication;
+
+    public AddMedicationPage4Fragment(boolean editMode, Medication medication) {
+        this.editMode = editMode;
+        this.medication = medication;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle SavedInstanceState) {
@@ -39,31 +46,59 @@ public class AddMedicationPage4Fragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initView();
+    }
+
+    private void initView() {
+        Calendar calendar1 = Calendar.getInstance();
+        if(editMode) {
+            start = medication.getStartDate();
+            end = medication.getEndDate();
+            binding.startDate.setText(medication.getStartDateString());
+            if(medication.getEndDate().getDay() != -1) {
+                binding.endDate.setText(medication.getEndDateString());
+                binding.endButton.setEnabled(true);
+            }
+            else {
+                binding.noEndCheckbox.setChecked(true);
+                binding.endButton.setEnabled(false);
+            }
+
+            calendar1.set(start.getYear(), start.getMonth(), start.getDay());
+        }
 
         binding.startButton.setOnClickListener(v -> {
-            Calendar calendar = Calendar.getInstance();
             DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), (view12, year, month, dayOfMonth) -> {
                 start = new DateModel(year, month, dayOfMonth);
-                binding.endButton.setEnabled(true);
+                if(!binding.noEndCheckbox.isChecked()) {
+                    binding.endButton.setEnabled(true);
+                    binding.endDate.setText("");
+                }
                 binding.startDate.setText(start.toString());
-            }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-            datePickerDialog.getDatePicker().setMinDate(new Date().getTime());
+            }, calendar1.get(Calendar.YEAR), calendar1.get(Calendar.MONTH), calendar1.get(Calendar.DAY_OF_MONTH));
+
+            datePickerDialog.getDatePicker().setMinDate(calendar1.getTime().getTime());
             datePickerDialog.show();
         });
 
-        binding.endButton.setEnabled(false);
+        if(!editMode)
+            binding.endButton.setEnabled(false);
         binding.endButton.setOnClickListener(v -> {
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(start.getYear(), start.getMonth(), start.getDay() + 1);
+            Calendar calendar2 = Calendar.getInstance();
+            calendar2.set(start.getYear(), start.getMonth(), start.getDay() + 1);
             DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), (view1, year, month, dayOfMonth) -> {
                 end = new DateModel(year, month, dayOfMonth);
                 binding.endDate.setText(end.toString());
-            }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-            datePickerDialog.getDatePicker().setMinDate(calendar.getTime().getTime());
+                calendar2.set(end.getYear(), end.getMonth(), end.getDay());
+            }, calendar2.get(Calendar.YEAR), calendar2.get(Calendar.MONTH), calendar2.get(Calendar.DAY_OF_MONTH));
+            datePickerDialog.getDatePicker().setMinDate(calendar2.getTime().getTime());
             datePickerDialog.show();
         });
 
-        binding.noEndCheckbox.setOnClickListener(v -> binding.endButton.setEnabled(!binding.noEndCheckbox.isChecked()));
+        binding.noEndCheckbox.setOnClickListener(v -> {
+            binding.endButton.setEnabled(!binding.noEndCheckbox.isChecked());
+            binding.endDate.setText("");
+        });
     }
 
     protected boolean setData(Medication medication) {

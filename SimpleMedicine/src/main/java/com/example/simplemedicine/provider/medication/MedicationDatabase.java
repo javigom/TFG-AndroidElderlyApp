@@ -14,7 +14,7 @@ import com.example.simplemedicine.util.converter.DateConverters;
 import com.example.simplemedicine.util.converter.HourListConverters;
 import com.example.simplemedicine.util.converter.WeekMapConverters;
 
-@Database(entities = Medication.class,version = 1,exportSchema = false)
+@Database(entities = Medication.class,version = 2,exportSchema = false)
 @TypeConverters({HourListConverters.class, DateConverters.class, WeekMapConverters.class})
 public abstract class MedicationDatabase extends RoomDatabase {
 

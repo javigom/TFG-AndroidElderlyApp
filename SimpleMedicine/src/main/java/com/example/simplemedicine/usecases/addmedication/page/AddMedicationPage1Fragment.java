@@ -14,7 +14,14 @@ import com.example.simplemedicine.model.medication.Medication;
 
 public class AddMedicationPage1Fragment extends Fragment {
 
-    FragmentAddMedicationPage1Binding binding;
+    private FragmentAddMedicationPage1Binding binding;
+    private boolean editMode;
+    private Medication medication;
+
+    public AddMedicationPage1Fragment(boolean editMode, Medication medication) {
+        this.editMode = editMode;
+        this.medication = medication;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle SavedInstanceState) {
@@ -31,9 +38,13 @@ public class AddMedicationPage1Fragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if(editMode) {
+            binding.name.setText(medication.getName());
+            binding.description.setText(medication.getDescription());
+        }
     }
 
-    protected boolean setData(Medication medication) {
+    protected boolean fillData(Medication medication) {
         if(binding.name.getText().toString().equals("")){
             return false;
         }

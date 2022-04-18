@@ -16,6 +16,7 @@ public class AddMedicationPageAdapter extends FragmentStateAdapter {
 
     private List<BaseFragmentRouter> pages;
 
+
     // CONSTRUCTOR
 
     public AddMedicationPageAdapter(@NonNull AppCompatActivity context, List<BaseFragmentRouter> pages) {
@@ -37,7 +38,7 @@ public class AddMedicationPageAdapter extends FragmentStateAdapter {
         return pages.size();
     }
 
-    public boolean saveData(int selection, Medication medication) {
+    public boolean fillData(int selection, Medication medication) {
         return pages.get(selection).fillData(medication);
     }
 

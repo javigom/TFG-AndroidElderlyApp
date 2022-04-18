@@ -1,5 +1,6 @@
 package com.example.simplemedicine.usecases.addmedication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -9,7 +10,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.simplemedicine.databinding.ActivityAddMedicationBinding;
+import com.example.simplemedicine.model.medication.Medication;
 import com.example.simplemedicine.usecases.addmedication.page.AddMedicationPageAdapter;
+import com.example.simplemedicine.usecases.seemedication.SeeMedicationActivity;
+import com.example.simplemedicine.usecases.seemedication.SeeMedicationRouter;
 
 public class AddMedicationActivity extends AppCompatActivity {
 
@@ -20,6 +24,7 @@ public class AddMedicationActivity extends AppCompatActivity {
 
     private AddMedicationPageAdapter pageAdapter;
     private int selection = 0;
+    private boolean editMode;
 
 
     // METHODS
@@ -30,7 +35,19 @@ public class AddMedicationActivity extends AppCompatActivity {
         binding = ActivityAddMedicationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         viewModel = new ViewModelProvider(this).get(AddMedicationViewModel.class);
-        getSupportActionBar().setTitle("Añadir un medicacamento");
+
+        Intent intent = getIntent();
+        if(intent.getExtras() != null) {
+            viewModel.setMedication((Medication) intent.getSerializableExtra("medication"));
+            getSupportActionBar().setTitle("Editar un medicacamento");
+            editMode = true;
+        }
+        else {
+            getSupportActionBar().setTitle("Añadir un medicacamento");
+            editMode = false;
+        }
+
+        viewModel.initPages();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initView();
     }
@@ -76,11 +93,18 @@ public class AddMedicationActivity extends AppCompatActivity {
         });
 
         binding.buttonNext.setOnClickListener(v -> {
-
-            if(pageAdapter.saveData(selection, viewModel.getMedication())) {
+            if(pageAdapter.fillData(selection, viewModel.getMedication())) {
                 if(selection == viewModel.getPages() - 1) {
-                    viewModel.insert();
-                    Toast.makeText(this, "Medicamento añadido con éxito", Toast.LENGTH_SHORT).show();
+                    if(editMode) {
+                        viewModel.update();
+                        Toast.makeText(this, "Medicamento editado con éxito", Toast.LENGTH_SHORT).show();
+                        new SeeMedicationRouter().launch(this, viewModel.getMedication());
+                    }
+                    else {
+                        viewModel.insert();
+                        Toast.makeText(this, "Medicamento añadido con éxito", Toast.LENGTH_SHORT).show();
+                    }
+
                     finish();
                 }
                 else {
@@ -91,9 +115,6 @@ public class AddMedicationActivity extends AppCompatActivity {
             else {
                 Toast.makeText(this, "Debes rellenar los campos obligatorios", Toast.LENGTH_SHORT).show();
             }
-
-
         });
-
     }
 }

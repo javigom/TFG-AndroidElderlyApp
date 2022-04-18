@@ -24,11 +24,16 @@ public class DaysRecyclerViewAdapter extends RecyclerView.Adapter<DaysRecyclerVi
 
     // CONSTRUCTOR
 
-    public DaysRecyclerViewAdapter() {
-        hourList = new ArrayList<>();
-        hourList.add(new HourModel(7, 0));
-        hourList.add(new HourModel(14, 0));
-        hourList.add(new HourModel(21, 0));
+    public DaysRecyclerViewAdapter(boolean editMode, List<HourModel> hourList) {
+        if(editMode) {
+            this.hourList = hourList;
+        }
+        else {
+            hourList = new ArrayList<>();
+            hourList.add(new HourModel(7, 0));
+            hourList.add(new HourModel(14, 0));
+            hourList.add(new HourModel(21, 0));
+        }
     }
 
     // METHODS

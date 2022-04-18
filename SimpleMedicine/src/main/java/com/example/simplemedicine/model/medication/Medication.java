@@ -22,10 +22,11 @@ public class Medication implements Serializable {
     private String description;
     private Map<WeekDaysEnum, Boolean> weekDays;
     private List<HourModel> hours;
-    private double unitsPerDosis;
+    private int unitsPerDosis;
     private DateModel startDate;
     private DateModel endDate;
     private String photo;
+    private boolean notifications;
 
      public Medication() {
         description = "";
@@ -34,6 +35,7 @@ public class Medication implements Serializable {
             weekDays.put(WeekDaysEnum.getWeekDay(i), false);
         hours = new ArrayList<>();
         this.unitsPerDosis = -1;
+        this.notifications = false;
     }
 
     @Override
@@ -44,7 +46,8 @@ public class Medication implements Serializable {
                 "hours=" + hours + '\n' +
                 "unitsPerDosis=" + unitsPerDosis + '\n' +
                 "startDate=" + startDate + '\n' +
-                "endDate=" + endDate + '\n';
+                "endDate=" + endDate + '\n' +
+                "notifications=" + notifications;
     }
 
     public int getId() {
@@ -100,12 +103,17 @@ public class Medication implements Serializable {
         this.hours = hours;
     }
 
-    public double getUnitsPerDosis() {
+    public int getUnitsPerDosis() {
         return unitsPerDosis;
     }
 
-    public void setUnitsPerDosis(double unitsPerDosis) {
+    public void setUnitsPerDosis(int unitsPerDosis) {
         this.unitsPerDosis = unitsPerDosis;
+    }
+
+    public String getUnitsPerDosisString() {
+         return unitsPerDosis + ((unitsPerDosis != 1)? " unidades" : " unidad") + " / "
+                 + hours.size() + ((hours.size() != 1)? " veces al día" : " vez al día");
     }
 
     public DateModel getStartDate() {
@@ -140,4 +148,11 @@ public class Medication implements Serializable {
         this.photo = photo;
     }
 
+    public boolean isNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(boolean notifications) {
+        this.notifications = notifications;
+    }
 }
