@@ -38,6 +38,10 @@ public class AddMedicationPage1Fragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initView();
+    }
+
+    private void initView() {
         if(editMode) {
             binding.name.setText(medication.getName());
             binding.description.setText(medication.getDescription());

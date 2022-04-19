@@ -29,10 +29,10 @@ public class DaysRecyclerViewAdapter extends RecyclerView.Adapter<DaysRecyclerVi
             this.hourList = hourList;
         }
         else {
-            hourList = new ArrayList<>();
-            hourList.add(new HourModel(7, 0));
-            hourList.add(new HourModel(14, 0));
-            hourList.add(new HourModel(21, 0));
+            this.hourList = new ArrayList<>();
+            this.hourList.add(new HourModel(7, 0));
+            this.hourList.add(new HourModel(14, 0));
+            this.hourList.add(new HourModel(21, 0));
         }
     }
 

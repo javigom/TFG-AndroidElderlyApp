@@ -45,9 +45,6 @@ public class AddMedicationPage3Fragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView();
-        if(editMode) {
-            binding.numberText.setText(String.valueOf(medication.getUnitsPerDosis()));
-        }
     }
 
     private void initView() {
@@ -73,9 +70,13 @@ public class AddMedicationPage3Fragment extends Fragment {
                 }
             }
         });
+
+        if(editMode) {
+            binding.numberText.setText(String.valueOf(medication.getUnitsPerDosis()));
+        }
     }
 
-    protected boolean setData(Medication medication) {
+    protected boolean fillData(Medication medication) {
         if(binding.numberText.getText().toString().equals("")) {
             return false;
         }

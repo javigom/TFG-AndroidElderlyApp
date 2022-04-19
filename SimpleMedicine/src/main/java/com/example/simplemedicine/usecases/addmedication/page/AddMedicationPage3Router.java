@@ -28,6 +28,6 @@ public class AddMedicationPage3Router implements BaseFragmentRouter {
 
     @Override
     public boolean fillData(Medication medication) {
-        return instance.setData(medication);
+        return instance.fillData(medication);
     }
 }

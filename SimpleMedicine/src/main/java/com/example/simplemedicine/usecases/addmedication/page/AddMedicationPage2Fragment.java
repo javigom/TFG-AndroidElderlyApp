@@ -43,6 +43,10 @@ public class AddMedicationPage2Fragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initView();
+    }
+
+    private void initView() {
         if(editMode) {
             binding.checkMonday.setChecked(medication.getWeekDays().get(WeekDaysEnum.MONDAY));
             binding.checkTuesday.setChecked(medication.getWeekDays().get(WeekDaysEnum.TUESDAY));
@@ -54,9 +58,8 @@ public class AddMedicationPage2Fragment extends Fragment {
         }
     }
 
-    protected boolean setData(Medication medication) {
+    protected boolean fillData(Medication medication) {
         boolean res = false;
-
         List<CheckBox> checkBoxList = new ArrayList<>();
         checkBoxList.add(binding.checkMonday);
         checkBoxList.add(binding.checkTuesday);
@@ -67,13 +70,9 @@ public class AddMedicationPage2Fragment extends Fragment {
         checkBoxList.add(binding.checkSunday);
 
         for(int i = 0; i < checkBoxList.size(); i++) {
-            if(checkBoxList.get(i).isChecked()) {
-                medication.getWeekDays().put(WeekDaysEnum.getWeekDay(i), true);
+            medication.getWeekDays().put(WeekDaysEnum.getWeekDay(i), checkBoxList.get(i).isChecked());
+            if(checkBoxList.get(i).isChecked())
                 res = true;
-            }
-            else {
-                medication.getWeekDays().put(WeekDaysEnum.getWeekDay(i), false);
-            }
         }
 
         return res;
