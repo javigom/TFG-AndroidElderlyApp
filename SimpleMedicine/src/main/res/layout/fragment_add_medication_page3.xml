@@ -1,108 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".usecases.addmedication.page.AddMedicationPage3Fragment"
-    android:padding="20dp">
+    tools:context=".usecases.addmedication.page.AddMedicationPage3Fragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/materialTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
             android:text="¿A qué horas del día lo tomas?"
             android:textColor="@color/primary_text"
             android:textSize="40sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_medication"
-            app:tint="@color/primary_text"
-            android:layout_marginTop="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialTextView" />
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="20dp"
             android:text="Número de dosis por toma:"
-            android:textColor="@color/primary_text"
             android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/materialTextView" />
+            android:textColor="@color/secondary_text" />
 
-        <EditText
-            android:id="@+id/numberText"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rectangle"
-            android:inputType="numberDecimal"
-            android:textSize="20sp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="20dp"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-        <ImageView
-            android:id="@+id/imageView2"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_alarm"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/numberText" />
+            android:background="@color/primary_light">
+
+            <ImageButton
+                android:id="@+id/downButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_line"
+                app:tint="@color/primary_text"
+                android:background="@color/primary_light"/>
+
+            <TextView
+                android:id="@+id/numberText"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:inputType="number"
+                android:textSize="20sp"
+                android:textColor="@color/primary_text"/>
+
+            <ImageButton
+                android:id="@+id/upButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_add"
+                app:tint="@color/primary_text"
+                android:background="@color/primary_light"/>
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
             android:text="Horas del día: "
-            android:textColor="@color/primary_text"
             android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@+id/imageView2"
-            app:layout_constraintTop_toBottomOf="@+id/numberText" />
+            android:textColor="@color/secondary_text"
+            android:layout_marginTop="20dp"/>
 
         <Button
             android:id="@+id/addButton"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Añadir"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="20dp"
-            app:layout_constraintStart_toEndOf="@+id/imageView2"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            android:textColor="@color/white"
+            android:backgroundTint="@color/primary"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="32dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addButton"
-            tools:listitem="@layout/item_day_list" />
+            tools:listitem="@layout/item_hour_list" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
+    </LinearLayout>
 
 </FrameLayout>

@@ -15,7 +15,6 @@ import com.example.simplemedicine.model.medication.Medication;
 import com.example.simplemedicine.model.medication.WeekDaysEnum;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class AddMedicationPage2Fragment extends Fragment {

@@ -15,7 +15,6 @@ import com.example.simplemedicine.model.date.DateModel;
 import com.example.simplemedicine.model.medication.Medication;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class AddMedicationPage4Fragment extends Fragment {
 
@@ -64,12 +63,12 @@ public class AddMedicationPage4Fragment extends Fragment {
                 binding.endButton.setEnabled(false);
             }
 
-            calendar1.set(start.getYear(), start.getMonth() - 1, start.getDay());
+            calendar1.set(start.getYear(), start.getMonth(), start.getDay());
         }
 
         binding.startButton.setOnClickListener(v -> {
             DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), (view12, year, month, dayOfMonth) -> {
-                start = new DateModel(year, month + 1, dayOfMonth);
+                start = new DateModel(year, month, dayOfMonth);
                 if(!binding.noEndCheckbox.isChecked()) {
                     binding.endButton.setEnabled(true);
                     binding.endDate.setText("");
@@ -85,11 +84,11 @@ public class AddMedicationPage4Fragment extends Fragment {
             binding.endButton.setEnabled(false);
         binding.endButton.setOnClickListener(v -> {
             Calendar calendar2 = Calendar.getInstance();
-            calendar2.set(start.getYear(), start.getMonth() - 1, start.getDay() + 1);
+            calendar2.set(start.getYear(), start.getMonth(), start.getDay() + 1);
             DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), (view1, year, month, dayOfMonth) -> {
-                end = new DateModel(year, month + 1, dayOfMonth);
+                end = new DateModel(year, month, dayOfMonth);
                 binding.endDate.setText(end.toString());
-                calendar2.set(end.getYear(), end.getMonth() - 1, end.getDay());
+                calendar2.set(end.getYear(), end.getMonth(), end.getDay());
             }, calendar2.get(Calendar.YEAR), calendar2.get(Calendar.MONTH), calendar2.get(Calendar.DAY_OF_MONTH));
             datePickerDialog.getDatePicker().setMinDate(calendar2.getTime().getTime());
             datePickerDialog.show();
@@ -105,9 +104,10 @@ public class AddMedicationPage4Fragment extends Fragment {
         if(start == null || (!binding.noEndCheckbox.isChecked() && end == null)) {
             return false;
         }
+
         medication.setStartDate(start);
         medication.setEndDate(binding.noEndCheckbox.isChecked()? new DateModel(-1, -1, -1): end);
-
+        medication.setNotifications(binding.notificationCheckbox.isChecked());
         return true;
     }
 }

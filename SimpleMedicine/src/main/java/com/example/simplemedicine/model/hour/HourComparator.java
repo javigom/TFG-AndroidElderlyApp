@@ -2,8 +2,6 @@ package com.example.simplemedicine.model.hour;
 
 import androidx.annotation.NonNull;
 
-import com.example.simplemedicine.model.hour.HourModel;
-
 import java.util.Comparator;
 
 public class HourComparator implements Comparator<HourModel> {

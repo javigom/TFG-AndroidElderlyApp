@@ -26,49 +26,56 @@
             android:id="@+id/checkMonday"
             android:text="Lunes"
             android:textSize="25sp"
-            android:checked="true"/>
+            android:checked="true"
+            android:buttonTint="@color/primary"/>
         <com.google.android.material.checkbox.MaterialCheckBox
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/checkTuesday"
             android:text="Martes"
             android:textSize="25sp"
-            android:checked="true"/>
+            android:checked="true"
+            android:buttonTint="@color/primary"/>
         <com.google.android.material.checkbox.MaterialCheckBox
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/checkWednesday"
             android:text="Miércoles"
             android:textSize="25sp"
-            android:checked="true"/>
+            android:checked="true"
+            android:buttonTint="@color/primary"/>
         <com.google.android.material.checkbox.MaterialCheckBox
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/checkThursday"
             android:text="Jueves"
             android:textSize="25sp"
-            android:checked="true"/>
+            android:checked="true"
+            android:buttonTint="@color/primary"/>
         <com.google.android.material.checkbox.MaterialCheckBox
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/checkFriday"
             android:text="Viernes"
             android:textSize="25sp"
-            android:checked="true"/>
+            android:checked="true"
+            android:buttonTint="@color/primary"/>
         <com.google.android.material.checkbox.MaterialCheckBox
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/checkSaturday"
             android:text="Sábado"
             android:textSize="25sp"
-            android:checked="true"/>
+            android:checked="true"
+            android:buttonTint="@color/primary"/>
         <com.google.android.material.checkbox.MaterialCheckBox
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/checkSunday"
             android:text="Domingo"
             android:textSize="25sp"
-            android:checked="true"/>
+            android:checked="true"
+            android:buttonTint="@color/primary"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

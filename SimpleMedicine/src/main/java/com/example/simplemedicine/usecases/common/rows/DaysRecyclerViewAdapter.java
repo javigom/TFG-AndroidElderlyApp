@@ -8,9 +8,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.simplemedicine.databinding.ItemDayListBinding;
-import com.example.simplemedicine.model.hour.HourModel;
+import com.example.simplemedicine.databinding.ItemHourListBinding;
 import com.example.simplemedicine.model.hour.HourComparator;
+import com.example.simplemedicine.model.hour.HourModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,8 +42,8 @@ public class DaysRecyclerViewAdapter extends RecyclerView.Adapter<DaysRecyclerVi
     @Override
     public DaysRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        ItemDayListBinding itemDayListBinding = ItemDayListBinding.inflate(layoutInflater, parent, false);
-        return new DaysRecyclerViewAdapter.ViewHolder(itemDayListBinding);
+        ItemHourListBinding itemHourListBinding = ItemHourListBinding.inflate(layoutInflater, parent, false);
+        return new DaysRecyclerViewAdapter.ViewHolder(itemHourListBinding);
     }
 
     @Override
@@ -74,16 +74,16 @@ public class DaysRecyclerViewAdapter extends RecyclerView.Adapter<DaysRecyclerVi
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        ItemDayListBinding itemDayListBinding;
+        ItemHourListBinding itemHourListBinding;
 
-        public ViewHolder(@NonNull ItemDayListBinding binding) {
+        public ViewHolder(@NonNull ItemHourListBinding binding) {
             super(binding.getRoot());
-            itemDayListBinding = binding;
+            itemHourListBinding = binding;
         }
 
         public void bindView(HourModel hour) {
-            itemDayListBinding.hourText.setText(hour.toString());
-            itemDayListBinding.deleteButton.setOnClickListener(view -> {
+            itemHourListBinding.hourText.setText(hour.toString());
+            itemHourListBinding.deleteButton.setOnClickListener(view -> {
                 
                 if(hourList.size() != 1) {
                     int index = hourList.indexOf(hour);

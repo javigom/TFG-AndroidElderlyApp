@@ -100,12 +100,23 @@
             android:layout_height="wrap_content"
             android:text="Sin fecha de fin"
             android:textColor="@color/secondary_text"
-            android:textSize="15sp"/>
+            android:textSize="15sp"
+            android:buttonTint="@color/primary"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="*Obligatorio"/>
+
+        <CheckBox
+            android:id="@+id/notificationCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Activar notificaciones"
+            android:textColor="@color/primary_text"
+            android:textSize="20sp"
+            android:buttonTint="@color/primary"
+            android:layout_marginTop="25dp" />
 
     </LinearLayout>
 

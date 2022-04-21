@@ -12,7 +12,6 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.simplemedicine.databinding.ActivityAddMedicationBinding;
 import com.example.simplemedicine.model.medication.Medication;
 import com.example.simplemedicine.usecases.addmedication.page.AddMedicationPageAdapter;
-import com.example.simplemedicine.usecases.seemedication.SeeMedicationActivity;
 import com.example.simplemedicine.usecases.seemedication.SeeMedicationRouter;
 
 public class AddMedicationActivity extends AppCompatActivity {

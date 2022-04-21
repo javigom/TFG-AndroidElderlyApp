@@ -41,6 +41,6 @@ public class DateModel implements Serializable {
         if(day == -1 || month == -1 || year == -1)
             return "Sin fecha de fin";
         else
-            return day + "/" + month + "/" + year;
+            return day + "/" + month + 1 + "/" + year;
     }
 }

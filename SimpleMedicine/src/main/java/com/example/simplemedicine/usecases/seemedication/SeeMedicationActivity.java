@@ -1,7 +1,7 @@
 package com.example.simplemedicine.usecases.seemedication;
 
-import android.app.ActivityManager;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,7 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.simplemedicine.R;
 import com.example.simplemedicine.databinding.ActivitySeeMedicationBinding;
@@ -58,6 +57,8 @@ public class SeeMedicationActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        if(medication.getPhoto() != null)
+            binding.image.setImageURI(Uri.parse(medication.getPhoto()));
         binding.nameText.setText(medication.getName());
         binding.descriptionText.setText(medication.getDescription());
         binding.unitsText.setText(medication.getUnitsPerDosisString());

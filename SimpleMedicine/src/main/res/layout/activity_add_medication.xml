@@ -10,9 +10,11 @@
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="64dp"
+        app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/layoutButtons">
+        app:layout_constraintTop_toTopOf="parent">
 
     </androidx.viewpager2.widget.ViewPager2>
 
@@ -32,14 +34,14 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/secondary_light"
             android:textAllCaps="false"
+            android:textColor="@color/primary_text"
             app:cornerRadius="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/buttonNext"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:backgroundTint="@color/secondary_light"
-            android:textColor="@color/primary_text"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/buttonNext"
@@ -48,14 +50,14 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/secondary"
             android:textAllCaps="false"
+            android:textColor="@color/white"
             app:cornerRadius="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/buttonPrev"
-            app:layout_constraintTop_toTopOf="parent"
-            android:backgroundTint="@color/secondary"
-            android:textColor="@color/white"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

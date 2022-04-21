@@ -1,5 +1,6 @@
 package com.example.simplemedicine.usecases.common.rows;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -61,6 +62,10 @@ public class MedicationRecyclerViewAdapter extends RecyclerView.Adapter<Medicati
 
         public void bindView(Medication medication) {
             itemMedicationListBinding.textViewIcon.setText(medication.getName());
+
+            if(medication.getPhoto() != null)
+                itemMedicationListBinding.image.setImageURI(Uri.parse(medication.getPhoto()));
+
             itemMedicationListBinding.linearLayout.setOnClickListener(view -> new SeeMedicationRouter().launch(view.getContext(), medication));
         }
 
