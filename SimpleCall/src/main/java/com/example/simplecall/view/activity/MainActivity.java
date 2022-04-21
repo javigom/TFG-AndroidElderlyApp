@@ -101,19 +101,19 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if(requestCode == ALL_PERMISSIONS) {
-            boolean isPerpermissionForAllGranted = true;
+            boolean isPermissionForAllGranted = true;
             if (grantResults.length > 0 && permissions.length == grantResults.length) {
                 for (int i = 0; i < permissions.length; i++) {
                     if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                        isPerpermissionForAllGranted = false;
+                        isPermissionForAllGranted = false;
                     }
                 }
 
             } else {
-                isPerpermissionForAllGranted = false;
+                isPermissionForAllGranted = false;
             }
 
-            if (isPerpermissionForAllGranted) {
+            if (isPermissionForAllGranted) {
                 initData();
                 initView();
             } else {
