@@ -36,7 +36,6 @@ public class AddMedicationPage1Fragment extends Fragment {
     private final boolean editMode;
     private final Medication medication;
     private Bitmap imageBitmap;
-    private final View view;
 
     private static final int PERMISSION_REQUEST_CAMERA = 100;
 
@@ -61,7 +60,6 @@ public class AddMedicationPage1Fragment extends Fragment {
     public AddMedicationPage1Fragment(boolean editMode, Medication medication) {
         this.editMode = editMode;
         this.medication = medication;
-        this.view = getView();
     }
 
 
@@ -103,7 +101,9 @@ public class AddMedicationPage1Fragment extends Fragment {
             return false;
         }
 
-        medication.setPhoto(getUriFromBitmap(imageBitmap).toString());
+        if(imageBitmap != null)
+            medication.setPhoto(getUriFromBitmap(imageBitmap).toString());
+
         medication.setName(binding.name.getText().toString());
         medication.setDescription(Objects.requireNonNull(binding.description.getText()).toString());
 
@@ -137,11 +137,11 @@ public class AddMedicationPage1Fragment extends Fragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == PERMISSION_REQUEST_CAMERA) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Snackbar.make(view, "Permisos de cámara concedidos", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(getView(), "Permisos de cámara concedidos", Snackbar.LENGTH_SHORT).show();
                 startCamera();
             } else {
                 // Permission request was denied.
-                Snackbar.make(view, "Permisos de cámara denegados", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(getView(), "Permisos de cámara denegados", Snackbar.LENGTH_SHORT).show();
             }
         }
     }
@@ -155,12 +155,12 @@ public class AddMedicationPage1Fragment extends Fragment {
 
     private void requestCameraPermission() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.CAMERA)) {
-            Snackbar.make(view, "Los permisos de cámara son necesarios",
+            Snackbar.make(getView(), "Los permisos de cámara son necesarios",
                     Snackbar.LENGTH_INDEFINITE).setAction("Ok", view -> {
                         ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CAMERA);
                     }).show();
         } else {
-            Snackbar.make(view, "Cámara no disponible", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(getView(), "Cámara no disponible", Snackbar.LENGTH_SHORT).show();
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CAMERA);
         }
     }

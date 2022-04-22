@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".usecases.medication.MedicationFragment">
+    tools:context=".usecases.medication.MedicationFragment"
+    android:background="#F1F1F1">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
