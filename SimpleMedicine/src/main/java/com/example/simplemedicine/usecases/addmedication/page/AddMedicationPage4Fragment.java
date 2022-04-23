@@ -71,6 +71,7 @@ public class AddMedicationPage4Fragment extends Fragment {
                 start = new DateModel(year, month, dayOfMonth);
                 if(!binding.noEndCheckbox.isChecked()) {
                     binding.endButton.setEnabled(true);
+                    binding.noEndCheckbox.setEnabled(true);
                     binding.endDate.setText("");
                 }
                 binding.startDate.setText(start.toString());
@@ -80,8 +81,10 @@ public class AddMedicationPage4Fragment extends Fragment {
             datePickerDialog.show();
         });
 
-        if(!editMode)
+        if(!editMode) {
             binding.endButton.setEnabled(false);
+            binding.noEndCheckbox.setEnabled(false);
+        }
         binding.endButton.setOnClickListener(v -> {
             Calendar calendar2 = Calendar.getInstance();
             calendar2.set(start.getYear(), start.getMonth(), start.getDay() + 1);
