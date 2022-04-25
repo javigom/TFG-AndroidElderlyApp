@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:elevation="4dp"
+    android:layout_margin="5dp"
+    android:background="@color/white"
+    android:id="@+id/constraintLayout">
+
+    <LinearLayout
+        android:id="@+id/linearHour"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/hour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/linearHour"
+            app:layout_constraintTop_toTopOf="parent"
+            android:maxWidth="300dp"
+            android:maxLines="1"
+            android:text="99:99"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary_text"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/medicamentos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/linearHour"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Medicamento X \n Medicamento Y"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
+        android:textSize="18sp"
+        android:textColor="@color/primary_text"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

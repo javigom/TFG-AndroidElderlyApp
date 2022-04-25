@@ -16,12 +16,20 @@ import com.example.simplemedicine.usecases.common.rows.MedicationRecyclerViewAda
 
 public class MedicationFragment extends Fragment {
 
+    // ATTRIBUTES
+
     private FragmentMedicationBinding binding;
     private MedicationViewModel viewModel;
     private MedicationRecyclerViewAdapter recyclerViewAdapter;
 
+
+    // CONSTRUCTOR
+
     public MedicationFragment() {
     }
+
+
+    // METHODS
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle SavedInstanceState) {

@@ -7,13 +7,15 @@ import com.example.simplemedicine.model.date.DateModel;
 import com.example.simplemedicine.model.hour.HourModel;
 
 import java.io.Serializable;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 @Entity(tableName = "medication_table")
-public class Medication implements Serializable {
+public class Medication implements Serializable, Comparable<Medication> {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -125,7 +127,7 @@ public class Medication implements Serializable {
     }
 
     public String getStartDateString() {
-         return startDate.toString();
+         return "Desde: " + startDate.toString();
     }
 
     public DateModel getEndDate() {
@@ -137,7 +139,7 @@ public class Medication implements Serializable {
     }
 
     public String getEndDateString() {
-        return endDate.toString();
+        return "Hasta: " + endDate.toString();
     }
 
     public String getPhoto() {
@@ -154,5 +156,13 @@ public class Medication implements Serializable {
 
     public void setNotifications(boolean notifications) {
         this.notifications = notifications;
+    }
+
+    @Override
+    public int compareTo(Medication o) {
+        String name1 = Normalizer.normalize(this.getName(), Normalizer.Form.NFD).replaceFirst("[^\\p{ASCII}]", "");
+        String name2 = Normalizer.normalize(o.getName(), Normalizer.Form.NFD).replaceFirst("[^\\p{ASCII}]", "");
+
+        return name1.toLowerCase(Locale.ROOT).compareTo(name2.toLowerCase(Locale.ROOT));
     }
 }

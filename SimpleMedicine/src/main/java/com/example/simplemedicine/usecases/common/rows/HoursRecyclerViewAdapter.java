@@ -9,14 +9,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.simplemedicine.databinding.ItemHourListBinding;
-import com.example.simplemedicine.model.hour.HourComparator;
 import com.example.simplemedicine.model.hour.HourModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class DaysRecyclerViewAdapter extends RecyclerView.Adapter<DaysRecyclerViewAdapter.ViewHolder> {
+public class HoursRecyclerViewAdapter extends RecyclerView.Adapter<HoursRecyclerViewAdapter.ViewHolder> {
 
     // ATTRIBUTES
 
@@ -24,7 +23,7 @@ public class DaysRecyclerViewAdapter extends RecyclerView.Adapter<DaysRecyclerVi
 
     // CONSTRUCTOR
 
-    public DaysRecyclerViewAdapter(boolean editMode, List<HourModel> hourList) {
+    public HoursRecyclerViewAdapter(boolean editMode, List<HourModel> hourList) {
         if(editMode) {
             this.hourList = hourList;
         }
@@ -40,14 +39,14 @@ public class DaysRecyclerViewAdapter extends RecyclerView.Adapter<DaysRecyclerVi
 
     @NonNull
     @Override
-    public DaysRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public HoursRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         ItemHourListBinding itemHourListBinding = ItemHourListBinding.inflate(layoutInflater, parent, false);
-        return new DaysRecyclerViewAdapter.ViewHolder(itemHourListBinding);
+        return new HoursRecyclerViewAdapter.ViewHolder(itemHourListBinding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DaysRecyclerViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull HoursRecyclerViewAdapter.ViewHolder holder, int position) {
         holder.bindView(hourList.get(position));
     }
 
@@ -64,7 +63,7 @@ public class DaysRecyclerViewAdapter extends RecyclerView.Adapter<DaysRecyclerVi
             }
         }
         hourList.add(hour);
-        Collections.sort(hourList, new HourComparator());
+        Collections.sort(hourList);
         notifyItemInserted(hourList.indexOf(hour));
         return true;
     }

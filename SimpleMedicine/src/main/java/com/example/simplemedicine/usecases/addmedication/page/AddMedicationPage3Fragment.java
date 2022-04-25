@@ -16,12 +16,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import com.example.simplemedicine.databinding.FragmentAddMedicationPage3Binding;
 import com.example.simplemedicine.model.hour.HourModel;
 import com.example.simplemedicine.model.medication.Medication;
-import com.example.simplemedicine.usecases.common.rows.DaysRecyclerViewAdapter;
+import com.example.simplemedicine.usecases.common.rows.HoursRecyclerViewAdapter;
 
 public class AddMedicationPage3Fragment extends Fragment {
 
     private FragmentAddMedicationPage3Binding binding;
-    private DaysRecyclerViewAdapter recyclerViewAdapter;
+    private HoursRecyclerViewAdapter recyclerViewAdapter;
     private int units;
     private boolean editMode;
     private Medication medication;
@@ -54,7 +54,7 @@ public class AddMedicationPage3Fragment extends Fragment {
     }
 
     private void initView() {
-        recyclerViewAdapter = new DaysRecyclerViewAdapter(editMode, medication.getHours());
+        recyclerViewAdapter = new HoursRecyclerViewAdapter(editMode, medication.getHours());
         binding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         binding.recyclerView.setAdapter(recyclerViewAdapter);
         binding.numberText.setText(String.valueOf(units));

@@ -64,8 +64,9 @@ public class SeeMedicationActivity extends AppCompatActivity {
         binding.unitsText.setText(medication.getUnitsPerDosisString());
         binding.daysText.setText(medication.getWeekDaysString());
         binding.hoursText.setText(medication.getHoursString());
-        binding.startText.setText("Desde: " + medication.getStartDateString());
-        binding.endText.setText("Hasta: " + medication.getEndDateString());
+        binding.startText.setText(medication.getStartDateString());
+        binding.endText.setText(medication.getEndDateString());
+        binding.notificationText.setText(medication.isNotifications()? "Sí": "No");
     }
 
     @Override

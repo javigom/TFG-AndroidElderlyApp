@@ -2,16 +2,19 @@ package com.example.simplemedicine.usecases.common.rows;
 
 import android.net.Uri;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.simplemedicine.R;
 import com.example.simplemedicine.databinding.ItemMedicationListBinding;
 import com.example.simplemedicine.model.medication.Medication;
 import com.example.simplemedicine.usecases.seemedication.SeeMedicationRouter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MedicationRecyclerViewAdapter extends RecyclerView.Adapter<MedicationRecyclerViewAdapter.ViewHolder> {
@@ -49,6 +52,7 @@ public class MedicationRecyclerViewAdapter extends RecyclerView.Adapter<Medicati
     public void updateMedicationList(final List<Medication> medicationModelList) {
         this.medicationList.clear();
         this.medicationList = medicationModelList;
+        Collections.sort(this.medicationList);
         notifyDataSetChanged();
     }
 
@@ -61,12 +65,16 @@ public class MedicationRecyclerViewAdapter extends RecyclerView.Adapter<Medicati
         }
 
         public void bindView(Medication medication) {
-            itemMedicationListBinding.textViewIcon.setText(medication.getName());
-
-            if(medication.getPhoto() != null)
+            if(medication.getPhoto() != null) {
                 itemMedicationListBinding.image.setImageURI(Uri.parse(medication.getPhoto()));
-
-            itemMedicationListBinding.linearLayout.setOnClickListener(view -> new SeeMedicationRouter().launch(view.getContext(), medication));
+            }
+            else {
+                itemMedicationListBinding.image.setImageResource(R.drawable.default_pill);
+            }
+            itemMedicationListBinding.name.setText(medication.getName());
+            itemMedicationListBinding.unidades.setText(medication.getUnitsPerDosisString());
+            itemMedicationListBinding.fin.setText(medication.getEndDateString());
+            itemMedicationListBinding.constraintLayout.setOnClickListener(view -> new SeeMedicationRouter().launch(view.getContext(), medication));
         }
 
     }

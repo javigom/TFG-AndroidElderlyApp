@@ -1,8 +1,10 @@
 package com.example.simplemedicine.model.date;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
-public class DateModel implements Serializable {
+public class DateModel implements Serializable, Comparable<DateModel> {
 
     private int year, month, day;
 
@@ -41,6 +43,17 @@ public class DateModel implements Serializable {
         if(day == -1 || month == -1 || year == -1)
             return "Sin fecha de fin";
         else
-            return day + "/" + month + 1 + "/" + year;
+            return day + "/" + (month + 1) + "/" + year;
+    }
+
+    @Override
+    public int compareTo(@NonNull DateModel o) {
+        if(this.getYear() != o.getYear())
+            return ((this.getYear() > o.getYear() || this.getYear() == -1)? 1: -1);
+        else if(this.getMonth() != o.getMonth())
+            return ((this.getMonth() > o.getMonth() || this.getMonth() == -1)? 1: -1);
+        else if(this.getDay() != o.getDay())
+            return ((this.getDay() > o.getDay() || this.getDay() == -1)? 1: -1);
+        else return 0;
     }
 }

@@ -9,16 +9,27 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.simplemedicine.databinding.FragmentTodayBinding;
+import com.example.simplemedicine.usecases.common.rows.TodayRecyclerViewAdapter;
 
 public class TodayFragment extends Fragment {
 
+    // ATTRIBUTES
+
     private FragmentTodayBinding binding;
     private TodayViewModel viewModel;
+    private TodayRecyclerViewAdapter recyclerViewAdapter;
+
+
+    // CONSTRUCTOR
 
     public TodayFragment() {
     }
+
+
+    // METHODS
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle SavedInstanceState) {
@@ -45,8 +56,13 @@ public class TodayFragment extends Fragment {
     }
 
     private void initView() {
+        // Recycler view
+        recyclerViewAdapter = new TodayRecyclerViewAdapter();
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.recyclerView.setAdapter(recyclerViewAdapter);
     }
 
     private void initData() {
+        viewModel.getAllMedications().observe(getViewLifecycleOwner(), recyclerViewAdapter::updateMedicationList);
     }
 }

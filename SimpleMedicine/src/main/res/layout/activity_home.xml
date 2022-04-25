@@ -34,7 +34,7 @@
         android:layout_gravity="bottom"
         android:background="@color/primary_light"
         app:itemIconTint="@color/primary_dark"
-        app:labelVisibilityMode="unlabeled"
+        app:itemTextColor="@color/primary_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/home_bottom_navigation_menu"
         app:elevation="0dp"/>

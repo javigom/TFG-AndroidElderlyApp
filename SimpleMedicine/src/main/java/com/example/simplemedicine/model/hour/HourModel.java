@@ -1,9 +1,11 @@
 package com.example.simplemedicine.model.hour;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.Objects;
 
-public class HourModel implements Serializable {
+public class HourModel implements Serializable, Comparable<HourModel> {
 
     private int hours;
     private int minutes;
@@ -45,5 +47,14 @@ public class HourModel implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(hours, minutes);
+    }
+    
+    @Override
+    public int compareTo(HourModel o) {
+        if(this.getHours() != o.getHours())
+            return (this.getHours() > o.getHours()? 1: -1);
+        else if(this.getMinutes() != o.getMinutes())
+            return (this.getMinutes() > o.getMinutes()? 1: -1);
+        else return 0;
     }
 }

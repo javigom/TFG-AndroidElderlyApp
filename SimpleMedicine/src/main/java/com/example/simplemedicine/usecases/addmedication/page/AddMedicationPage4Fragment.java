@@ -53,9 +53,9 @@ public class AddMedicationPage4Fragment extends Fragment {
         if(editMode) {
             start = medication.getStartDate();
             end = medication.getEndDate();
-            binding.startDate.setText(medication.getStartDateString());
+            binding.startDate.setText(medication.getStartDate().toString());
             if(medication.getEndDate().getDay() != -1) {
-                binding.endDate.setText(medication.getEndDateString());
+                binding.endDate.setText(medication.getEndDate().toString());
                 binding.endButton.setEnabled(true);
             }
             else {
@@ -64,6 +64,9 @@ public class AddMedicationPage4Fragment extends Fragment {
             }
 
             calendar1.set(start.getYear(), start.getMonth(), start.getDay());
+        }
+        else {
+            binding.notificationCheckbox.setChecked(true);
         }
 
         binding.startButton.setOnClickListener(v -> {

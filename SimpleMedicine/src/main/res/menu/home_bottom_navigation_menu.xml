@@ -3,10 +3,10 @@
     <item
         android:id="@+id/home_menu_medication"
         android:icon="@drawable/ic_medication"
-        android:title="" />
+        android:title="MEDICAMENTOS" />
     <item
         android:id="@+id/home_menu_today"
         android:icon="@drawable/ic_calendar"
-        android:title="" />
+        android:title="HOY" />
 
 </menu>
