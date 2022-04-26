@@ -61,4 +61,5 @@ public class AddMedicationViewModel extends AndroidViewModel {
     public Medication getMedication() {
         return medication;
     }
+
 }

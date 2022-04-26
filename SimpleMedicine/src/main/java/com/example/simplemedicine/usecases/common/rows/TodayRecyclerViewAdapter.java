@@ -2,13 +2,12 @@ package com.example.simplemedicine.usecases.common.rows;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.simplemedicine.databinding.ItemMedicationListBinding;
 import com.example.simplemedicine.databinding.ItemTodayListBinding;
 import com.example.simplemedicine.model.date.DateModel;
 import com.example.simplemedicine.model.hour.HourModel;
@@ -18,7 +17,6 @@ import com.example.simplemedicine.model.medication.WeekDaysEnum;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -93,10 +91,10 @@ public class TodayRecyclerViewAdapter extends RecyclerView.Adapter<TodayRecycler
 
         public void bindView(HourModel hour) {
             itemTodayListBinding.hour.setText(hour.toString());
-            itemTodayListBinding.medicamentos.setText("");
-            for(Medication medication: medicatonHashMap.get(hour)) {
-                itemTodayListBinding.medicamentos.append(medication.getName() + "\n");
-            }
+            TodayChildRecyclerViewAdapter recyclerViewAdapter = new TodayChildRecyclerViewAdapter();
+            itemTodayListBinding.recyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
+            itemTodayListBinding.recyclerView.setAdapter(recyclerViewAdapter);
+            recyclerViewAdapter.updateMedicationList(medicatonHashMap.get(hour));
         }
     }
 

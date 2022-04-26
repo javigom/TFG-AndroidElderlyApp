@@ -24,6 +24,7 @@ public class AddMedicationActivity extends AppCompatActivity {
     private AddMedicationPageAdapter pageAdapter;
     private int selection = 0;
     private boolean editMode;
+    private Medication oldMedication;
 
 
     // METHODS
@@ -37,6 +38,7 @@ public class AddMedicationActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if(intent.getExtras() != null) {
+            oldMedication = (Medication) intent.getSerializableExtra("medication");
             viewModel.setMedication((Medication) intent.getSerializableExtra("medication"));
             getSupportActionBar().setTitle("Editar un medicacamento");
             editMode = true;
@@ -83,6 +85,8 @@ public class AddMedicationActivity extends AppCompatActivity {
 
         binding.buttonPrev.setOnClickListener(v -> {
             if(selection == 0) {
+                if(editMode)
+                    new SeeMedicationRouter().launch(this, oldMedication);
                 super.onBackPressed();
             }
             else {
@@ -98,6 +102,7 @@ public class AddMedicationActivity extends AppCompatActivity {
                         viewModel.update();
                         Toast.makeText(this, "Medicamento editado con éxito", Toast.LENGTH_SHORT).show();
                         new SeeMedicationRouter().launch(this, viewModel.getMedication());
+                        super.onBackPressed();
                     }
                     else {
                         viewModel.insert();
