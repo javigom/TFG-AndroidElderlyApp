@@ -5,7 +5,7 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 
 import com.example.simplemedicine.model.medication.Medication;
-import com.example.simplemedicine.provider.medication.MedicationRepo;
+import com.example.simplemedicine.provider.room.repository.MedicationRepo;
 import com.example.simplemedicine.usecases.addmedication.page.AddMedicationPage1Router;
 import com.example.simplemedicine.usecases.addmedication.page.AddMedicationPage2Router;
 import com.example.simplemedicine.usecases.addmedication.page.AddMedicationPage3Router;

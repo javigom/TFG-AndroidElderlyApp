@@ -1,4 +1,4 @@
-package com.example.simplemedicine.provider.medication;
+package com.example.simplemedicine.provider.room.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;

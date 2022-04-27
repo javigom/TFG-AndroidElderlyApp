@@ -5,15 +5,11 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.example.simplemedicine.model.hour.HourModel;
 import com.example.simplemedicine.model.medication.Medication;
-import com.example.simplemedicine.provider.medication.MedicationRepo;
+import com.example.simplemedicine.provider.room.repository.MedicationRepo;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 public class TodayViewModel extends AndroidViewModel {
 

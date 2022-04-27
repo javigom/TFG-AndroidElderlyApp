@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.simplemedicine.model.medication.Medication;
-import com.example.simplemedicine.provider.medication.MedicationRepo;
+import com.example.simplemedicine.provider.room.repository.MedicationRepo;
 
 import java.util.List;
 

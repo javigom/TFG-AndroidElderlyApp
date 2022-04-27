@@ -1,4 +1,4 @@
-package com.example.simplemedicine.util.converter;
+package com.example.simplemedicine.provider.room.converter;
 
 import androidx.room.TypeConverter;
 

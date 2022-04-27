@@ -1,4 +1,4 @@
-package com.example.simplemedicine.provider.medication;
+package com.example.simplemedicine.provider.room;
 
 import android.content.Context;
 
@@ -10,9 +10,10 @@ import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.simplemedicine.model.medication.Medication;
-import com.example.simplemedicine.util.converter.DateConverters;
-import com.example.simplemedicine.util.converter.HourListConverters;
-import com.example.simplemedicine.util.converter.WeekMapConverters;
+import com.example.simplemedicine.provider.room.converter.DateConverters;
+import com.example.simplemedicine.provider.room.converter.HourListConverters;
+import com.example.simplemedicine.provider.room.converter.WeekMapConverters;
+import com.example.simplemedicine.provider.room.dao.MedicationDao;
 
 @Database(entities = Medication.class,version = 3,exportSchema = false)
 @TypeConverters({HourListConverters.class, DateConverters.class, WeekMapConverters.class})
