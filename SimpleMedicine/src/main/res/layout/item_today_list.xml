@@ -12,13 +12,14 @@
 
     <TextView
         android:id="@+id/status"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:text=" ■ PENDIENTE"
+        android:text="PENDIENTE"
         android:textColor="@color/secondary"
+        android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"/>
 
     <LinearLayout
         android:id="@+id/linearHour"
@@ -37,37 +38,25 @@
             android:maxWidth="300dp"
             android:maxLines="1"
             android:text="99:99"
-            android:textColor="@color/primary_text"
+            android:textColor="@color/secondary_text"
             android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginEnd="5dp"/>
 
     </LinearLayout>
-
-<!--    <TextView-->
-<!--        android:id="@+id/medicamentos"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="16dp"-->
-<!--        android:text="Medicamento X \nMedicamento Y"-->
-<!--        android:textColor="@color/primary_text"-->
-<!--        android:textSize="18sp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintStart_toEndOf="@+id/linearHour"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/status" />-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/linearHour"
-        app:layout_constraintTop_toBottomOf="@+id/status"
+        app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/item_today_child_list" />
-
-
 
         <LinearLayout
             android:id="@+id/linearLayout"
-            android:layout_width="100dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical"
@@ -78,21 +67,16 @@
             android:layout_marginBottom="5dp">
 
             <ImageButton
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/circle_button"
-                android:src="@drawable/ic_check"
+                android:id="@+id/checkButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/icons" />
+                android:background="@drawable/circle_button"
+                android:src="@drawable/ic_check"
+                app:tint="@color/white" />
 
         </LinearLayout>
 
-
-
-
-
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

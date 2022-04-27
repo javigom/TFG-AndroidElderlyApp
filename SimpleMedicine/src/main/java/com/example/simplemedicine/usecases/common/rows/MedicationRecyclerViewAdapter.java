@@ -75,8 +75,8 @@ public class MedicationRecyclerViewAdapter extends RecyclerView.Adapter<Medicati
             itemMedicationListBinding.unidades.setText(medication.getUnitsPerDosisString());
             itemMedicationListBinding.fin.setText(medication.getEndDateString());
             itemMedicationListBinding.constraintLayout.setOnClickListener(view -> new SeeMedicationRouter().launch(view.getContext(), medication));
+            itemMedicationListBinding.color.setBackgroundColor(medication.getColor());
         }
-
     }
 
 }

@@ -11,8 +11,8 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_today_list" />
+        tools:listitem="@layout/item_today_list"
+        android:paddingBottom="70dp"
+        android:clipToPadding="false"/>
 
 </FrameLayout>

@@ -1,13 +1,19 @@
 package com.example.simplemedicine.usecases.common.rows;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.simplemedicine.R;
 import com.example.simplemedicine.databinding.ItemTodayListBinding;
 import com.example.simplemedicine.model.date.DateModel;
 import com.example.simplemedicine.model.hour.HourModel;
@@ -27,6 +33,8 @@ public class TodayRecyclerViewAdapter extends RecyclerView.Adapter<TodayRecycler
     private HashMap<HourModel, List<Medication>> medicatonHashMap;
     private List<HourModel> hourList;
 
+    private Context context;
+
     // CONSTRUCTOR
 
     public TodayRecyclerViewAdapter() {
@@ -41,6 +49,7 @@ public class TodayRecyclerViewAdapter extends RecyclerView.Adapter<TodayRecycler
     public TodayRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         ItemTodayListBinding itemTodayListBinding = ItemTodayListBinding.inflate(layoutInflater, parent, false);
+        context = parent.getContext();
         return new TodayRecyclerViewAdapter.ViewHolder(itemTodayListBinding);
     }
 
@@ -95,6 +104,15 @@ public class TodayRecyclerViewAdapter extends RecyclerView.Adapter<TodayRecycler
             itemTodayListBinding.recyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
             itemTodayListBinding.recyclerView.setAdapter(recyclerViewAdapter);
             recyclerViewAdapter.updateMedicationList(medicatonHashMap.get(hour));
+            itemTodayListBinding.checkButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    itemTodayListBinding.checkButton.setEnabled(false);
+                    itemTodayListBinding.status.setText("COMPLETADO");
+                    itemTodayListBinding.status.setTextColor(context.getResources().getColor(R.color.primary));
+                    itemTodayListBinding.checkButton.setBackground(context.getResources().getDrawable(R.drawable.circle_button_pressed));
+                }
+            });
         }
     }
 

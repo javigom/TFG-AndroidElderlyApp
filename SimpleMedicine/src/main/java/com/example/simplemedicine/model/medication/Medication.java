@@ -3,6 +3,7 @@ package com.example.simplemedicine.model.medication;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.example.simplemedicine.R;
 import com.example.simplemedicine.model.date.DateModel;
 import com.example.simplemedicine.model.hour.HourModel;
 
@@ -29,6 +30,7 @@ public class Medication implements Serializable, Comparable<Medication> {
     private DateModel endDate;
     private String photo;
     private boolean notifications;
+    private int color;
 
      public Medication() {
         description = "";
@@ -36,8 +38,9 @@ public class Medication implements Serializable, Comparable<Medication> {
         for(int i = 0; i < WeekDaysEnum.values().length; i++)
             weekDays.put(WeekDaysEnum.getWeekDay(i), false);
         hours = new ArrayList<>();
-        this.unitsPerDosis = -1;
-        this.notifications = false;
+        unitsPerDosis = -1;
+        notifications = false;
+        color = R.color.primary;
     }
 
     @Override
@@ -49,7 +52,8 @@ public class Medication implements Serializable, Comparable<Medication> {
                 "unitsPerDosis=" + unitsPerDosis + '\n' +
                 "startDate=" + startDate + '\n' +
                 "endDate=" + endDate + '\n' +
-                "notifications=" + notifications;
+                "notifications=" + notifications + '\n' +
+                "color=" + color;
     }
 
     public int getId() {
@@ -156,6 +160,14 @@ public class Medication implements Serializable, Comparable<Medication> {
 
     public void setNotifications(boolean notifications) {
         this.notifications = notifications;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -21,12 +22,15 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.simplemedicine.R;
 import com.example.simplemedicine.databinding.FragmentAddMedicationPage1Binding;
 import com.example.simplemedicine.model.medication.Medication;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Objects;
+
+import petrov.kristiyan.colorpicker.ColorPicker;
 
 public class AddMedicationPage1Fragment extends Fragment {
 
@@ -84,16 +88,38 @@ public class AddMedicationPage1Fragment extends Fragment {
     }
 
     private void initView() {
-        if(editMode) {
-            if(medication.getPhoto() != null)
+        if (editMode) {
+            if (medication.getPhoto() != null)
                 binding.image.setImageURI(Uri.parse(medication.getPhoto()));
             binding.name.setText(medication.getName());
             binding.description.setText(medication.getDescription());
         }
 
+        binding.colorButton.setBackgroundColor(medication.getColor());
         binding.image.setOnClickListener(v -> showCameraPreview());
         binding.description.setImeOptions(EditorInfo.IME_ACTION_DONE);
         binding.description.setRawInputType(InputType.TYPE_CLASS_TEXT);
+
+        binding.colorButton.setOnClickListener(v -> {
+            final ColorPicker colorPicker = new ColorPicker(getActivity());
+            colorPicker.setOnFastChooseColorListener(new ColorPicker.OnFastChooseColorListener() {
+                @Override
+                public void setOnFastChooseColorListener(int position, int color) {
+                    medication.setColor(color);
+                    binding.colorButton.setBackgroundColor(color);
+                }
+                @Override
+                public void onCancel(){
+                    // put code
+                }
+            })
+                    .setDefaultColorButton(medication.getColor())
+                    .setColors(R.array.default_color_picker)
+                    .setRoundColorButton(true)
+                    .setTitle("Elige un color")
+                    .setColumns(5)
+                    .show();
+        });
     }
 
     protected boolean fillData(Medication medication) {

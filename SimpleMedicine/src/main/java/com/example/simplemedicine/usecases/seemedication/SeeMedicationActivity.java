@@ -1,21 +1,27 @@
 package com.example.simplemedicine.usecases.seemedication;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.simplemedicine.R;
 import com.example.simplemedicine.databinding.ActivitySeeMedicationBinding;
 import com.example.simplemedicine.model.medication.Medication;
 import com.example.simplemedicine.usecases.addmedication.AddMedicationRouter;
+
+import java.util.Objects;
 
 public class SeeMedicationActivity extends AppCompatActivity {
 
@@ -67,6 +73,14 @@ public class SeeMedicationActivity extends AppCompatActivity {
         binding.startText.setText(medication.getStartDateString());
         binding.endText.setText(medication.getEndDateString());
         binding.notificationText.setText(medication.isNotifications()? "Sí": "No");
+        binding.profileLayout.setBackgroundColor(medication.getColor());
+
+        // Action & Status bar color
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(medication.getColor()));
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(medication.getColor());
     }
 
     @Override

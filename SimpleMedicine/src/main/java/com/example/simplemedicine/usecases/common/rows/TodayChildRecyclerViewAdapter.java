@@ -62,6 +62,7 @@ public class TodayChildRecyclerViewAdapter extends RecyclerView.Adapter<TodayChi
 
         public void bindView(Medication medication) {
             itemTodayChildListBinding.name.setText(medication.getName());
+            itemTodayChildListBinding.constraintLayout.getBackground().setTint(medication.getColor());
         }
     }
 }
