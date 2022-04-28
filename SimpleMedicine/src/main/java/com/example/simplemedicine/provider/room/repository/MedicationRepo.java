@@ -5,9 +5,9 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.simplemedicine.model.medication.Medication;
+import com.example.simplemedicine.model.Medication;
 import com.example.simplemedicine.provider.room.dao.MedicationDao;
-import com.example.simplemedicine.provider.room.MedicationDatabase;
+import com.example.simplemedicine.provider.room.database.MedicationDatabase;
 
 import java.util.List;
 

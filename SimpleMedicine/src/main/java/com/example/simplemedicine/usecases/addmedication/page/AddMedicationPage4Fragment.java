@@ -11,8 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.simplemedicine.databinding.FragmentAddMedicationPage4Binding;
-import com.example.simplemedicine.model.date.DateModel;
-import com.example.simplemedicine.model.medication.Medication;
+import com.example.simplemedicine.model.DateModel;
+import com.example.simplemedicine.model.Medication;
 
 import java.util.Calendar;
 

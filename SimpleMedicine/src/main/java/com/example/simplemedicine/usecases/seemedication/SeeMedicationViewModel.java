@@ -4,7 +4,7 @@ import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 
-import com.example.simplemedicine.model.medication.Medication;
+import com.example.simplemedicine.model.Medication;
 import com.example.simplemedicine.provider.room.repository.MedicationRepo;
 
 public class SeeMedicationViewModel extends AndroidViewModel {

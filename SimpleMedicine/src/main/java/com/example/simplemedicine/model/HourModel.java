@@ -1,6 +1,4 @@
-package com.example.simplemedicine.model.hour;
-
-import androidx.annotation.NonNull;
+package com.example.simplemedicine.model;
 
 import java.io.Serializable;
 import java.util.Objects;

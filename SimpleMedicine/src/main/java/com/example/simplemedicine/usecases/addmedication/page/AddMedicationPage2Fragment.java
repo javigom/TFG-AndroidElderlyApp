@@ -11,8 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.simplemedicine.databinding.FragmentAddMedicationPage2Binding;
-import com.example.simplemedicine.model.medication.Medication;
-import com.example.simplemedicine.model.medication.WeekDaysEnum;
+import com.example.simplemedicine.model.Medication;
+import com.example.simplemedicine.util.WeekDaysEnum;
 
 import java.util.ArrayList;
 import java.util.List;

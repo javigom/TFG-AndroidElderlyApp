@@ -7,7 +7,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.simplemedicine.model.medication.Medication;
+import com.example.simplemedicine.model.Medication;
 
 import java.util.List;
 

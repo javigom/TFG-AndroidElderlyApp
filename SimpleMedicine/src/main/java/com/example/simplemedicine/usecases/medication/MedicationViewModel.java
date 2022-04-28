@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.simplemedicine.model.medication.Medication;
+import com.example.simplemedicine.model.Medication;
 import com.example.simplemedicine.provider.room.repository.MedicationRepo;
 
 import java.util.List;

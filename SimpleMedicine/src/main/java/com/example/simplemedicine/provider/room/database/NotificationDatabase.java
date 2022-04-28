@@ -1,4 +1,4 @@
-package com.example.simplemedicine.provider.room;
+package com.example.simplemedicine.provider.room.database;
 
 import android.content.Context;
 
@@ -9,23 +9,22 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.example.simplemedicine.model.medication.Medication;
+import com.example.simplemedicine.model.NotificationModel;
 import com.example.simplemedicine.provider.room.converter.DateConverters;
 import com.example.simplemedicine.provider.room.converter.HourListConverters;
-import com.example.simplemedicine.provider.room.converter.WeekMapConverters;
-import com.example.simplemedicine.provider.room.dao.MedicationDao;
+import com.example.simplemedicine.provider.room.dao.NotificationDao;
 
-@Database(entities = Medication.class,version = 3,exportSchema = false)
-@TypeConverters({HourListConverters.class, DateConverters.class, WeekMapConverters.class})
-public abstract class MedicationDatabase extends RoomDatabase {
+@Database(entities = NotificationModel.class, version = 1, exportSchema = false)
+@TypeConverters({HourListConverters.class, DateConverters.class})
+public abstract class NotificationDatabase extends RoomDatabase {
 
-    private static MedicationDatabase instance; //only one interface
+    private static NotificationDatabase instance; //only one interface
 
-    public abstract MedicationDao medicationDao();
+    public abstract NotificationDao notificationDao();
 
-    public static synchronized MedicationDatabase getInstance(Context context){
+    public static synchronized NotificationDatabase getInstance(Context context){
         if(instance == null){
-            instance = Room.databaseBuilder(context.getApplicationContext(), MedicationDatabase.class , "Medication_name")
+            instance = Room.databaseBuilder(context.getApplicationContext(), NotificationDatabase.class , "Notification_name")
                     .fallbackToDestructiveMigration()
                     .addCallback(roomCallBack)
                     .build();

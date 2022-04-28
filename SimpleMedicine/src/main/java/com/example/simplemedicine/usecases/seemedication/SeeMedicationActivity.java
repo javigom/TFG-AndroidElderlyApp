@@ -13,15 +13,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.simplemedicine.R;
 import com.example.simplemedicine.databinding.ActivitySeeMedicationBinding;
-import com.example.simplemedicine.model.medication.Medication;
+import com.example.simplemedicine.model.Medication;
 import com.example.simplemedicine.usecases.addmedication.AddMedicationRouter;
-
-import java.util.Objects;
 
 public class SeeMedicationActivity extends AppCompatActivity {
 

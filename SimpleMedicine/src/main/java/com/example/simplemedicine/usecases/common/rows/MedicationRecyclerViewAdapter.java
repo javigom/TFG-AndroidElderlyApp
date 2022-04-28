@@ -2,7 +2,6 @@ package com.example.simplemedicine.usecases.common.rows;
 
 import android.net.Uri;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -10,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.simplemedicine.R;
 import com.example.simplemedicine.databinding.ItemMedicationListBinding;
-import com.example.simplemedicine.model.medication.Medication;
+import com.example.simplemedicine.model.Medication;
 import com.example.simplemedicine.usecases.seemedication.SeeMedicationRouter;
 
 import java.util.ArrayList;

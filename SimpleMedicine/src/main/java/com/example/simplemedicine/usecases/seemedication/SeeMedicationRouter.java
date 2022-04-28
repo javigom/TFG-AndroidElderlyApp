@@ -5,7 +5,7 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
-import com.example.simplemedicine.model.medication.Medication;
+import com.example.simplemedicine.model.Medication;
 import com.example.simplemedicine.usecases.base.BaseActivityRouter;
 
 public class SeeMedicationRouter implements BaseActivityRouter {

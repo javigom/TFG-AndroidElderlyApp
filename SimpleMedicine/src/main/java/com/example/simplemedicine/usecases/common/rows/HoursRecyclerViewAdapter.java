@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.simplemedicine.databinding.ItemHourListBinding;
-import com.example.simplemedicine.model.hour.HourModel;
+import com.example.simplemedicine.model.HourModel;
 
 import java.util.ArrayList;
 import java.util.Collections;

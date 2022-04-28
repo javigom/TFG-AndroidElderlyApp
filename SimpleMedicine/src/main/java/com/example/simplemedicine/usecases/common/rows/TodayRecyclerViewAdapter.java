@@ -2,23 +2,20 @@ package com.example.simplemedicine.usecases.common.rows;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.simplemedicine.R;
 import com.example.simplemedicine.databinding.ItemTodayListBinding;
-import com.example.simplemedicine.model.date.DateModel;
-import com.example.simplemedicine.model.hour.HourModel;
-import com.example.simplemedicine.model.medication.Medication;
-import com.example.simplemedicine.model.medication.WeekDaysEnum;
+import com.example.simplemedicine.model.DateModel;
+import com.example.simplemedicine.model.HourModel;
+import com.example.simplemedicine.model.Medication;
+import com.example.simplemedicine.util.WeekDaysEnum;
 
 import java.util.ArrayList;
 import java.util.Calendar;

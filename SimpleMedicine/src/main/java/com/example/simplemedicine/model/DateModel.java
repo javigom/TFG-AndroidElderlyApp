@@ -1,4 +1,4 @@
-package com.example.simplemedicine.model.date;
+package com.example.simplemedicine.model;
 
 import androidx.annotation.NonNull;
 

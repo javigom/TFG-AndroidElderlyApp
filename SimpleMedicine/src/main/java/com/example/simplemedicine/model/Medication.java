@@ -1,11 +1,10 @@
-package com.example.simplemedicine.model.medication;
+package com.example.simplemedicine.model;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.example.simplemedicine.R;
-import com.example.simplemedicine.model.date.DateModel;
-import com.example.simplemedicine.model.hour.HourModel;
+import com.example.simplemedicine.util.WeekDaysEnum;
 
 import java.io.Serializable;
 import java.text.Normalizer;
@@ -32,7 +31,7 @@ public class Medication implements Serializable, Comparable<Medication> {
     private boolean notifications;
     private int color;
 
-     public Medication() {
+    public Medication() {
         description = "";
         weekDays = new HashMap<>();
         for(int i = 0; i < WeekDaysEnum.values().length; i++)

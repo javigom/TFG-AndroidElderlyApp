@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.simplemedicine.databinding.ActivityAddMedicationBinding;
-import com.example.simplemedicine.model.medication.Medication;
+import com.example.simplemedicine.model.Medication;
 import com.example.simplemedicine.usecases.addmedication.page.AddMedicationPageAdapter;
 import com.example.simplemedicine.usecases.seemedication.SeeMedicationRouter;
 
