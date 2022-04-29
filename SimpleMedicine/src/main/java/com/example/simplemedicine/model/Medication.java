@@ -1,5 +1,6 @@
 package com.example.simplemedicine.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -18,13 +19,13 @@ import java.util.Map;
 public class Medication implements Serializable, Comparable<Medication> {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private Long id;
 
     private String name;
     private String description;
     private Map<WeekDaysEnum, Boolean> weekDays;
     private List<HourModel> hours;
-    private int unitsPerDosis;
+    private int unitsPerDoses;
     private DateModel startDate;
     private DateModel endDate;
     private String photo;
@@ -37,29 +38,30 @@ public class Medication implements Serializable, Comparable<Medication> {
         for(int i = 0; i < WeekDaysEnum.values().length; i++)
             weekDays.put(WeekDaysEnum.getWeekDay(i), false);
         hours = new ArrayList<>();
-        unitsPerDosis = -1;
+        unitsPerDoses = -1;
         notifications = false;
         color = R.color.primary;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return  "name=" + name + '\n' +
                 "description=" + description + '\n' +
                 "weekDays=" + weekDays + '\n' +
                 "hours=" + hours + '\n' +
-                "unitsPerDosis=" + unitsPerDosis + '\n' +
+                "unitsPerDosis=" + unitsPerDoses + '\n' +
                 "startDate=" + startDate + '\n' +
                 "endDate=" + endDate + '\n' +
                 "notifications=" + notifications + '\n' +
                 "color=" + color;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -108,16 +110,16 @@ public class Medication implements Serializable, Comparable<Medication> {
         this.hours = hours;
     }
 
-    public int getUnitsPerDosis() {
-        return unitsPerDosis;
+    public int getUnitsPerDoses() {
+        return unitsPerDoses;
     }
 
-    public void setUnitsPerDosis(int unitsPerDosis) {
-        this.unitsPerDosis = unitsPerDosis;
+    public void setUnitsPerDoses(int unitsPerDoses) {
+        this.unitsPerDoses = unitsPerDoses;
     }
 
     public String getUnitsPerDosisString() {
-         return unitsPerDosis + ((unitsPerDosis != 1)? " unidades" : " unidad") + " / "
+         return unitsPerDoses + ((unitsPerDoses != 1)? " unidades" : " unidad") + " / "
                  + hours.size() + ((hours.size() != 1)? " veces al día" : " vez al día");
     }
 

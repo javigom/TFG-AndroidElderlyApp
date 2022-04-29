@@ -31,7 +31,7 @@ public class AddMedicationPage3Fragment extends Fragment {
         this.medication = medication;
 
         if(this.editMode)
-            this.units = medication.getUnitsPerDosis();
+            this.units = medication.getUnitsPerDoses();
         else
             this.units = 1;
     }
@@ -95,7 +95,7 @@ public class AddMedicationPage3Fragment extends Fragment {
     }
 
     protected boolean fillData(Medication medication) {
-        medication.setUnitsPerDosis(units);
+        medication.setUnitsPerDoses(units);
         medication.setHours(recyclerViewAdapter.getHourList());
         return true;
     }

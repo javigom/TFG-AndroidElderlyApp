@@ -62,7 +62,7 @@ public class AddMedicationPage4Fragment extends Fragment {
                 binding.noEndCheckbox.setChecked(true);
                 binding.endButton.setEnabled(false);
             }
-
+            binding.notificationCheckbox.setChecked(medication.isNotifications());
             calendar1.set(start.getYear(), start.getMonth(), start.getDay());
         }
         else {

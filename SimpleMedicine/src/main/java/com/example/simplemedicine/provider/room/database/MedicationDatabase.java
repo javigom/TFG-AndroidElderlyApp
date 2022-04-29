@@ -15,7 +15,7 @@ import com.example.simplemedicine.provider.room.converter.HourListConverters;
 import com.example.simplemedicine.provider.room.converter.WeekMapConverters;
 import com.example.simplemedicine.provider.room.dao.MedicationDao;
 
-@Database(entities = Medication.class, version = 3, exportSchema = false)
+@Database(entities = Medication.class, version = 5, exportSchema = false)
 @TypeConverters({HourListConverters.class, DateConverters.class, WeekMapConverters.class})
 public abstract class MedicationDatabase extends RoomDatabase {
 
@@ -25,7 +25,7 @@ public abstract class MedicationDatabase extends RoomDatabase {
 
     public static synchronized MedicationDatabase getInstance(Context context){
         if(instance == null){
-            instance = Room.databaseBuilder(context.getApplicationContext(), MedicationDatabase.class , "Medication_name")
+            instance = Room.databaseBuilder(context.getApplicationContext(), MedicationDatabase.class , "SimpleMedicine_db")
                     .fallbackToDestructiveMigration()
                     .addCallback(roomCallBack)
                     .build();

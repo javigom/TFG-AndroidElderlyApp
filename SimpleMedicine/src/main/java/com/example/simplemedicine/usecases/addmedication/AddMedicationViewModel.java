@@ -5,7 +5,7 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 
 import com.example.simplemedicine.model.Medication;
-import com.example.simplemedicine.provider.room.repository.MedicationRepo;
+import com.example.simplemedicine.provider.room.repository.Repository;
 import com.example.simplemedicine.usecases.addmedication.page.AddMedicationPage1Router;
 import com.example.simplemedicine.usecases.addmedication.page.AddMedicationPage2Router;
 import com.example.simplemedicine.usecases.addmedication.page.AddMedicationPage3Router;
@@ -19,13 +19,13 @@ public class AddMedicationViewModel extends AndroidViewModel {
 
     private final List<BaseFragmentRouter> fragments;
     private Medication medication;
-    private final MedicationRepo repository;
+    private final Repository repository;
     private boolean editMode;
 
     public AddMedicationViewModel(Application application) {
         super(application);
         fragments = new ArrayList<>();
-        repository = new MedicationRepo(application);
+        repository = new Repository(application);
         medication = new Medication();
         editMode = false;
     }

@@ -11,11 +11,12 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.simplemedicine.model.NotificationModel;
 import com.example.simplemedicine.provider.room.converter.DateConverters;
+import com.example.simplemedicine.provider.room.converter.HourConverters;
 import com.example.simplemedicine.provider.room.converter.HourListConverters;
 import com.example.simplemedicine.provider.room.dao.NotificationDao;
 
-@Database(entities = NotificationModel.class, version = 1, exportSchema = false)
-@TypeConverters({HourListConverters.class, DateConverters.class})
+@Database(entities = NotificationModel.class, version = 3, exportSchema = false)
+@TypeConverters({HourListConverters.class, DateConverters.class, HourConverters.class})
 public abstract class NotificationDatabase extends RoomDatabase {
 
     private static NotificationDatabase instance; //only one interface
@@ -24,7 +25,7 @@ public abstract class NotificationDatabase extends RoomDatabase {
 
     public static synchronized NotificationDatabase getInstance(Context context){
         if(instance == null){
-            instance = Room.databaseBuilder(context.getApplicationContext(), NotificationDatabase.class , "Notification_name")
+            instance = Room.databaseBuilder(context.getApplicationContext(), NotificationDatabase.class , "SimpleMedicine_db")
                     .fallbackToDestructiveMigration()
                     .addCallback(roomCallBack)
                     .build();

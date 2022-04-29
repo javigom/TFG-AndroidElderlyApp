@@ -2,10 +2,8 @@ package com.example.simplemedicine.provider.room.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.Update;
 
 import com.example.simplemedicine.model.NotificationModel;
 
@@ -17,14 +15,8 @@ public interface NotificationDao {
     @Insert
     void Insert(NotificationModel notification);
 
-    @Update
-    void Update(NotificationModel notification);
-
-    @Delete
-    void Delete(NotificationModel notification);
-
-    @Query("DELETE FROM notification_table")
-    void DeleteAllNotifications();
+    @Query("DELETE FROM notification_table WHERE medicationId = :medicationId")
+    void DeleteNotificationsByMedicationId(Long medicationId);
 
     @Query("SELECT * FROM notification_table")
     LiveData<List<NotificationModel>> getAllNotifications();

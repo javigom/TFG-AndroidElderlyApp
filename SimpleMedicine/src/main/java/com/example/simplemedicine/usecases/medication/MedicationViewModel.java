@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.simplemedicine.model.Medication;
-import com.example.simplemedicine.provider.room.repository.MedicationRepo;
+import com.example.simplemedicine.provider.room.repository.Repository;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public class MedicationViewModel extends AndroidViewModel {
 
     // ATTRIBUTES
 
-    private MedicationRepo repository;
+    private Repository repository;
     private LiveData<List<Medication>> allMedications;
 
 
@@ -23,7 +23,7 @@ public class MedicationViewModel extends AndroidViewModel {
 
     public MedicationViewModel(@NonNull Application application) {
         super(application);
-        repository = new MedicationRepo(application);
+        repository = new Repository(application);
         allMedications = repository.getAllMedication();
     }
 

@@ -5,15 +5,15 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 
 import com.example.simplemedicine.model.Medication;
-import com.example.simplemedicine.provider.room.repository.MedicationRepo;
+import com.example.simplemedicine.provider.room.repository.Repository;
 
 public class SeeMedicationViewModel extends AndroidViewModel {
 
-    private final MedicationRepo repository;
+    private final Repository repository;
 
     public SeeMedicationViewModel(Application application) {
         super(application);
-        repository = new MedicationRepo(application);
+        repository = new Repository(application);
     }
 
     public void delete(Medication medication) {

@@ -9,18 +9,23 @@ import java.io.Serializable;
 public class NotificationModel implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private Long id;
 
     private HourModel hour;
-    private int medicationId;
-    private DateModel endDate;
+    private Long medicationId;
     private boolean completed;
 
-    public int getId() {
+    public NotificationModel(HourModel hour, Long medicationId, boolean completed) {
+        this.hour = hour;
+        this.medicationId = medicationId;
+        this.completed = completed;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -32,20 +37,12 @@ public class NotificationModel implements Serializable {
         this.hour = hour;
     }
 
-    public int getMedicationId() {
+    public Long getMedicationId() {
         return medicationId;
     }
 
-    public void setMedicationId(int medicationId) {
+    public void setMedicationId(Long medicationId) {
         this.medicationId = medicationId;
-    }
-
-    public DateModel getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(DateModel endDate) {
-        this.endDate = endDate;
     }
 
     public boolean isCompleted() {

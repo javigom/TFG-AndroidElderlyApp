@@ -15,16 +15,13 @@ import java.util.List;
 public interface MedicationDao {
 
     @Insert
-    void Insert(Medication medication);
+    Long Insert(Medication medication);
 
     @Update
     void Update(Medication medication);
 
     @Delete
     void Delete(Medication medication);
-
-    @Query("DELETE FROM medication_table")
-    void DeleteAllMedications();
 
     @Query("SELECT * FROM medication_table")
     LiveData<List<Medication>> getAllMedications();
