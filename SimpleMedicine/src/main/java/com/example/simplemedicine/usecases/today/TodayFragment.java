@@ -32,7 +32,7 @@ public class TodayFragment extends Fragment {
     // METHODS
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle SavedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle SavedInstanceState) {
         binding = FragmentTodayBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -57,12 +57,12 @@ public class TodayFragment extends Fragment {
 
     private void initView() {
         // Recycler view
-        recyclerViewAdapter = new TodayRecyclerViewAdapter();
+        recyclerViewAdapter = new TodayRecyclerViewAdapter(viewModel.getRepository());
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerView.setAdapter(recyclerViewAdapter);
     }
 
     private void initData() {
-        viewModel.getAllMedications().observe(getViewLifecycleOwner(), recyclerViewAdapter::updateMedicationList);
+        viewModel.getAllNotifications().observe(getViewLifecycleOwner(), recyclerViewAdapter::updateMedicationList);
     }
 }

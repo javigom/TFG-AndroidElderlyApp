@@ -9,23 +9,27 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.example.simplemedicine.model.Medication;
 import com.example.simplemedicine.model.NotificationModel;
 import com.example.simplemedicine.provider.room.converter.DateConverters;
 import com.example.simplemedicine.provider.room.converter.HourConverters;
 import com.example.simplemedicine.provider.room.converter.HourListConverters;
+import com.example.simplemedicine.provider.room.converter.WeekMapConverters;
+import com.example.simplemedicine.provider.room.dao.MedicationDao;
 import com.example.simplemedicine.provider.room.dao.NotificationDao;
 
-@Database(entities = NotificationModel.class, version = 3, exportSchema = false)
-@TypeConverters({HourListConverters.class, DateConverters.class, HourConverters.class})
-public abstract class NotificationDatabase extends RoomDatabase {
+@Database(entities = {Medication.class, NotificationModel.class}, version = 1, exportSchema = false)
+@TypeConverters({HourListConverters.class, DateConverters.class, WeekMapConverters.class, HourConverters.class})
+public abstract class SimpleMedicineDatabase extends RoomDatabase {
 
-    private static NotificationDatabase instance; //only one interface
+    private static SimpleMedicineDatabase instance; //only one interface
 
+    public abstract MedicationDao medicationDao();
     public abstract NotificationDao notificationDao();
 
-    public static synchronized NotificationDatabase getInstance(Context context){
+    public static synchronized SimpleMedicineDatabase getInstance(Context context){
         if(instance == null){
-            instance = Room.databaseBuilder(context.getApplicationContext(), NotificationDatabase.class , "SimpleMedicine_db")
+            instance = Room.databaseBuilder(context.getApplicationContext(), SimpleMedicineDatabase.class , "SimpleMedicine_db")
                     .fallbackToDestructiveMigration()
                     .addCallback(roomCallBack)
                     .build();

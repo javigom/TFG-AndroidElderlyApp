@@ -3,40 +3,41 @@ package com.example.simplemedicine.usecases.common.rows;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.simplemedicine.R;
 import com.example.simplemedicine.databinding.ItemTodayListBinding;
-import com.example.simplemedicine.model.DateModel;
 import com.example.simplemedicine.model.HourModel;
-import com.example.simplemedicine.model.Medication;
-import com.example.simplemedicine.util.WeekDaysEnum;
+import com.example.simplemedicine.model.NotificationModel;
+import com.example.simplemedicine.provider.room.repository.Repository;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TodayRecyclerViewAdapter extends RecyclerView.Adapter<TodayRecyclerViewAdapter.ViewHolder> {
 
     // ATTRIBUTES
-
-    private HashMap<HourModel, List<Medication>> medicatonHashMap;
-    private List<HourModel> hourList;
-
+    private List<NotificationModel> notificationList;
+    private final Map<HourModel, List<NotificationModel>> notificationMap;
+    private final List<HourModel> hourList;
     private Context context;
+    private final Repository repository;
 
     // CONSTRUCTOR
 
-    public TodayRecyclerViewAdapter() {
-        this.medicatonHashMap = new HashMap<>();
+    public TodayRecyclerViewAdapter(Repository repository) {
+        this.notificationList = new ArrayList<>();
+        this.notificationMap = new HashMap<>();
         this.hourList = new ArrayList<>();
+        this.repository = repository;
     }
 
     // METHODS
@@ -61,28 +62,20 @@ public class TodayRecyclerViewAdapter extends RecyclerView.Adapter<TodayRecycler
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void updateMedicationList(List<Medication> medicationList) {
-        this.medicatonHashMap.clear();
+    public void updateMedicationList(List<NotificationModel> notificationList) {
+        this.notificationList.clear();
+        this.notificationMap.clear();
         this.hourList.clear();
-        this.medicatonHashMap = new HashMap<>();
-        this.hourList = new ArrayList<>();
-
-        Calendar calendar = Calendar.getInstance();
-        DateModel today = new DateModel(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-        int weekday = (calendar.get(Calendar.DAY_OF_WEEK) - 2) % 7;
-        for(Medication medication: medicationList) {
-            if(medication.getStartDate().compareTo(today) <= 0  && medication.getEndDate().compareTo(today) >= 0 && medication.getWeekDays().get(WeekDaysEnum.getWeekDay(weekday))) {
-                for(HourModel hour: medication.getHours()) {
-                    List<Medication> list = medicatonHashMap.get(hour);
-                    if(list == null) {
-                        list = new ArrayList<>();
-                    }
-                    list.add(medication);
-                    medicatonHashMap.put(hour, list);
-                }
+        this.notificationList = notificationList;
+        for(NotificationModel notification: this.notificationList) {
+            List<NotificationModel> list = notificationMap.get(notification.getHour());
+            if(list == null) {
+                list = new ArrayList<>();
+                this.hourList.add(notification.getHour());
             }
+            list.add(notification);
+            notificationMap.put(notification.getHour(), list);
         }
-        this.hourList.addAll(this.medicatonHashMap.keySet());
         Collections.sort(this.hourList);
         notifyDataSetChanged();
     }
@@ -100,16 +93,42 @@ public class TodayRecyclerViewAdapter extends RecyclerView.Adapter<TodayRecycler
             TodayChildRecyclerViewAdapter recyclerViewAdapter = new TodayChildRecyclerViewAdapter();
             itemTodayListBinding.recyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
             itemTodayListBinding.recyclerView.setAdapter(recyclerViewAdapter);
-            recyclerViewAdapter.updateMedicationList(medicatonHashMap.get(hour));
-            itemTodayListBinding.checkButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    itemTodayListBinding.checkButton.setEnabled(false);
-                    itemTodayListBinding.status.setText("COMPLETADO");
-                    itemTodayListBinding.status.setTextColor(context.getResources().getColor(R.color.primary));
-                    itemTodayListBinding.checkButton.setBackground(context.getResources().getDrawable(R.drawable.circle_button_pressed));
+            recyclerViewAdapter.updateNotificationList(notificationMap.get(hour));
+            List<NotificationModel> list = notificationMap.get(hour);
+            if(list != null) {
+                for(NotificationModel notificationModel: list) {
+                    if(notificationModel.isCompleted()) {
+                        itemTodayListBinding.checkButton.setEnabled(false);
+                        statusCheckButton(true, hour);
+                        break;
+                    }
                 }
+
+            }
+            itemTodayListBinding.checkButton.setOnClickListener(v -> {
+                itemTodayListBinding.checkButton.setEnabled(false);
+                statusCheckButton(true, hour);
             });
+        }
+
+        public void statusCheckButton(boolean completed, HourModel hour) {
+            if(completed) {
+                itemTodayListBinding.status.setText("COMPLETADO");
+                itemTodayListBinding.status.setTextColor(context.getResources().getColor(R.color.primary));
+                itemTodayListBinding.checkButton.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.circle_button_pressed, null));
+                List<NotificationModel> updateList = notificationMap.get(hour);
+                if(updateList != null) {
+                    for(NotificationModel notification : updateList) {
+                        notification.setCompleted(true);
+                        repository.update(notification);
+                    }
+                }
+            }
+            else {
+                itemTodayListBinding.status.setText("PENDIENTE");
+                itemTodayListBinding.status.setTextColor(context.getResources().getColor(R.color.secondary));
+                itemTodayListBinding.checkButton.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.circle_button, null));
+            }
         }
     }
 

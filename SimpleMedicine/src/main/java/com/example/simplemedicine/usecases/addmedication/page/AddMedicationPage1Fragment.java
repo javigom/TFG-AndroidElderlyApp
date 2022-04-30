@@ -98,6 +98,7 @@ public class AddMedicationPage1Fragment extends Fragment {
         binding.image.setOnClickListener(v -> showCameraPreview());
         binding.description.setImeOptions(EditorInfo.IME_ACTION_DONE);
         binding.description.setRawInputType(InputType.TYPE_CLASS_TEXT);
+        binding.colorButton.setBackgroundColor(medication.getColor());
         binding.colorButton.setOnClickListener(v -> {
             final ColorPicker colorPicker = new ColorPicker(getActivity());
             colorPicker.setOnFastChooseColorListener(new ColorPicker.OnFastChooseColorListener() {

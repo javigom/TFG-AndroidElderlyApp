@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.simplemedicine.model.Medication;
+import com.example.simplemedicine.model.NotificationModel;
 import com.example.simplemedicine.provider.room.repository.Repository;
 
 import java.util.List;
@@ -15,8 +15,8 @@ public class TodayViewModel extends AndroidViewModel {
 
     // ATTRIBUTES
 
-    private Repository repository;
-    private LiveData<List<Medication>> allMedications;
+    private final Repository repository;
+    private final LiveData<List<NotificationModel>> allNotifications;
 
 
     // CONSTRUCTOR
@@ -24,12 +24,16 @@ public class TodayViewModel extends AndroidViewModel {
     public TodayViewModel(@NonNull Application application) {
         super(application);
         repository = new Repository(application);
-        allMedications = repository.getAllMedication();
+        allNotifications = repository.getAllNotification();
     }
 
     // METHODS
 
-    public LiveData<List<Medication>> getAllMedications() {
-        return allMedications;
+    public LiveData<List<NotificationModel>> getAllNotifications() {
+        return allNotifications;
+    }
+
+    public Repository getRepository() {
+        return repository;
     }
 }

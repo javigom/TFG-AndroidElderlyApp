@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.simplemedicine.databinding.ItemTodayChildListBinding;
 import com.example.simplemedicine.model.Medication;
+import com.example.simplemedicine.model.NotificationModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +18,12 @@ public class TodayChildRecyclerViewAdapter extends RecyclerView.Adapter<TodayChi
 
     // ATTRIBUTES
 
-    private List<Medication> medicationList;
+    private List<NotificationModel> notificationList;
 
     // CONSTRUCTOR
 
     public TodayChildRecyclerViewAdapter() {
-        this.medicationList = new ArrayList<>();
+        this.notificationList = new ArrayList<>();
     }
 
     // METHODS
@@ -37,18 +38,18 @@ public class TodayChildRecyclerViewAdapter extends RecyclerView.Adapter<TodayChi
 
     @Override
     public void onBindViewHolder(@NonNull TodayChildRecyclerViewAdapter.ViewHolder holder, int position) {
-        holder.bindView(medicationList.get(position));
+        holder.bindView(notificationList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return medicationList.size();
+        return notificationList.size();
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void updateMedicationList(List<Medication> medicationList) {
-        this.medicationList.clear();
-        this.medicationList = medicationList;
+    public void updateNotificationList(List<NotificationModel> notificationList) {
+        this.notificationList.clear();
+        this.notificationList = notificationList;
         notifyDataSetChanged();
     }
 
@@ -60,9 +61,9 @@ public class TodayChildRecyclerViewAdapter extends RecyclerView.Adapter<TodayChi
             itemTodayChildListBinding = binding;
         }
 
-        public void bindView(Medication medication) {
-            itemTodayChildListBinding.name.setText(medication.getName());
-            itemTodayChildListBinding.constraintLayout.getBackground().setTint(medication.getColor());
+        public void bindView(NotificationModel notification) {
+            itemTodayChildListBinding.name.setText(notification.getMedicationName());
+            itemTodayChildListBinding.constraintLayout.getBackground().setTint(notification.getMedicationColor());
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.simplemedicine.usecases.common.rows;
 
+import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -48,6 +49,7 @@ public class MedicationRecyclerViewAdapter extends RecyclerView.Adapter<Medicati
         return medicationList.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void updateMedicationList(final List<Medication> medicationModelList) {
         this.medicationList.clear();
         this.medicationList = medicationModelList;

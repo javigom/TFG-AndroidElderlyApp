@@ -13,11 +13,15 @@ public class NotificationModel implements Serializable {
 
     private HourModel hour;
     private Long medicationId;
+    private String medicationName;
+    private int medicationColor;
     private boolean completed;
 
-    public NotificationModel(HourModel hour, Long medicationId, boolean completed) {
+    public NotificationModel(HourModel hour, Long medicationId, String medicationName, int medicationColor, boolean completed) {
         this.hour = hour;
         this.medicationId = medicationId;
+        this.medicationName = medicationName;
+        this.medicationColor = medicationColor;
         this.completed = completed;
     }
 
@@ -43,6 +47,22 @@ public class NotificationModel implements Serializable {
 
     public void setMedicationId(Long medicationId) {
         this.medicationId = medicationId;
+    }
+
+    public String getMedicationName() {
+        return medicationName;
+    }
+
+    public void setMedicationName(String medicationName) {
+        this.medicationName = medicationName;
+    }
+
+    public int getMedicationColor() {
+        return medicationColor;
+    }
+
+    public void setMedicationColor(int medicationColor) {
+        this.medicationColor = medicationColor;
     }
 
     public boolean isCompleted() {
