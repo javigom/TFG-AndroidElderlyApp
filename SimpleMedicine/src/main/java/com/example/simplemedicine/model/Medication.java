@@ -5,7 +5,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.example.simplemedicine.R;
-import com.example.simplemedicine.util.WeekDaysEnum;
+import com.example.simplemedicine.util.WeekDayEnum;
 
 import java.io.Serializable;
 import java.text.Normalizer;
@@ -23,7 +23,7 @@ public class Medication implements Serializable, Comparable<Medication> {
 
     private String name;
     private String description;
-    private Map<WeekDaysEnum, Boolean> weekDays;
+    private Map<WeekDayEnum, Boolean> weekDays;
     private List<HourModel> hours;
     private int unitsPerDoses;
     private DateModel startDate;
@@ -35,8 +35,8 @@ public class Medication implements Serializable, Comparable<Medication> {
     public Medication() {
         description = "";
         weekDays = new HashMap<>();
-        for(int i = 0; i < WeekDaysEnum.values().length; i++)
-            weekDays.put(WeekDaysEnum.getWeekDay(i), false);
+        for(int i = 0; i < WeekDayEnum.values().length; i++)
+            weekDays.put(WeekDayEnum.getWeekDay(i), false);
         hours = new ArrayList<>();
         unitsPerDoses = -1;
         notifications = false;
@@ -81,20 +81,20 @@ public class Medication implements Serializable, Comparable<Medication> {
         this.description = description;
     }
 
-    public Map<WeekDaysEnum, Boolean> getWeekDays() {
+    public Map<WeekDayEnum, Boolean> getWeekDays() {
         return weekDays;
     }
 
     public String getWeekDaysString() {
          ArrayList<String> days = new ArrayList<>();
          for(int i = 0; i < weekDays.size(); i++) {
-             if(weekDays.get(WeekDaysEnum.getWeekDay(i)))
-                 days.add(WeekDaysEnum.getWeekDayString(i));
+             if(weekDays.get(WeekDayEnum.getWeekDay(i)))
+                 days.add(WeekDayEnum.getWeekDayString(i));
          }
          return days.toString().replace("[", "").replace("]", "");
     }
 
-    public void setWeekDays(Map<WeekDaysEnum, Boolean> weekDays) {
+    public void setWeekDays(Map<WeekDayEnum, Boolean> weekDays) {
         this.weekDays = weekDays;
     }
 

@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.simplemedicine.databinding.FragmentAddMedicationPage2Binding;
 import com.example.simplemedicine.model.Medication;
-import com.example.simplemedicine.util.WeekDaysEnum;
+import com.example.simplemedicine.util.WeekDayEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,13 +47,13 @@ public class AddMedicationPage2Fragment extends Fragment {
 
     private void initView() {
         if(editMode) {
-            binding.checkMonday.setChecked(medication.getWeekDays().get(WeekDaysEnum.MONDAY));
-            binding.checkTuesday.setChecked(medication.getWeekDays().get(WeekDaysEnum.TUESDAY));
-            binding.checkWednesday.setChecked(medication.getWeekDays().get(WeekDaysEnum.WEDNESDAY));
-            binding.checkThursday.setChecked(medication.getWeekDays().get(WeekDaysEnum.THURSDAY));
-            binding.checkFriday.setChecked(medication.getWeekDays().get(WeekDaysEnum.FRIDAY));
-            binding.checkSaturday.setChecked(medication.getWeekDays().get(WeekDaysEnum.SATURDAY));
-            binding.checkSunday.setChecked(medication.getWeekDays().get(WeekDaysEnum.SUNDAY));
+            binding.checkMonday.setChecked(medication.getWeekDays().get(WeekDayEnum.MONDAY));
+            binding.checkTuesday.setChecked(medication.getWeekDays().get(WeekDayEnum.TUESDAY));
+            binding.checkWednesday.setChecked(medication.getWeekDays().get(WeekDayEnum.WEDNESDAY));
+            binding.checkThursday.setChecked(medication.getWeekDays().get(WeekDayEnum.THURSDAY));
+            binding.checkFriday.setChecked(medication.getWeekDays().get(WeekDayEnum.FRIDAY));
+            binding.checkSaturday.setChecked(medication.getWeekDays().get(WeekDayEnum.SATURDAY));
+            binding.checkSunday.setChecked(medication.getWeekDays().get(WeekDayEnum.SUNDAY));
         }
     }
 
@@ -69,7 +69,7 @@ public class AddMedicationPage2Fragment extends Fragment {
         checkBoxList.add(binding.checkSunday);
 
         for(int i = 0; i < checkBoxList.size(); i++) {
-            medication.getWeekDays().put(WeekDaysEnum.getWeekDay(i), checkBoxList.get(i).isChecked());
+            medication.getWeekDays().put(WeekDayEnum.getWeekDay(i), checkBoxList.get(i).isChecked());
             if(checkBoxList.get(i).isChecked())
                 res = true;
         }

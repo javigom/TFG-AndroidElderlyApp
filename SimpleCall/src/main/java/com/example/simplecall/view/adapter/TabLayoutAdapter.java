@@ -49,9 +49,9 @@ public class TabLayoutAdapter extends FragmentStateAdapter {
         notifyDataSetChanged();
     }
 
+    @NonNull
     @Override
     public Fragment createFragment(int position) {
-
         switch (position) {
             case 0:
                 this.favContactListFragment = new FavContactListFragment(favContactList, selectedFavContact);
@@ -65,7 +65,6 @@ public class TabLayoutAdapter extends FragmentStateAdapter {
             default:
                 return null;
         }
-
     }
 
     @Override

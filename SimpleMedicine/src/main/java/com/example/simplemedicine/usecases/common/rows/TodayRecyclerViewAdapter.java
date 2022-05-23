@@ -12,17 +12,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.simplemedicine.R;
 import com.example.simplemedicine.databinding.ItemTodayListBinding;
+import com.example.simplemedicine.model.DateModel;
 import com.example.simplemedicine.model.HourModel;
 import com.example.simplemedicine.model.NotificationModel;
 import com.example.simplemedicine.provider.room.repository.Repository;
+import com.example.simplemedicine.util.Utils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TodayRecyclerViewAdapter extends RecyclerView.Adapter<TodayRecyclerViewAdapter.ViewHolder> {
+public class    TodayRecyclerViewAdapter extends RecyclerView.Adapter<TodayRecyclerViewAdapter.ViewHolder> {
 
     // ATTRIBUTES
     private List<NotificationModel> notificationList;
@@ -68,13 +71,15 @@ public class TodayRecyclerViewAdapter extends RecyclerView.Adapter<TodayRecycler
         this.hourList.clear();
         this.notificationList = notificationList;
         for(NotificationModel notification: this.notificationList) {
-            List<NotificationModel> list = notificationMap.get(notification.getHour());
-            if(list == null) {
-                list = new ArrayList<>();
-                this.hourList.add(notification.getHour());
+            if(notification.getStartDate().compareTo(Utils.getTodayDate()) <= 0 && notification.getEndDate().compareTo(Utils.getTodayDate()) >= 0) {
+                List<NotificationModel> list = notificationMap.get(notification.getHour());
+                if(list == null) {
+                    list = new ArrayList<>();
+                    this.hourList.add(notification.getHour());
+                }
+                list.add(notification);
+                notificationMap.put(notification.getHour(), list);
             }
-            list.add(notification);
-            notificationMap.put(notification.getHour(), list);
         }
         Collections.sort(this.hourList);
         notifyDataSetChanged();
@@ -94,6 +99,7 @@ public class TodayRecyclerViewAdapter extends RecyclerView.Adapter<TodayRecycler
             itemTodayListBinding.recyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
             itemTodayListBinding.recyclerView.setAdapter(recyclerViewAdapter);
             recyclerViewAdapter.updateNotificationList(notificationMap.get(hour));
+
             List<NotificationModel> list = notificationMap.get(hour);
             if(list != null) {
                 for(NotificationModel notificationModel: list) {
@@ -103,7 +109,6 @@ public class TodayRecyclerViewAdapter extends RecyclerView.Adapter<TodayRecycler
                         break;
                     }
                 }
-
             }
             itemTodayListBinding.checkButton.setOnClickListener(v -> {
                 itemTodayListBinding.checkButton.setEnabled(false);

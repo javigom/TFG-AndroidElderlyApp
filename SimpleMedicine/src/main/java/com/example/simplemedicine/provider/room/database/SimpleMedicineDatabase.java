@@ -18,7 +18,7 @@ import com.example.simplemedicine.provider.room.converter.WeekMapConverters;
 import com.example.simplemedicine.provider.room.dao.MedicationDao;
 import com.example.simplemedicine.provider.room.dao.NotificationDao;
 
-@Database(entities = {Medication.class, NotificationModel.class}, version = 1, exportSchema = false)
+@Database(entities = {Medication.class, NotificationModel.class}, version = 2, exportSchema = false)
 @TypeConverters({HourListConverters.class, DateConverters.class, WeekMapConverters.class, HourConverters.class})
 public abstract class SimpleMedicineDatabase extends RoomDatabase {
 

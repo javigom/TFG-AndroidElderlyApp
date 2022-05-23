@@ -25,8 +25,6 @@ public class AppListDataSource {
 
     private static Context context;
 
-    // CONSTRUCTOR
-
     // METHODS
 
     public static void updateContext(Context context) {
@@ -34,7 +32,6 @@ public class AppListDataSource {
     }
 
     public static List<AppModel> fetchApps(OrderTypeAppModel orderType){
-
         List<AppModel> appList = new ArrayList<>();
         PackageManager packageManager = context.getPackageManager();
         Intent intent = new Intent(Intent.ACTION_MAIN, null);
@@ -53,22 +50,16 @@ public class AppListDataSource {
             appList.add(app);
         }
 
-        if(orderType == OrderTypeAppModel.ORDER_BY_SHORTCUT_AND_NAME) {
+        if(orderType == OrderTypeAppModel.ORDER_BY_SHORTCUT_AND_NAME)
             Collections.sort(appList, new AppComparatorByShortcutAndName());
-        }
-
-        else if(orderType == OrderTypeAppModel.ORDER_BY_NAME) {
+        else if(orderType == OrderTypeAppModel.ORDER_BY_NAME)
             Collections.sort(appList, new AppComparatorByName());
-        }
-
-        System.out.println("Number of shortcuts = " + myPreferences.getInt("numberOfShortcuts", 0));
 
         return appList;
     }
 
     public static void addShortcutApp(@NonNull AppModel app) {
         SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-
         if(myPreferences.getInt(app.getID(), -1) == -1) {
             SharedPreferences.Editor myEditor = myPreferences.edit();
             int numShortcuts = myPreferences.getInt("numberOfShortcuts", 0);
@@ -81,7 +72,6 @@ public class AppListDataSource {
 
     public static void removeShortcutApp(@NonNull AppModel app) {
         SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-
         if(myPreferences.getInt(app.getID(), -1) != -1) {
             SharedPreferences.Editor myEditor = myPreferences.edit();
             myEditor.remove(app.getID());
@@ -108,7 +98,4 @@ public class AppListDataSource {
         myEditor.putInt(app2.getID(), app1.getPosition());
         myEditor.apply();
     }
-
-
-
 }

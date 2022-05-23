@@ -10,6 +10,7 @@ import com.example.simplemedicine.model.NotificationModel;
 import com.example.simplemedicine.provider.room.repository.Repository;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class TodayViewModel extends AndroidViewModel {
 
@@ -21,10 +22,10 @@ public class TodayViewModel extends AndroidViewModel {
 
     // CONSTRUCTOR
 
-    public TodayViewModel(@NonNull Application application) {
+    public TodayViewModel(@NonNull Application application) throws ExecutionException, InterruptedException {
         super(application);
         repository = new Repository(application);
-        allNotifications = repository.getAllNotification();
+        allNotifications = repository.getTodayNotifications();
     }
 
     // METHODS

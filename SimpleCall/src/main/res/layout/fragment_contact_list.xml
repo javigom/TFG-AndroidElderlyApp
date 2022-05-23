@@ -29,7 +29,9 @@
             android:id="@+id/rvContactsFCL"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/item_contact" />
+            tools:listitem="@layout/item_contact"
+            android:paddingBottom="100dp"
+            android:clipToPadding="false"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

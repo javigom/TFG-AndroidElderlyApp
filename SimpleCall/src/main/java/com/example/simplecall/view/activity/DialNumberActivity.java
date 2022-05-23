@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
@@ -19,7 +20,8 @@ public class DialNumberActivity extends AppCompatActivity {
     private static final int UPDATE_CALL_LOG = 200;
 
     private TextView tpPhone;
-    private Button bCall, b1, b2, b3, b4, b5, b6, b7, b8, b9, b0, bAsterisk, bHashMark, bDelete;
+    private Button bCall, b1, b2, b3, b4, b5, b6, b7, b8, b9, b0, bAsterisk, bHashMark;
+    private ImageButton bDelete;
     private boolean callDone = false;
 
     @Override
@@ -28,9 +30,8 @@ public class DialNumberActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dial_number);
 
         // ACTION BAR
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setTitle("Marcador");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // VIEW BUTTONS
         tpPhone = findViewById(R.id.tpPhoneADN);

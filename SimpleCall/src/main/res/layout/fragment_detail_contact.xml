@@ -66,8 +66,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        app:backgroundTint="@color/orange_edit"
-        app:fabCustomSize="80dp"
+        app:backgroundTint="@color/secondaryColor"
+        app:fabCustomSize="70dp"
         app:fabSize="auto"
         app:maxImageSize="40dp"
         app:srcCompat="@drawable/ic_edit" />

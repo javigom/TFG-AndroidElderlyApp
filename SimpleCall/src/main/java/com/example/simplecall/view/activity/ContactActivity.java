@@ -38,7 +38,7 @@ public class ContactActivity extends AppCompatActivity implements ChangeFragment
         // ACTION BAR
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setTitle("Detalles del contacto");
 
         // BACK NAVIGATION BUTTON
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
@@ -94,6 +94,7 @@ public class ContactActivity extends AppCompatActivity implements ChangeFragment
             transaction.show(editContactFragment);
             transaction.hide(detailContactFragment);
             actualFragment = 1;
+            getSupportActionBar().setTitle("Editar contacto");
         }
 
         // EditContact to DetailContact
@@ -102,6 +103,7 @@ public class ContactActivity extends AppCompatActivity implements ChangeFragment
             transaction.hide(editContactFragment);
             detailContactFragment.updateView();
             actualFragment = 0;
+            getSupportActionBar().setTitle("Detalles del contacto");
         }
 
         else if(code == 2) {

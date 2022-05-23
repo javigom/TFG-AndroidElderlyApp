@@ -99,7 +99,7 @@ public class AddContactActivity extends AppCompatActivity {
     public void initActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setTitle("Añadir un contacto");
     }
 
     public void initView(){
@@ -209,7 +209,6 @@ public class AddContactActivity extends AppCompatActivity {
                 imageBitmap = null;
                 ivPhoto.setImageResource(R.drawable.ic_default_contact_photo);
             }
-
 
         });
 

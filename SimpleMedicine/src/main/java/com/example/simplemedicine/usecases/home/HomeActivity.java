@@ -44,7 +44,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void loadTabs() {
-
         if(medicationFragment != null)
             medicationFragment.remove(getSupportFragmentManager());
         if(todayFragment != null)
@@ -74,7 +73,6 @@ public class HomeActivity extends AppCompatActivity {
             }
             return false;
         });
-
     }
 
     private void defaultTab() {

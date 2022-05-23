@@ -38,15 +38,12 @@ public class MyContentResolver {
      * @param favContactList
      */
     public void loadContacts(List<ContactModel> contactModelList, List<ContactModel> favContactList, Map<String, ContactModel> phoneContactMap) {
-
         // Order by name
         String sortOrder = ContactsContract.Data.DISPLAY_NAME + " ASC";
-
         // Query
         Cursor cursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, sortOrder);
 
         if (cursor.getCount() > 0) {
-
             while (cursor.moveToNext()) {
 
                 // ID
@@ -60,7 +57,6 @@ public class MyContentResolver {
                             ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{String.valueOf(id)}, null);
 
                     if (cursorPhone != null && cursorPhone.moveToFirst()) {
-
                         // NAME
                         String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
                         // PHONE
@@ -69,35 +65,27 @@ public class MyContentResolver {
                         Integer isStarred = Integer.parseInt(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.STARRED)));
                         // PHOTO
                         String photo = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.PHOTO_URI));
-
                         // Contact to storage
                         ContactModel contact = new ContactModel(id, name, PhoneNumberUtils.formatNumber(phone.replace("+34", ""), "ES"), photo, isStarred);
                         contactModelList.add(contact);
 
                         // Favorite list
-                        if(contact.getIsStarred() == 1){
+                        if(contact.getIsStarred() == 1)
                             favContactList.add(contact);
-                        }
 
                         // Phone-Contact map
                         phoneContactMap.put(contact.getPhone(), contact);
-
                         cursorPhone.close();
                     }
-
                 }
-
             }
 
             // Sort the contact list (for special characters)
             ContactComparator comparator = new ContactComparator();
             contactModelList.sort(comparator);
             favContactList.sort(comparator);
-
         }
-
         cursor.close();
-
     }
 
     /**
@@ -105,10 +93,8 @@ public class MyContentResolver {
      * @param callModelList
      */
     public void loadCallLogs(List<CallModel> callModelList){
-
         // Order by date
         String sortOrder = CallLog.Calls.DATE + " DESC";
-
         // Query
         Cursor cursor = contentResolver.query(CallLog.Calls.CONTENT_URI, null, null, null, sortOrder);
 
@@ -116,7 +102,6 @@ public class MyContentResolver {
             while (cursor.moveToNext()) {
                 callModelList.add(recoverCallModel(cursor));
             }
-
             cursor.close();
         }
     }

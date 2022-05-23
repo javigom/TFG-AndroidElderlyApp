@@ -13,4 +13,14 @@
     <color name="orange_edit">#FF8400</color>
     <color name="blue_primary">#02397C</color>
     <color name="blue_primary_variant">#7182A3</color>
+
+    <color name="primaryColor">#311b92</color>
+    <color name="primaryLightColor">#6746c3</color>
+    <color name="primaryDarkColor">#000063</color>
+    <color name="secondaryColor">#ffa000</color>
+    <color name="secondaryLightColor">#ffd149</color>
+    <color name="secondaryDarkColor">#c67100</color>
+    <color name="primaryTextColor">#ffffff</color>
+    <color name="secondaryTextColor">#000000</color>
+
 </resources>

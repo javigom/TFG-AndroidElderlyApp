@@ -1,6 +1,6 @@
 package com.example.simplemedicine.provider.room.repository;
 
-import android.app.Application;
+import android.content.Context;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
@@ -12,10 +12,12 @@ import com.example.simplemedicine.model.NotificationModel;
 import com.example.simplemedicine.provider.room.dao.MedicationDao;
 import com.example.simplemedicine.provider.room.dao.NotificationDao;
 import com.example.simplemedicine.provider.room.database.SimpleMedicineDatabase;
-import com.example.simplemedicine.util.WeekDaysEnum;
+import com.example.simplemedicine.util.Utils;
+import com.example.simplemedicine.util.WeekDayEnum;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class Repository {
 
@@ -29,9 +31,9 @@ public class Repository {
 
     // CONSTRUCTOR
 
-    public Repository(Application application) {
+    public Repository(Context context) {
         // Medication database
-        SimpleMedicineDatabase database = SimpleMedicineDatabase.getInstance(application);
+        SimpleMedicineDatabase database = SimpleMedicineDatabase.getInstance(context);
         medicationDao = database.medicationDao();
         notificationDao = database.notificationDao();
         allMedication = medicationDao.getAllMedications();
@@ -63,6 +65,9 @@ public class Repository {
     public LiveData<List<NotificationModel>> getAllNotification() {
         return allNotification;
     }
+    public LiveData<List<NotificationModel>> getTodayNotifications() throws ExecutionException, InterruptedException {
+        return new GetTodayNotificationsAsyncTask(notificationDao).execute().get();
+    }
 
 
     // Nested classes for async
@@ -77,14 +82,12 @@ public class Repository {
         @Override
         protected Void doInBackground(Medication... medications) {
             Long id = medicationDao.Insert(medications[0]);
-            Calendar calendar = Calendar.getInstance();
-            DateModel todayDate = new DateModel(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-            int weekday = (calendar.get(Calendar.DAY_OF_WEEK) - 2) % 7;
             for(HourModel hour: medications[0].getHours()) {
-                Boolean isDayWeek = medications[0].getWeekDays().get(WeekDaysEnum.getWeekDay(weekday));
-                if(isDayWeek != null) {
-                    if(medications[0].getStartDate().compareTo(todayDate) <= 0 && medications[0].getEndDate().compareTo(todayDate) >= 0 && isDayWeek) {
-                        notificationDao.Insert(new NotificationModel(hour, id, medications[0].getName(), medications[0].getColor(), false));
+                for(int weekday = 0; weekday < 7; weekday ++) {
+                    Boolean isDayWeek = medications[0].getWeekDays().get(WeekDayEnum.getWeekDay(weekday));
+                    if(isDayWeek != null && isDayWeek) {
+                        notificationDao.Insert(new NotificationModel(hour, id, WeekDayEnum.getWeekDay(weekday),
+                                medications[0].getStartDate(), medications[0].getEndDate(), medications[0].getName(), medications[0].getColor(), false));
                     }
                 }
             }
@@ -102,13 +105,13 @@ public class Repository {
         protected Void doInBackground(Medication... medications) {
             medicationDao.Update(medications[0]);
             notificationDao.DeleteNotificationsByMedicationId(medications[0].getId());
-            Calendar calendar = Calendar.getInstance();
-            DateModel todayDate = new DateModel(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-            int weekday = (calendar.get(Calendar.DAY_OF_WEEK) - 2) % 7;
             for(HourModel hour: medications[0].getHours()) {
-                Boolean isDayWeek = medications[0].getWeekDays().get(WeekDaysEnum.getWeekDay(weekday));
-                if(medications[0].getStartDate().compareTo(todayDate) <= 0 && medications[0].getEndDate().compareTo(todayDate) >= 0 && isDayWeek) {
-                    notificationDao.Insert(new NotificationModel(hour, medications[0].getId(), medications[0].getName(), medications[0].getColor(), false));
+                for(int weekday = 0; weekday < 7; weekday ++) {
+                    Boolean isDayWeek = medications[0].getWeekDays().get(WeekDayEnum.getWeekDay(weekday));
+                    if(isDayWeek != null && isDayWeek) {
+                        notificationDao.Insert(new NotificationModel(hour, medications[0].getId(), WeekDayEnum.getWeekDay(weekday),
+                                medications[0].getStartDate(), medications[0].getEndDate(), medications[0].getName(), medications[0].getColor(), false));
+                    }
                 }
             }
             return null;
@@ -138,6 +141,17 @@ public class Repository {
             medicationDao.Delete(medications[0]);
             notificationDao.DeleteNotificationsByMedicationId(medications[0].getId());
             return null;
+        }
+    }
+    private static class GetTodayNotificationsAsyncTask extends AsyncTask<Void, Void, LiveData<List<NotificationModel>>> {
+        private final NotificationDao notificationDao;
+        private GetTodayNotificationsAsyncTask(NotificationDao notificationDao) {
+            this.notificationDao = notificationDao;
+        }
+
+        @Override
+        protected LiveData<List<NotificationModel>> doInBackground(Void... voids) {
+            return notificationDao.getTodayNotifications(Utils.getTodayWeekDay());
         }
     }
 

@@ -13,6 +13,7 @@ import com.example.simplemedicine.databinding.ActivityAddMedicationBinding;
 import com.example.simplemedicine.model.Medication;
 import com.example.simplemedicine.usecases.addmedication.page.AddMedicationPageAdapter;
 import com.example.simplemedicine.usecases.seemedication.SeeMedicationRouter;
+import com.example.simplemedicine.util.Utils;
 
 public class AddMedicationActivity extends AppCompatActivity {
 
@@ -40,11 +41,11 @@ public class AddMedicationActivity extends AppCompatActivity {
         if(intent.getExtras() != null) {
             oldMedication = (Medication) intent.getSerializableExtra("medication");
             viewModel.setMedication((Medication) intent.getSerializableExtra("medication"));
-            getSupportActionBar().setTitle("Editar un medicacamento");
+            getSupportActionBar().setTitle("Editar un medicamento");
             editMode = true;
         }
         else {
-            getSupportActionBar().setTitle("Añadir un medicacamento");
+            getSupportActionBar().setTitle("Añadir un medicamento");
             editMode = false;
         }
 
