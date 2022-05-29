@@ -57,6 +57,10 @@ public class Repository {
     public void delete(Medication medication) {
         new DeleteMedicationAsyncTask(medicationDao, notificationDao).execute(medication);
     }
+    public void restartAllNotifications(){
+        new RestartNotificationsAsyncTask(notificationDao).execute();
+
+    }
     // GetAll
     public LiveData<List<Medication>> getAllMedication() {
         return allMedication;
@@ -146,6 +150,19 @@ public class Repository {
             return null;
         }
     }
+    private static class RestartNotificationsAsyncTask extends AsyncTask<Void, Void, Void> {
+        private final NotificationDao notificationDao;
+        private RestartNotificationsAsyncTask(NotificationDao notificationDao) {
+            this.notificationDao = notificationDao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            notificationDao.RestartNotifications();
+            return null;
+        }
+    }
+
     private static class GetTodayNotificationsAsyncTask extends AsyncTask<Void, Void, LiveData<List<NotificationModel>>> {
         private final NotificationDao notificationDao;
         private GetTodayNotificationsAsyncTask(NotificationDao notificationDao) {

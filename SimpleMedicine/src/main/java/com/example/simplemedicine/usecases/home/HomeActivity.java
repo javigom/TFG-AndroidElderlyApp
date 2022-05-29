@@ -2,17 +2,25 @@ package com.example.simplemedicine.usecases.home;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.simplemedicine.R;
 import com.example.simplemedicine.databinding.ActivityHomeBinding;
+import com.example.simplemedicine.provider.room.repository.Repository;
 import com.example.simplemedicine.usecases.addmedication.AddMedicationRouter;
 import com.example.simplemedicine.usecases.medication.MedicationRouter;
 import com.example.simplemedicine.usecases.today.TodayRouter;
+import com.example.simplemedicine.util.Utils;
+import com.example.simplemedicine.util.WeekDayEnum;
+
+import java.util.Calendar;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -39,16 +47,7 @@ public class HomeActivity extends AppCompatActivity {
         selectedItem = -1;
         initView();
         createNotificationChannel();
-    }
-
-    private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, getString(R.string.notification_channel_name), importance);
-            channel.setDescription("main channel");
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
+        checkMedicationWeek();
     }
 
     private void initView() {
@@ -91,6 +90,29 @@ public class HomeActivity extends AppCompatActivity {
 
     private void defaultTab() {
         binding.homeBottomNavigationView.setSelectedItemId(viewModel.defaultTab());
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, getString(R.string.notification_channel_name), importance);
+            channel.setDescription("main channel");
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    private void checkMedicationWeek() {
+        SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Repository repository = new Repository(getApplicationContext());
+        int weekYear = Utils.getWeekOfYear();
+        if(myPreferences.getInt("notification_update", 0) != weekYear) {
+            SharedPreferences.Editor myEditor = myPreferences.edit();
+            myEditor.putInt("notification_update", weekYear);
+            myEditor.apply();
+            repository.restartAllNotifications();
+        }
+        repository.getAllNotification().observe(this, viewModel::updateAlarms);
     }
 
 }

@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class    TodayRecyclerViewAdapter extends RecyclerView.Adapter<TodayRecyclerViewAdapter.ViewHolder> {
+public class TodayRecyclerViewAdapter extends RecyclerView.Adapter<TodayRecyclerViewAdapter.ViewHolder> {
 
     // ATTRIBUTES
     private List<NotificationModel> notificationList;
@@ -77,6 +77,7 @@ public class    TodayRecyclerViewAdapter extends RecyclerView.Adapter<TodayRecyc
                 notificationMap.put(notification.getHour(), list);
             }
         }
+
         notifyDataSetChanged();
     }
 

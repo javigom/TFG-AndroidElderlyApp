@@ -4,12 +4,17 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.example.simplemedicine.model.DateModel;
 import com.example.simplemedicine.model.HourModel;
+import com.example.simplemedicine.model.Medication;
+import com.example.simplemedicine.model.NotificationModel;
 import com.example.simplemedicine.util.alarm.AlarmReceiver;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class Utils {
 
@@ -24,13 +29,86 @@ public class Utils {
         return WeekDayEnum.getWeekDay(weekday);
     }
 
-    public static void createAlarm(HourModel hour, Context context) {
+    public static int getWeekOfYear() {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, hour.getHours());
-        calendar.set(Calendar.MINUTE, hour.getMinutes());
-        Intent intent = new Intent(context, AlarmReceiver.class);
-        PendingIntent  pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, pendingIntent);
+        return calendar.get(Calendar.WEEK_OF_YEAR);
+    }
+
+    public static void createAlarm(List<NotificationModel> notificationList, Context context) {
+
+        removeAlarms(context);
+        System.out.println("createAlarm");
+        int numAlarms = 0;
+
+        for(NotificationModel notification: notificationList) {
+            System.out.println(notification);
+            if(notification.getStartDate().compareTo(Utils.getTodayDate()) <= 0 && notification.getEndDate().compareTo(Utils.getTodayDate()) >= 0
+                    && !notification.isCompleted() && WeekDayEnum.getWeekDayInt(getTodayWeekDay()) <= WeekDayEnum.getWeekDayInt(notification.getWeekDay())) {
+                Intent intent = new Intent(context, AlarmReceiver.class);
+                AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                PendingIntent pendingIntent;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M)
+                    pendingIntent = PendingIntent.getBroadcast(context, numAlarms, intent, PendingIntent.FLAG_IMMUTABLE);
+                else
+                    pendingIntent = PendingIntent.getBroadcast(context, numAlarms, intent, 0);
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.SECOND, 0);
+                calendar.set(Calendar.MINUTE, notification.getHour().getMinutes());
+                calendar.set(Calendar.HOUR_OF_DAY, notification.getHour().getHours());
+                calendar.add(Calendar.DAY_OF_WEEK, (WeekDayEnum.getWeekDayInt(notification.getWeekDay()) - 1) % 7);
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                System.out.println(calendar.getTime() + " numAlarm = " + numAlarms);
+                numAlarms++;
+            }
+        }
+
+        SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor myEditor = myPreferences.edit();
+        myEditor.putInt("number_alarms", numAlarms);
+        myEditor.apply();
+
+    }
+
+    private static void removeAlarms(Context context) {
+        SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        int numberAlarms = myPreferences.getInt("number_alarms", 0);
+        if(numberAlarms != 0) {
+            for(int i = 0; i < numberAlarms; i++) {
+                Intent intent = new Intent(context, AlarmReceiver.class);
+                PendingIntent pendingIntent;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M)
+                    pendingIntent = PendingIntent.getBroadcast(context, i, intent, PendingIntent.FLAG_IMMUTABLE);
+                else
+                    pendingIntent = PendingIntent.getBroadcast(context, i, intent, 0);
+                AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                alarmManager.cancel(pendingIntent);
+            }
+        }
+    }
+
+    public static void createAlarmNotification(Medication medication, Context context){
+        if(medication.isNotifications()){
+            for(HourModel hour: medication.getHours()) {
+                for(int i = 0; i < 7; i ++) {
+                    Boolean isDayWeek = medication.getWeekDays().get(WeekDayEnum.getWeekDay(i));
+                    if(isDayWeek != null && isDayWeek) {
+                        Intent intent = new Intent(context, AlarmReceiver.class);
+                        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                        PendingIntent pendingIntent;
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M)
+                            pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+                        else
+                            pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(Calendar.SECOND, 0);
+                        calendar.set(Calendar.MINUTE, hour.getMinutes());
+                        calendar.set(Calendar.HOUR_OF_DAY, hour.getHours());
+                        calendar.add(Calendar.DAY_OF_WEEK, i - 1);
+                        System.out.println("createAlarmNotification");
+                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                    }
+                }
+            }
+        }
     }
 }

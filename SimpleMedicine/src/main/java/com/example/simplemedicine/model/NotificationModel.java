@@ -104,4 +104,19 @@ public class NotificationModel implements Serializable {
     public void setCompleted(boolean completed) {
         this.completed = completed;
     }
+
+    @Override
+    public String toString() {
+        return "NotificationModel{" +
+                "id=" + id +
+                ", hour=" + hour +
+                ", medicationId=" + medicationId +
+                ", weekDay=" + weekDay +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", medicationName='" + medicationName + '\'' +
+                ", medicationColor=" + medicationColor +
+                ", completed=" + completed +
+                '}';
+    }
 }

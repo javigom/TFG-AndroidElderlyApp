@@ -18,6 +18,7 @@ import com.example.simplemedicine.model.HourModel;
 import com.example.simplemedicine.model.Medication;
 import com.example.simplemedicine.usecases.addmedication.page.AddMedicationPageAdapter;
 import com.example.simplemedicine.usecases.seemedication.SeeMedicationRouter;
+import com.example.simplemedicine.util.Utils;
 import com.example.simplemedicine.util.WeekDayEnum;
 import com.example.simplemedicine.util.alarm.AlarmReceiver;
 
@@ -115,7 +116,7 @@ public class AddMedicationActivity extends AppCompatActivity {
                     }
                     else {
                         viewModel.insert();
-                        createAlarmNotification();
+                        //Utils.createAlarmNotification(viewModel.getMedication(), getApplicationContext());
                         Toast.makeText(this, "Medicamento añadido con éxito", Toast.LENGTH_SHORT).show();
                     }
 
@@ -132,46 +133,30 @@ public class AddMedicationActivity extends AppCompatActivity {
         });
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private void createAlarmNotification(){
-//        PendingIntent pendingIntent;
-//        Intent intent = new Intent(HomeActivity.this, AlarmReceiver.class);
-//        pendingIntent = PendingIntent.getBroadcast(HomeActivity.this, 0, intent , PendingIntent.FLAG_IMMUTABLE);
-//        AlarmManager littlefluppy = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-//        littlefluppy.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 200, pendingIntent);
-
-        Medication medication = viewModel.getMedication();
-
-        if(medication.isNotifications()){
-            for(HourModel hour: medication.getHours()) {
-                for(int i = 0; i < 7; i ++) {
-                    Boolean isDayWeek = medication.getWeekDays().get(WeekDayEnum.getWeekDay(i));
-                    if(isDayWeek != null && isDayWeek) {
-                        Intent intent = new Intent(AddMedicationActivity.this, AlarmReceiver.class);
-                        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                        PendingIntent pendingIntent = PendingIntent.getBroadcast(AddMedicationActivity.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-                        Calendar calendar = Calendar. getInstance ();
-                        calendar.set(Calendar.SECOND, 0);
-                        calendar.set(Calendar.MINUTE, hour.getMinutes());
-                        calendar.set(Calendar.HOUR_OF_DAY, hour.getHours());
-                        calendar.add(Calendar.DAY_OF_WEEK, i);
-                        System.out.println(calendar.getTime());
-                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                    }
-                }
-
-//                Intent intent = new Intent(AddMedicationActivity.this, AlarmReceiver.class);
-//                AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-//                PendingIntent pendingIntent = PendingIntent.getBroadcast(AddMedicationActivity.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-//                Calendar calendar = Calendar. getInstance ();
-//                calendar.set(Calendar.SECOND, 0);
-//                calendar.set(Calendar.MINUTE, hour.getMinutes());
-//                calendar.set(Calendar.HOUR_OF_DAY, hour.getHours());
-//                //calendar.add(Calendar.DAY_OF_WEEK, 0);
-//                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, pendingIntent);
-            }
-
-        }
-
-    }
+//    private void createAlarmNotification(){
+//        Medication medication = viewModel.getMedication();
+//        if(medication.isNotifications()){
+//            for(HourModel hour: medication.getHours()) {
+//                for(int i = 0; i < 7; i ++) {
+//                    Boolean isDayWeek = medication.getWeekDays().get(WeekDayEnum.getWeekDay(i));
+//                    if(isDayWeek != null && isDayWeek) {
+//                        Intent intent = new Intent(AddMedicationActivity.this, AlarmReceiver.class);
+//                        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+//                        PendingIntent pendingIntent;
+//                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M)
+//                            pendingIntent = PendingIntent.getBroadcast(AddMedicationActivity.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+//                        else
+//                            pendingIntent = PendingIntent.getBroadcast(AddMedicationActivity.this, 0, intent, 0);
+//                        Calendar calendar = Calendar.getInstance();
+//                        calendar.set(Calendar.SECOND, 0);
+//                        calendar.set(Calendar.MINUTE, hour.getMinutes());
+//                        calendar.set(Calendar.HOUR_OF_DAY, hour.getHours());
+//                        calendar.add(Calendar.DAY_OF_WEEK, i - 1);
+//                        System.out.println(calendar.getTime());
+//                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+//                    }
+//                }
+//            }
+//        }
+//    }
 }

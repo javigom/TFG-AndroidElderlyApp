@@ -19,8 +19,8 @@ public interface NotificationDao {
     @Query("UPDATE notification_table SET completed = 1 WHERE id IN (:ids)")
     void Update(List<Long> ids);
 
-    @Query("DELETE FROM notification_table")
-    void DeleteAllNotifications();
+    @Query("UPDATE notification_table SET completed = 0")
+    void RestartNotifications();
 
     @Query("DELETE FROM notification_table WHERE medicationId = :medicationId")
     void DeleteNotificationsByMedicationId(Long medicationId);
