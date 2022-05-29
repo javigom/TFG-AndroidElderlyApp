@@ -60,10 +60,4 @@ dependencies {
     // ColorPicker
     implementation 'petrov.kristiyan:colorpicker-library:1.1.10'
 
-    // WorkManager
-    def work_version = "2.7.1"
-    implementation "androidx.work:work-runtime:$work_version"
-    implementation "androidx.work:work-runtime-ktx:$work_version"
-
-
 }
