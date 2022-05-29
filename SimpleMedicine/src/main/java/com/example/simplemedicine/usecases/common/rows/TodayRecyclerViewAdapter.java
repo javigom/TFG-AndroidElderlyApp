@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.simplemedicine.R;
 import com.example.simplemedicine.databinding.ItemTodayListBinding;
 import com.example.simplemedicine.model.HourModel;
+import com.example.simplemedicine.model.Medication;
 import com.example.simplemedicine.model.NotificationModel;
 import com.example.simplemedicine.provider.room.repository.Repository;
 import com.example.simplemedicine.util.Utils;
@@ -22,13 +23,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class    TodayRecyclerViewAdapter extends RecyclerView.Adapter<TodayRecyclerViewAdapter.ViewHolder> {
 
     // ATTRIBUTES
     private List<NotificationModel> notificationList;
     private final Map<HourModel, List<NotificationModel>> notificationMap;
-    private final List<HourModel> hourList;
     private Context context;
     private final Repository repository;
 
@@ -36,8 +37,7 @@ public class    TodayRecyclerViewAdapter extends RecyclerView.Adapter<TodayRecyc
 
     public TodayRecyclerViewAdapter(Repository repository) {
         this.notificationList = new ArrayList<>();
-        this.notificationMap = new HashMap<>();
-        this.hourList = new ArrayList<>();
+        this.notificationMap = new TreeMap<>();
         this.repository = repository;
     }
 
@@ -54,32 +54,29 @@ public class    TodayRecyclerViewAdapter extends RecyclerView.Adapter<TodayRecyc
 
     @Override
     public void onBindViewHolder(@NonNull TodayRecyclerViewAdapter.ViewHolder holder, int position) {
-        holder.bindView(hourList.get(position));
+        holder.bindView(new ArrayList<>(notificationMap.keySet()).get(position));
     }
 
     @Override
     public int getItemCount() {
-        return hourList.size();
+        return notificationMap.size();
     }
 
     @SuppressLint("NotifyDataSetChanged")
     public void updateMedicationList(List<NotificationModel> notificationList) {
         this.notificationList.clear();
         this.notificationMap.clear();
-        this.hourList.clear();
         this.notificationList = notificationList;
         for(NotificationModel notification: this.notificationList) {
             if(notification.getStartDate().compareTo(Utils.getTodayDate()) <= 0 && notification.getEndDate().compareTo(Utils.getTodayDate()) >= 0) {
                 List<NotificationModel> list = notificationMap.get(notification.getHour());
                 if(list == null) {
                     list = new ArrayList<>();
-                    this.hourList.add(notification.getHour());
                 }
                 list.add(notification);
                 notificationMap.put(notification.getHour(), list);
             }
         }
-        Collections.sort(this.hourList);
         notifyDataSetChanged();
     }
 
@@ -100,37 +97,37 @@ public class    TodayRecyclerViewAdapter extends RecyclerView.Adapter<TodayRecyc
 
             List<NotificationModel> list = notificationMap.get(hour);
             if(list != null) {
-                for(NotificationModel notificationModel: list) {
-                    if(notificationModel.isCompleted()) {
-                        itemTodayListBinding.checkButton.setEnabled(false);
-                        statusCheckButton(true, hour);
-                        break;
-                    }
-                }
+                for(NotificationModel notificationModel: list)
+                    statusCheckButton(notificationModel.isCompleted(), hour);
             }
             itemTodayListBinding.checkButton.setOnClickListener(v -> {
-                itemTodayListBinding.checkButton.setEnabled(false);
                 statusCheckButton(true, hour);
+                updateDatabase(hour);
             });
         }
 
         public void statusCheckButton(boolean completed, HourModel hour) {
             if(completed) {
-                itemTodayListBinding.status.setText("COMPLETADO");
+                // Disable button & text
+                itemTodayListBinding.checkButton.setEnabled(false);
+                itemTodayListBinding.status.setText(R.string.notification_completed);
                 itemTodayListBinding.status.setTextColor(context.getResources().getColor(R.color.primary));
                 itemTodayListBinding.checkButton.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.circle_button_pressed, null));
-                List<NotificationModel> updateList = notificationMap.get(hour);
-                if(updateList != null) {
-                    for(NotificationModel notification : updateList) {
-                        notification.setCompleted(true);
-                        repository.update(notification);
-                    }
-                }
             }
             else {
-                itemTodayListBinding.status.setText("PENDIENTE");
+                // Enable button & text
+                itemTodayListBinding.checkButton.setEnabled(true);
+                itemTodayListBinding.status.setText(R.string.notification_pending);
                 itemTodayListBinding.status.setTextColor(context.getResources().getColor(R.color.secondary));
                 itemTodayListBinding.checkButton.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.circle_button, null));
+            }
+        }
+
+        public void updateDatabase(HourModel hour){
+            List<NotificationModel> updateList = notificationMap.get(hour);
+            if(updateList != null) {
+                NotificationModel[] array = new NotificationModel[updateList.size()];
+                repository.update(updateList.toArray(array));
             }
         }
     }

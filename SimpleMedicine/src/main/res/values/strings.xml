@@ -2,4 +2,8 @@
     <string name="app_name">SimpleMedicine</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="notification_pending">PENDIENTE</string>
+    <string name="notification_completed">COMPLETADO</string>
+    <string name="notification_channel_name">Notificaciones push</string>
+    <string name="notification_message">¡Hora de tomar la medicación!</string>
 </resources>

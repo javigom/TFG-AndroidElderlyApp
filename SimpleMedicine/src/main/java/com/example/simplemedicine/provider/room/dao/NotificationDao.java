@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.Update;
 
 import com.example.simplemedicine.model.NotificationModel;
 import com.example.simplemedicine.util.WeekDayEnum;
@@ -17,8 +16,8 @@ public interface NotificationDao {
     @Insert
     void Insert(NotificationModel notification);
 
-    @Update
-    void Update(NotificationModel notificationModel);
+    @Query("UPDATE notification_table SET completed = 1 WHERE id IN (:ids)")
+    void Update(List<Long> ids);
 
     @Query("DELETE FROM notification_table")
     void DeleteAllNotifications();

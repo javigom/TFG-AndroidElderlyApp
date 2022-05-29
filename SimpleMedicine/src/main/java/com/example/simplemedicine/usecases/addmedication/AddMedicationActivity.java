@@ -3,10 +3,12 @@ package com.example.simplemedicine.usecases.addmedication;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
@@ -130,6 +132,7 @@ public class AddMedicationActivity extends AppCompatActivity {
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void createAlarmNotification(){
 //        PendingIntent pendingIntent;
 //        Intent intent = new Intent(HomeActivity.this, AlarmReceiver.class);
@@ -144,29 +147,28 @@ public class AddMedicationActivity extends AppCompatActivity {
                 for(int i = 0; i < 7; i ++) {
                     Boolean isDayWeek = medication.getWeekDays().get(WeekDayEnum.getWeekDay(i));
                     if(isDayWeek != null && isDayWeek) {
-//                        Intent intent = new Intent(AddMedicationActivity.this, AlarmReceiver.class);
-//                        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-//                        PendingIntent pendingIntent = PendingIntent.getBroadcast(AddMedicationActivity.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-//                        Calendar calendar = Calendar. getInstance ();
-//                        calendar.set(Calendar.SECOND, 0);
-//                        calendar.set(Calendar.MINUTE, hour.getMinutes());
-//                        calendar.set(Calendar.HOUR_OF_DAY, hour.getHours());
-//                        calendar.add(Calendar.DAY_OF_WEEK, i);
-//                        System.out.println(calendar.getTime());
-//                        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, pendingIntent);
+                        Intent intent = new Intent(AddMedicationActivity.this, AlarmReceiver.class);
+                        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                        PendingIntent pendingIntent = PendingIntent.getBroadcast(AddMedicationActivity.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+                        Calendar calendar = Calendar. getInstance ();
+                        calendar.set(Calendar.SECOND, 0);
+                        calendar.set(Calendar.MINUTE, hour.getMinutes());
+                        calendar.set(Calendar.HOUR_OF_DAY, hour.getHours());
+                        calendar.add(Calendar.DAY_OF_WEEK, i);
+                        System.out.println(calendar.getTime());
+                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
                     }
                 }
 
-                Intent intent = new Intent(AddMedicationActivity.this, AlarmReceiver.class);
-                AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(AddMedicationActivity.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-                Calendar calendar = Calendar. getInstance ();
-                calendar.set(Calendar.SECOND, 0);
-                calendar.set(Calendar.MINUTE, hour.getMinutes());
-                calendar.set(Calendar.HOUR_OF_DAY, hour.getHours());
-                //calendar.add(Calendar.DAY_OF_WEEK, 0);
-                System.out.println(calendar.getTime());
-                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, pendingIntent);
+//                Intent intent = new Intent(AddMedicationActivity.this, AlarmReceiver.class);
+//                AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+//                PendingIntent pendingIntent = PendingIntent.getBroadcast(AddMedicationActivity.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+//                Calendar calendar = Calendar. getInstance ();
+//                calendar.set(Calendar.SECOND, 0);
+//                calendar.set(Calendar.MINUTE, hour.getMinutes());
+//                calendar.set(Calendar.HOUR_OF_DAY, hour.getHours());
+//                //calendar.add(Calendar.DAY_OF_WEEK, 0);
+//                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, pendingIntent);
             }
 
         }

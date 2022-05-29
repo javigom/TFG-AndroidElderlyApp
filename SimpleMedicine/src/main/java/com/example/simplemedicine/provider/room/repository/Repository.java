@@ -14,6 +14,7 @@ import com.example.simplemedicine.provider.room.database.SimpleMedicineDatabase;
 import com.example.simplemedicine.util.Utils;
 import com.example.simplemedicine.util.WeekDayEnum;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -49,8 +50,8 @@ public class Repository {
     public void update(Medication medication) {
         new UpdateMedicationAsyncTask(medicationDao, notificationDao).execute(medication);
     }
-    public void update(NotificationModel notification) {
-        new UpdateNotificationAsyncTask(notificationDao).execute(notification);
+    public void update(NotificationModel... notifications) {
+        new UpdateNotificationAsyncTask(notificationDao).execute(notifications);
     }
     // Delete
     public void delete(Medication medication) {
@@ -122,7 +123,11 @@ public class Repository {
         }
         @Override
         protected Void doInBackground(NotificationModel... notifications) {
-            notificationDao.Update(notifications[0]);
+            List<Long> ids = new ArrayList<>();
+            for(NotificationModel notification: notifications){
+                ids.add(notification.getId());
+            }
+            notificationDao.Update(ids);
             return null;
         }
     }
