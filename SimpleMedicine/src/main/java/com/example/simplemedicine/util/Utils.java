@@ -4,17 +4,12 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
 
 import com.example.simplemedicine.model.DateModel;
 import com.example.simplemedicine.model.HourModel;
 import com.example.simplemedicine.util.alarm.AlarmReceiver;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class Utils {
 

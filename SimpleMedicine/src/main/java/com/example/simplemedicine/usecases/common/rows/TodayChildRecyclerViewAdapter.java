@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.simplemedicine.databinding.ItemTodayChildListBinding;
-import com.example.simplemedicine.model.Medication;
 import com.example.simplemedicine.model.NotificationModel;
 
 import java.util.ArrayList;

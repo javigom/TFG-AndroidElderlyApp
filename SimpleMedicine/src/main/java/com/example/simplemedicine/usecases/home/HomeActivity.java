@@ -1,5 +1,8 @@
 package com.example.simplemedicine.usecases.home;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,7 +27,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private int selectedItem;
 
-
+    public static final String CHANNEL_ID = "_main_channel";
     // METHODS
 
     @Override
@@ -35,7 +38,21 @@ public class HomeActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         selectedItem = -1;
         initView();
+        createNotificationChannel();
     }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "Notificaciones push", importance);
+            channel.setDescription("main channel");
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
 
     private void initView() {
         binding.floatingButton.setOnClickListener(v -> new AddMedicationRouter().launch(this));

@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.simplemedicine.model.DateModel;
 import com.example.simplemedicine.model.HourModel;
 import com.example.simplemedicine.model.Medication;
 import com.example.simplemedicine.model.NotificationModel;
@@ -15,7 +14,6 @@ import com.example.simplemedicine.provider.room.database.SimpleMedicineDatabase;
 import com.example.simplemedicine.util.Utils;
 import com.example.simplemedicine.util.WeekDayEnum;
 
-import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 

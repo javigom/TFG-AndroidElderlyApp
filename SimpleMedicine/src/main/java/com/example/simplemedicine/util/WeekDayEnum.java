@@ -1,9 +1,5 @@
 package com.example.simplemedicine.util;
 
-import com.example.simplemedicine.model.DateModel;
-
-import java.util.Calendar;
-
 public enum WeekDayEnum {
     MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY;
 
