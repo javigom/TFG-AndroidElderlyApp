@@ -13,14 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.simplemedicine.R;
 import com.example.simplemedicine.databinding.ItemTodayListBinding;
 import com.example.simplemedicine.model.HourModel;
-import com.example.simplemedicine.model.Medication;
 import com.example.simplemedicine.model.NotificationModel;
 import com.example.simplemedicine.provider.room.repository.Repository;
 import com.example.simplemedicine.util.Utils;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;

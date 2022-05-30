@@ -17,10 +17,6 @@ import com.example.simplemedicine.usecases.addmedication.AddMedicationRouter;
 import com.example.simplemedicine.usecases.medication.MedicationRouter;
 import com.example.simplemedicine.usecases.today.TodayRouter;
 import com.example.simplemedicine.util.Utils;
-import com.example.simplemedicine.util.WeekDayEnum;
-
-import java.util.Calendar;
-import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 

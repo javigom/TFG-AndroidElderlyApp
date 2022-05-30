@@ -1,28 +1,18 @@
 package com.example.simplemedicine.usecases.addmedication;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.simplemedicine.databinding.ActivityAddMedicationBinding;
-import com.example.simplemedicine.model.HourModel;
 import com.example.simplemedicine.model.Medication;
 import com.example.simplemedicine.usecases.addmedication.page.AddMedicationPageAdapter;
 import com.example.simplemedicine.usecases.seemedication.SeeMedicationRouter;
-import com.example.simplemedicine.util.Utils;
-import com.example.simplemedicine.util.WeekDayEnum;
-import com.example.simplemedicine.util.alarm.AlarmReceiver;
-
-import java.util.Calendar;
 
 public class AddMedicationActivity extends AppCompatActivity {
 
